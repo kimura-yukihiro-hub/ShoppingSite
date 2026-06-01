@@ -16,7 +16,7 @@
 			<!-- IDの入力フォーム -->
 			<div class="input-group">
 				<label for="memberId">会員番号(ID)</label><input type="text"
-					id="memberId" name="memberId" required maxlength="10"> <span
+					id="memberId" name="memberId"  maxlength="10"> <span
 					id="memberId-error" class="error-msg"></span>
 			</div>
 			<!-- パスワードの入力フォーム -->
@@ -24,7 +24,7 @@
 				<label for="password">パスワード</label>
 				<!-- 目のマークを黒ボックスの右端に浮かせるための囲み(wrapper)と目のSVGを挿入 -->
 				<div class="password-wrapper">
-					<input type="password" id="password" name="password" required
+					<input type="password" id="password" name="password" 
 						maxlength="32">
 
 					<!--パスワード入力エリアボタンの中身を、初期状態で「閉じ目」のSVGにする-->

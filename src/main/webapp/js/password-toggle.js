@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				showError(memberIdInput, memberIdError, "会員番号を入力してください");
 				return false;
 			}
-			if (!/^[a-zA-Z0-9]+$/.test(value)) {
+			if (!/^[a-zA-Z0-9\-]+$/.test(value)) {
 				showError(memberIdInput, memberIdError, "会員番号は半角英数字のみで入力してください");
 				return false;
 			}
