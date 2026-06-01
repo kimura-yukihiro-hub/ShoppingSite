@@ -33,7 +33,7 @@ public class LoginAction extends Action {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
 			// ログインしたまま画面を30分放置すると、自動的にログインの記憶が消滅する安全装置が発動する
-			session.setMaxInactiveInterval(1 * 60);
+			session.setMaxInactiveInterval(30 * 60);
 
 			//会員ランク(MEAT_RANK)を取得
 			int rank = loginUser.getMeatRank();
