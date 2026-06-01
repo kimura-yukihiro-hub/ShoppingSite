@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+	<Resource
+		name="jdbc/shoppingsite_kimura"
+		auth="Container"
+		type="javax.sql.DataSource"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/shoppingsite_kimura"
+		username="root"
+		password="21424Aisiteru"
+	/>
+</Context>

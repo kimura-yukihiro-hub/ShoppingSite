@@ -1,0 +1,434 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   1. 全画面共通の基本スタイル
+   ========================================================================== */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	transition: background-color 0.5s ease, color 0.5s ease;
+	/* 画面切り替え時の色変化を滑らかに */
+}
+
+/* 共通のカード型コンテナ（ログイン・エラー・メニュー共通） */
+.login-container,
+.error-container,
+menu-container {
+	padding: 24px 40px 30px 40px;
+	border-radius: 12px;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+	width: 380px;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+/* ボタンとメニュー要素の共通デザイン（リセットと押しやすさの追求） */
+.btn-submit,
+.btn-register,
+.btn-back {
+	display: block;
+	width: 100%;
+	padding: 14px;
+	margin-top: 15px;
+	border-radius: 6px;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	border: none;
+	box-sizing: border-box;
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+
+.btn-submit:hover,
+.btn-register:hover,
+btn-back:hover,
+.btn-menu:hover {
+	transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   2. ログイン画面専用（login-in.jsp）
+   ========================================================================== */
+/* 未ログイン状態（bodyにランクやエラーのクラスがない時）は重厚な黒背景 */
+
+body:not([class*="rank-"]):not(.error-page) {
+	background-color: #141414;
+	color: #f0f0f0;
+}
+
+.login-container {
+	background-color: #1e1e1e;
+	border: 1px solid rgba(212, 175, 55, 0.8);
+	padding: 24px 40px 30px 40px;
+	box-shadow: 0 12px 45px rgba(212, 175, 55, 0.8);
+}
+
+.login-container h2 {
+	color: #ad222c;
+	margin-top: 0;
+	margin-bottom: 30px;
+	font-size: 26px;
+	letter-spacing: 3px;
+}
+
+.input-group {
+	margin-bottom: 16px;
+	text-align: left;
+}
+
+.input-group label {
+	display: block;
+	margin-bottom: 2px;
+	color: #b3b3b3;
+	font-size: 13px;
+	letter-spacing: 1px;
+}
+
+.input-group input {
+	width: 100%;
+	padding: 12px;
+	box-sizing: border-box;
+	border: 1px solid #3a3a3a;
+	border-radius: 4px;
+	background-color: #141414;
+	color: #ffffff;
+	font-size: 15px;
+}
+
+.input-group input:focus {
+	border-color: #ad222c;
+	outline: none;
+}
+
+.btn-submit {
+	background-color: #ad222c;
+	color: #ffffff;
+}
+
+.btn-submit:hover {
+	background-color: #c42732;
+	box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+}
+
+.btn-register {
+	background-color: transparent;
+	color: #bf9f5a;
+	border: 1px solid rgba(180, 150, 80, 0.5);
+}
+
+.btn-register:hover {
+	background-color: #bf9f5a;
+	color: #141414;
+}
+
+/* ==========================================================================
+   3. ログインエラー画面専用（login-error.jsp：仕様書③完全準拠）
+   ========================================================================== */
+
+.error-page {
+	background-color: #0c0a09;
+}
+
+.error-container {
+	background-color: #1a1515;
+	border: 1px solid rgba(230, 57, 70, 0.6);
+	box-shadow: 0 0 40px rgba(230, 57, 70, 0.35);
+	padding: 30px 40px 35px 40px;
+}
+
+.error-icon {
+	font-size: 54px;
+	margin-bottom: 12px;
+	filter: drop-shadow(0 0 8px rgba(255, 159, 67, 0.6));
+}
+
+.error-container h2 {
+	color: #e63946;
+	font-size: 24px;
+	margin-bottom: 15px;
+	letter-spacing: 0.5px;
+	font-weight: 900;
+}
+
+.error-container p {
+	color: #dddddd;
+	font-size: 16px;
+	margin-bottom: 30px;
+	letter-spacing: 0.5px;
+}
+
+.btn-back {
+	background-color: transparent;
+	color: #e63946;
+	border: 1px solid rgba(230, 57, 70, 0.6);
+}
+
+.btn-back:hover {
+	background-color: #e63946;
+	color: #ffffff;
+	box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+}
+
+/* ==========================================================================
+   4. 会員情報登録ホーム画面・全体共通設定（user-menu.jsp）
+   ========================================================================== */
+/* メニュー画面のベースとなる半透明の薄いカード箱 */
+
+.menu-container {
+	background-color: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	color: inherit;
+	width: 350px;
+	padding: 24px 30px;
+}
+
+/* ユーザー情報を表示するカードエリア */
+.user-card {
+	padding-bottom: 16px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-card h3 {
+	margin: 0 0 10px 0;
+	font-size: 22px;
+	letter-spacing: 1px;
+}
+
+.user-card p {
+	font-size: 16px;
+	margin: 8px 0;
+}
+
+.menu-links h3 {
+	font-size: 18px;
+	margin-top: 25px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding-bottom: 8px;
+}
+
+.menu-links ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.menu-links li {
+	margin-bottom: 10px;
+}
+
+/* メニューボタン共通の土台設定（標準の見た目） */
+.btn-menu {
+	display: block;
+	width: 100%;
+	background-color: #333333;
+	color: #ffffff;
+	border: 1px solid #444444;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 10px;
+	border-radius: 6px;
+	font-size: 16px;
+}
+
+/* ==========================================================================
+   会員（ランク）別デザインテーマ
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ランク1: 一般会員
+   -------------------------------------------------------------------------- */
+
+.rank-a1 {
+	background-color: #f2ede2;
+	color: #333333;
+}
+
+.rank-a1 .menu-container {
+	background-color: #ffffff;
+	border: 1px solid #dcd6d0;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.rank-a1 .menu-links h2 {
+	border-bottom: 1px solid #dcd6d0;
+	color: #555555;
+}
+
+.rank-a1 .btn-menu {
+	background-color: #ffffff;
+	color: #333333 !important;
+	border: 1px solid #cccccc;
+}
+
+.rank-a1 .btn-update:hover,
+.rank-a1 .btn-delete:hover,
+.rank-a1 .btn-logout:hover {
+	background-color: #5c4033;
+	color: #ffffff !important;
+	border-color: #5c4033;
+}
+
+/* --------------------------------------------------------------------------
+ ランク2: 熟成会員
+   -------------------------------------------------------------------------- */
+
+   .rank-a2 {
+
+       background-color: #3a2c28; 
+       color: #ffffff;
+   }
+
+   .rank-a2 .menu-container {
+       background-color: rgba(0, 0, 0, 0.45); 
+       border: 1px solid rgba(255, 255, 255, 0.12);
+       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); 
+   }
+
+   .rank-a2 .menu-links h3 {
+       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+       color: #ffffff;
+   }
+
+   .rank-a2 .rank-badge {
+       background: linear-gradient(135deg, #a8a8a8 0%, #f0f0f0 50%, #7c7c7c 100%);
+       color: #1a1a1a;
+       font-weight: bold;
+   }
+
+   .rank-a2 .btn-menu {
+       background-color: #5a4a42;
+       color: #ffffff !important; 
+       border: 1px solid #6b5950;
+   }
+
+   .rank-a2 .btn-update:hover,
+   .rank-a2 .btn-delete:hover,
+   .rank-a2 .btn-logout:hover {
+       background-color: #bf9f5a;
+       color: #1a1a1a !important;
+       border-color: #bf9f5a;
+       box-shadow: 0 4px 15px rgba(191, 159, 90, 0.4); 
+   }
+
+/* --------------------------------------------------------------------------
+  ランク3: 特選会員
+    -------------------------------------------------------------------------- */
+.rank-a3 {
+	background-color: #120507;
+	color: #f2e9d8;
+}
+
+.rank-a3 .menu-container {
+	background-color: #5a1827;
+	border: 2px solid #5a1827;
+	box-shadow: 0 12px 35px rgba(90, 24, 39, 0.2);
+	color: #f2e9d8;
+}
+
+.rank-a3 .menu-links h3 {
+	border-bottom: 1px solid rgba(242, 233, 216, 0.2);
+	color: #f2e9d8;
+}
+
+.rank-a3 .btn-menu {
+	background-color: #ebd8b3;
+	color: #5a1827 !important;
+	border: 1px solid #ebd8b3;
+}
+
+.rank-a3 .btn-update:hover,
+.rank-a3 .btn-delete:hover,
+.rank-a3 .btn-logout:hover {
+	background-color: #a3704c;
+	color: #ebd8b3 !important;
+	border-color: #a3704c;
+	box-shadow: 0 4px 12px rgba(163, 112, 76, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+ ランク4: 極上プレミアム会員
+   -------------------------------------------------------------------------- */
+
+.rank-a4 {
+	background-color: #0c0a09;
+	color: #ffffff;
+}
+
+.rank-a4 .menu-container {
+	background: linear-gradient(135deg, #1f0306 0%, #0c0a09 100%);
+	border: 2px solid rgba(212, 175, 55, 0.8);
+	box-shadow: 0 15px 40px rgba(212, 175, 55, 0.25);
+}
+
+.rank-a4 .user-card h3 {
+	background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.rank-a4 .btn-menu {
+	background-color: transparent;
+	color: #d4af37 !important;
+	border: 1px solid rgba(212, 175, 55, 0.6);
+}
+
+.rank-a4 .btn-menu:hover {
+	background: linear-gradient(to right, #bf953f, #fcf6ba);
+	color: #0c0a09 !important;
+}
+
+/* --------------------------------------------------------------------------
+ ランク5: 店舗管理者
+   -------------------------------------------------------------------------- */
+
+.rank-a5 {
+	background-color: #1a1e22;
+	color: #f1f3f5;
+}
+
+/*管理者用メニューコンテナの装飾*/
+.rank-a5 .menu-container {
+	background-color: #242b31;
+	border: 1px solid #4a545c;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.rank-a5 .user-card h3 {
+	background: linear-gradient(to right, #4dabf7, #339af0, #228be6);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.rank-a5 .btn-menu {
+	background-color: #2f363d;
+	color: #f1f3f5 !important;
+	border: 1px solid #444c56;
+}
+
+.rank-a5 .btn-update:hover {
+	background-color: #228be6;
+	color: #ffffff !important;
+	border-color: #228be6;
+}
+
+.rank-a5 .btn-delete:hover {
+	background-color: #e03131;
+	color: #ffffff !important;
+	border-color: #e03131;
+}
+
+.rank-a5 .btn-logout:hover {
+	background-color: #868e96;
+	color: #ffffff !important;
+	border-color: #868e96;
+}
