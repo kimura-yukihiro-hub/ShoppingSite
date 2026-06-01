@@ -96,13 +96,30 @@ body:not([class*="rank-"]):not(.error-page) {
 	box-sizing: border-box;
 	border: 1px solid #3a3a3a;
 	border-radius: 4px;
-	background-color: #141414;
+	background-color: #141414 !important;
 	color: #ffffff;
 	font-size: 15px;
 }
 
-.input-group input:focus {
+.input-group input:-webkit-autofill,
+.input-group input:-webkit-autofill:hover,
+.input-group input:-webkit-autofill:focus {
+	-webkit-text-fill-color: #ffffff !important;
+	/* 文字色を白に固定 */
+	box-shadow: 0 0 0px 1000px #141414 inset !important;
+	/* 内側の影を使って背景を黒（#141414）で塗りつぶす */
+	transition: background-color 5000s ease-in-out 0s !important;
+	/* 背景色が変わるのを事実上ストップさせる */
+}
+
+.input-group input:focus,
+.input-group input:active {
 	border-color: #ad222c;
+	/* カチッと選択した時は赤枠 */
+	background-color: #141414 !important;
+	/* 日本語入力中も絶対に黒背景を維持 */
+	color: #ffffff !important;
+	/* 文字色も白を維持 */
 	outline: none;
 }
 
@@ -125,6 +142,73 @@ body:not([class*="rank-"]):not(.error-page) {
 .btn-register:hover {
 	background-color: #bf9f5a;
 	color: #141414;
+}
+
+/* ==========================================================================
+   パスワード表示・非表示（目のマーク）用のスタイル
+   ========================================================================== */
+
+/* 1. 入力欄とボタンを重ねるための基準となる親要素 */
+.password-wrapper {
+	position: relative;
+	width: 100%;
+	display: block;
+}
+
+/* 2. パスワード入力欄の右側に、ボタンと文字が重ならないための余白を作る */
+.password-wrapper input {
+	padding-right: 46px !important;
+}
+
+/* 3. 目のマークのボタンを黒ボックスの右端に浮かせる */
+.btn-toggle-pw {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #777777;
+	/* 初期状態（閉じ目）のアイコンの色 */
+	outline: none;
+	z-index: 10;
+	/* 入力欄より手前に引っ張り出してクリック可能にする */
+	transition: color 0.2s ease, transform 0.1s ease;
+}
+
+/* 4. 目のマークにマウスを乗せたときの演出 */
+.btn-toggle-pw:hover {
+	color: #bf9f5a;
+}
+
+/* 5. 目のマークをクリックした瞬間の微かな沈み込み */
+.btn-toggle-pw:active {
+	transform: translateY(-50%) scale(0.9);
+}
+
+/* ==========================================================================
+   リアルタイム・バリデーション用スタイル
+   ========================================================================== */
+
+.error-msg {
+	display: block;
+	color: #e63946;
+	font-size: 12px;
+	margin-top: 4px;
+	min-height: 18px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+
+/* エラーが発生した入力ボックスを赤枠にする */
+.input-group input.is-invalid {
+	border-color: #e63946 !important;
+	box-shadow: 0 0 8px rgba(230, 57, 70, 0.4);
 }
 
 /* ==========================================================================
@@ -161,6 +245,10 @@ body:not([class*="rank-"]):not(.error-page) {
 	font-size: 16px;
 	margin-bottom: 30px;
 	letter-spacing: 0.5px;
+	word-break: keep-all;
+	overflow-wrap: anywhere;
+	line-height: 1.6;
+	padding: 0 10px;
 }
 
 .btn-back {
@@ -280,43 +368,43 @@ body:not([class*="rank-"]):not(.error-page) {
  ランク2: 熟成会員
    -------------------------------------------------------------------------- */
 
-   .rank-a2 {
+.rank-a2 {
 
-       background-color: #3a2c28; 
-       color: #ffffff;
-   }
+	background-color: #3a2c28;
+	color: #ffffff;
+}
 
-   .rank-a2 .menu-container {
-       background-color: rgba(0, 0, 0, 0.45); 
-       border: 1px solid rgba(255, 255, 255, 0.12);
-       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); 
-   }
+.rank-a2 .menu-container {
+	background-color: rgba(0, 0, 0, 0.45);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
 
-   .rank-a2 .menu-links h3 {
-       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-       color: #ffffff;
-   }
+.rank-a2 .menu-links h3 {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+	color: #ffffff;
+}
 
-   .rank-a2 .rank-badge {
-       background: linear-gradient(135deg, #a8a8a8 0%, #f0f0f0 50%, #7c7c7c 100%);
-       color: #1a1a1a;
-       font-weight: bold;
-   }
+.rank-a2 .rank-badge {
+	background: linear-gradient(135deg, #a8a8a8 0%, #f0f0f0 50%, #7c7c7c 100%);
+	color: #1a1a1a;
+	font-weight: bold;
+}
 
-   .rank-a2 .btn-menu {
-       background-color: #5a4a42;
-       color: #ffffff !important; 
-       border: 1px solid #6b5950;
-   }
+.rank-a2 .btn-menu {
+	background-color: #5a4a42;
+	color: #ffffff !important;
+	border: 1px solid #6b5950;
+}
 
-   .rank-a2 .btn-update:hover,
-   .rank-a2 .btn-delete:hover,
-   .rank-a2 .btn-logout:hover {
-       background-color: #bf9f5a;
-       color: #1a1a1a !important;
-       border-color: #bf9f5a;
-       box-shadow: 0 4px 15px rgba(191, 159, 90, 0.4); 
-   }
+.rank-a2 .btn-update:hover,
+.rank-a2 .btn-delete:hover,
+.rank-a2 .btn-logout:hover {
+	background-color: #bf9f5a;
+	color: #1a1a1a !important;
+	border-color: #bf9f5a;
+	box-shadow: 0 4px 15px rgba(191, 159, 90, 0.4);
+}
 
 /* --------------------------------------------------------------------------
   ランク3: 特選会員

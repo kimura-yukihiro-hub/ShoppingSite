@@ -7,8 +7,8 @@ response.setHeader("Pragma", "no-cache");
 response.setDateHeader("Expires", 0);
 %>
 <script>
-    // このマイページが開いた瞬間に、ブラウザのログイン通信の履歴(POST)を、安全な現在のURL(GET)へ強制的に上書きしてすり替えます。
-    window.history.replaceState(null, null, window.location.href);
+	// このマイページが開いた瞬間に、ブラウザのログイン通信の履歴(POST)を、安全な現在のURL(GET)へ強制的に上書きしてすり替えます。
+	window.history.replaceState(null, null, window.location.href);
 </script>
 <!DOCTYPE html>
 <html>
@@ -22,8 +22,7 @@ response.setDateHeader("Expires", 0);
 		<div class="user-card">
 			<h3>マイページ</h3>
 			<p>
-				ようこそ、<strong>${sessionScope.loginUser.lastName}
-					${sessionScope.loginUser.firstName}</strong>さん！
+				ようこそ、<strong>${sessionScope.loginUser.lastName}</strong>さん！
 			</p>
 		</div>
 

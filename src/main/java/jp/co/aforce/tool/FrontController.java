@@ -43,10 +43,14 @@ public class FrontController extends HttpServlet {
 
 			// 各Actionのexecute()メソッドを呼び出す
 			String url = action.execute(request, response);
-			// もし他の処理で個別にリダイレクトなどが行われ、urlがnullで戻ってきた場合は二重案内エラー（500）を防ぐためにフォワードをスキップする安全な設計にします
 			if (url != null) {
-				// 各Actionから帰ってきたJSPのパスへフォワード
-				request.getRequestDispatcher("/views/" + url).forward(request, response);
+				if (url.startsWith("redirect:")) {
+					// 「redirect:」の文字を切り取って、そのURLへリダイレクトさせる
+					String redirectUrl = url.replace("redirect:", "");
+					response.sendRedirect(request.getContextPath() + "/" + redirectUrl);
+				} else {
+					request.getRequestDispatcher("/views/" + url).forward(request, response);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

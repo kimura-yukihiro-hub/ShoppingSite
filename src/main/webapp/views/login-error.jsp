@@ -13,9 +13,9 @@
 		<div class="error-icon">⚠️</div>
 		<h2>ログインできませんでした</h2>
 
-		<p>エラーもしくはパスワードが違います</p>
+		<p>${not empty errorMessage ? errorMessage : 'エラーもしくはパスワードが違います'}</p>
 
-		<button type=" button" class="btn-back"
+		<button type="button" class="btn-back"
 			onclick="location.href='${pageContext.request.contextPath}/views/login-in.jsp'">ログイン画面へ戻る</button>
 	</div>
 
