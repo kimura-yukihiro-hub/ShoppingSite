@@ -25,7 +25,8 @@ public class FrontController extends HttpServlet {
 
 		try {
 			String path = request.getServletPath();
-			if (!path.equals("/Login.action")) {
+			if (!path.equalsIgnoreCase("/Login.action") && !path.equalsIgnoreCase("/UserAdd.action")
+					&& !path.equalsIgnoreCase("/UserAddExecute.action")) {
 
 				// 現在のセッションの部屋を取得（存在しない場合は新しく作らない）
 				HttpSession session = request.getSession(false);

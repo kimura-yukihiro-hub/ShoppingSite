@@ -16,7 +16,7 @@
 			<!-- IDの入力フォーム -->
 			<div class="input-group">
 				<label for="memberId">会員番号(ID)</label><input type="text"
-					id="memberId" name="memberId"  maxlength="10"> <span
+					id="memberId" name="memberId" maxlength="10"> <span
 					id="memberId-error" class="error-msg"></span>
 			</div>
 			<!-- パスワードの入力フォーム -->
@@ -24,8 +24,7 @@
 				<label for="password">パスワード</label>
 				<!-- 目のマークを黒ボックスの右端に浮かせるための囲み(wrapper)と目のSVGを挿入 -->
 				<div class="password-wrapper">
-					<input type="password" id="password" name="password" 
-						maxlength="32">
+					<input type="password" id="password" name="password" maxlength="32">
 
 					<!--パスワード入力エリアボタンの中身を、初期状態で「閉じ目」のSVGにする-->
 					<button type="button" id="toggle-password" class="btn-toggle-pw"
@@ -47,7 +46,7 @@
 			<button type="submit" class="btn-submit">ログイン</button>
 			<!-- 新規会員登録ボタン -->
 			<button type="button" class="btn-register"
-				onclick="alert('新規会員登録機能は今後の演習で実装します。')">新規会員登録</button>
+				onclick="location.href='${pageContext.request.contextPath}/views/user-add.jsp'">新規会員登録</button>
 		</form>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/password-toggle.js"></script>

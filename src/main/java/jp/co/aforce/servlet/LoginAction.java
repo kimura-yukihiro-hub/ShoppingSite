@@ -53,7 +53,7 @@ public class LoginAction extends Action {
 		} else {
 			//ログイン失敗の時
 			//ユーザーが見つからなかった場合は、エラー専用画面へ移動
-			request.setAttribute("errorMessage", "会員番号もしくはパスワードが違います");
+			request.setAttribute("errorMessage", "会員番号もしくは<br>パスワードが違います");
 			return "login-error.jsp";
 		}
 	}

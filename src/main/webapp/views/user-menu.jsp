@@ -29,15 +29,17 @@ response.setDateHeader("Expires", 0);
 		<nav class="menu-links">
 			<h3>メインメニュー</h3>
 			<ul>
-				<li><button type="button" class="btn-menu btn-update"
-						onclick="alert('修正機能は今後の演習で実装します。')">修正</button></li>
+				<li>
+					<button type="button" class="btn-menu btn-update"
+						onclick="location.href='${pageContext.request.contextPath}/UserUpdateForm.action'">修正</button>
+				</li>
 				<li>
 					<button type="button" class="btn-menu btn-delete"
-						onclick="alert('削除機能は今後の演習で実装します。')">削除</button>
+						onclick="location.href='${pageContext.request.contextPath}/UserDelete.action'">削除</button>
 				</li>
 				<li>
 					<button type="button" class="btn-menu btn-logout"
-						onclick="location.href='/ShoppingSite/Logout.action'">ログアウト</button>
+						onclick="location.href='${pageContext.request.contextPath}/Logout.action'">ログアウト</button>
 				</li>
 			</ul>
 		</nav>

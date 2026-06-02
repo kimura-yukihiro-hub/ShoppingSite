@@ -11,7 +11,7 @@ public class LogoutAction extends Action {
 			HttpServletRequest request, HttpServletResponse response
 			) throws Exception {
 		//現在のユーザーのセッションを取得
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if (session != null) {
 			//セッションの部屋を無効化
 			session.invalidate();

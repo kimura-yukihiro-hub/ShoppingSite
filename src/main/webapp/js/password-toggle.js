@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				return false;
 			}
 			if (!/^[a-zA-Z0-9\-]+$/.test(value)) {
-				showError(memberIdInput, memberIdError, "会員番号は半角英数字またはハイフンで入力してください");
+				showError(memberIdInput, memberIdError, "会員番号は半角英数字・ハイフンのみ有効です");
 				return false;
 			}
 
