@@ -30,6 +30,63 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	}
+	
+	// ==========================================================================
+	//新旧パスワード・目のマーク連動制御スクリプト
+	// ==========================================================================
+	document.addEventListener("DOMContentLoaded", function() {
+
+	    // ----------------------------------------------------------------------
+	    // 「新しいパスワード」側の目のマーク制御
+	    // ----------------------------------------------------------------------
+	    const toggleNewBtn = document.getElementById("toggle-password");
+	    const newInput = document.getElementById("password");
+	    const eyeIconNew = document.getElementById("eye-icon");
+
+	    if (toggleNewBtn && newInput && eyeIconNew) {
+	        toggleNewBtn.addEventListener("click", function() {
+	            if (newInput.type === "password") {
+	                newInput.type = "text";
+	                eyeIconNew.innerHTML = `
+	                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+	                    <circle cx="12" cy="12" r="3"></circle>
+	                `;
+	            } else {
+	                newInput.type = "password";
+	                eyeIconNew.innerHTML = `
+	                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+	                    <line x1="1" y1="1" x2="23" y2="23"></line>
+	                `;
+	            }
+	        });
+	    }
+
+	    // ----------------------------------------------------------------------
+	    //「現在のパスワード」側の目のマーク制御
+	    // ----------------------------------------------------------------------
+	    const toggleCurrentBtn = document.getElementById("toggle-password-current");
+	    const currentInput = document.getElementById("currentPassword");
+	    const eyeIconCurrent = document.getElementById("eye-icon-current");
+
+	    if (toggleCurrentBtn && currentInput && eyeIconCurrent) {
+	        toggleCurrentBtn.addEventListener("click", function() {
+	            if (currentInput.type === "password") {
+	                currentInput.type = "text";
+	                eyeIconCurrent.innerHTML = `
+	                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+	                    <circle cx="12" cy="12" r="3"></circle>
+	                `;
+	            } else {
+	                currentInput.type = "password";
+	                eyeIconCurrent.innerHTML = `
+	                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+	                    <line x1="1" y1="1" x2="23" y2="23"></line>
+	                `;
+	            }
+	        });
+	    }
+	});
+	
 	// ==========================================================================
 	// 2. ログインフォームのバリデーション（入力チェック）処理
 	// ==========================================================================

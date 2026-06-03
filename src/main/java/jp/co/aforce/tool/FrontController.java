@@ -36,6 +36,26 @@ public class FrontController extends HttpServlet {
 					request.getRequestDispatcher("/views/login-in.jsp").forward(request, response);
 					return;
 				}
+
+				//管理者画面の不正アクセス防止ガード(認可チェック)
+				// 1. セッションからログインしているユーザーの情報をBeanとして取得
+				jp.co.aforce.beans.User loginUser = (jp.co.aforce.beans.User) session.getAttribute("loginUser");
+
+				//2. ブラウザが要求してきたURL（アクション名）が「/Admin」から始まっているか判定
+				if (path.startsWith("/Admin")) {
+
+					//3. もし管理者用URLなのに、肉ランクが「5(管理者)」でなければ即座にブロック
+					if (loginUser.getMeatRank() != 5) {
+						request.setAttribute("errorTitle", "アクセス権限がありません");
+						request.setAttribute("errorMessage", "このページは管理者専用です。一般ユーザーはアクセスできません。");
+						request.setAttribute("errorBackUrl", "UserMenu.action"); // ボタンを押したら安全に一般マイページへ戻す
+						request.setAttribute("errorBtnText", "マイページへ戻る");
+
+						// データベースや本来のActionクラスへ一切触れさせずにエラー画面へフォワード
+						request.getRequestDispatcher("/views/login-error.jsp").forward(request, response);
+						return; // ここで通信を強制終了させてハッカーをシャットアウト
+					}
+				}
 			}
 			String name = "jp.co.aforce.servlet." + path.substring(1).replace(".action", "Action");
 

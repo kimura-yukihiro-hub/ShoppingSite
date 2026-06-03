@@ -327,6 +327,197 @@ body:not([class*="rank-"]):not(.error-page) {
 }
 
 /* ==========================================================================
+  （登録・変更・削除・確認・完了）共通のスタイル
+   ========================================================================== */
+
+.form-container {
+	background-color: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	color: #ffffff;
+	width: 430px;
+	margin: 0 auto !important;
+	padding: 8px 30px !important;
+	box-sizing: border-box;
+	border-radius: 12px;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.form-container h2 {
+	margin: 0 0 4px 0 !important;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff;
+	letter-spacing: 1px;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+	padding-bottom: 3px !important;
+	text-align: center;
+}
+
+.form-group {
+	margin-bottom: 5px !important;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 3px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #ffffff;
+	letter-spacing: 0.5px;
+}
+
+/* 入力欄のスタイリッシュな透過デザイン */
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"] {
+	display: block;
+	width: 100%;
+	background-color: #ffffff;
+	color: #222222;
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	box-sizing: border-box;
+	padding: 5px 12px;
+	border-radius: 6px;
+	font-size: 14px;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* フォーカス時に枠線を発光させるエフェクト */
+.form-group input:focus {
+	border-color: #64b5f6;
+	box-shadow: 0 0 8px rgba(100, 181, 246, 0.5);
+	outline: none;
+}
+
+/* 読み取り専用（会員番号）のグレーアウト表現 */
+.form-group input[readonly] {
+	background-color: #e0e0e0;
+	color: #555555;
+	border: 2px dashed #999999;
+	cursor: not-allowed;
+	border-style: dashed;
+	/* 変更できないことを直感的に伝える点線 */
+}
+
+/* 姓・名の横並びを綺麗に保つ調整 */
+.name-flex-group {
+	display: flex !important;
+	gap: 12px !important;
+}
+
+.name-flex-group div {
+	flex: 1;
+}
+
+/* 確認画面用の静的データ表示ボックス */
+.confirm-value {
+	padding: 8px 12px;
+	background-color: rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 6px;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+/* リアルタイムエラー：暗い背景でもしっかり目立つネオンレッド */
+.error-msg {
+	display: block;
+	color: #ff5252;
+	font-size: 11px;
+	margin-top: 2px;
+	min-height: 0px;
+	font-weight: bold;
+}
+
+/* ボタン類の配置エリア */
+.btn-area {
+	margin-top: 8px;
+	display: flex;
+	flex-direction: column;
+	/* ボタンを押しやすく縦並びにスタック */
+	gap: 5px;
+}
+
+.btn-action-primary {
+	display: block;
+	width: 100%;
+	background-color: #1976d2;
+	color: #ffffff;
+	border: none;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 8px;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.btn-action-primary:hover {
+	background-color: #1565c0;
+}
+
+.btn-action-secondary {
+	display: block;
+	width: 100%;
+	background-color: transparent;
+	color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	text-align: center;
+	box-sizing: border-box;
+	padding: 7px;
+	border-radius: 6px;
+	font-size: 15px;
+	text-decoration: none;
+	/* 💡 下線を消去 */
+	cursor: pointer;
+	transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-action-secondary:hover {
+	background-color: rgba(255, 255, 255, 0.05);
+	border-color: #ffffff;
+}
+
+/* 退会画面用のデンジャー警告カラー */
+.container-danger {
+	border: 2px solid #ff5252;
+	box-shadow: 0 8px 32px rgba(255, 82, 82, 0.15);
+}
+
+.btn-action-danger {
+	background-color: #ff5252;
+	color: #ffffff;
+	border: 1px solid #ff5252;
+}
+
+.btn-action-danger:hover {
+	background-color: #e53935;
+}
+
+/*確認画面の静的データ表示ボックス */
+.confirm-value {
+	padding: 6px 12px !important;
+	background-color: rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 6px;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+/*説明文の基本スタイル：*/
+.form-container .lead-text {
+	font-size: 13px !important;
+	opacity: 0.8 !important;
+	line-height: 1.6 !important;
+	text-align: left !important;
+	margin: 0 0 15px 0 !important;
+}
+
+/* ==========================================================================
    会員（ランク）別デザインテーマ
    ========================================================================== */
 
@@ -475,7 +666,7 @@ body:not([class*="rank-"]):not(.error-page) {
 }
 
 /* --------------------------------------------------------------------------
- ランク5: 店舗管理者
+ ランク5: 店舗管理者(admin-menu.jsp)
    -------------------------------------------------------------------------- */
 
 .rank-a5 {
@@ -488,6 +679,11 @@ body:not([class*="rank-"]):not(.error-page) {
 	background-color: #242b31;
 	border: 1px solid #4a545c;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+	padding: 15px 25px important;
+}
+
+.rank-a5 .user-card {
+	margin-bottom: 12px !important;
 }
 
 .rank-a5 .user-card h3 {
@@ -495,12 +691,25 @@ body:not([class*="rank-"]):not(.error-page) {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
+	margin-top: 5px !important;
+	margin-bottom: 8px !important;
+}
+
+.rank-a5 .menu-links h3 {
+	margin-top: 14px !important;
+	margin-bottom: 8px !important;
+	padding-bottom: 4px !important;
+}
+
+.rank-a5 .menu-links li {
+	margin-bottom: 6px !important;
 }
 
 .rank-a5 .btn-menu {
 	background-color: #2f363d;
 	color: #f1f3f5 !important;
 	border: 1px solid #444c56;
+	padding: 8px 10px !important;
 }
 
 .rank-a5 .btn-update:hover {
@@ -519,4 +728,15 @@ body:not([class*="rank-"]):not(.error-page) {
 	background-color: #868e96;
 	color: #ffffff !important;
 	border-color: #868e96;
+}
+
+.rank-a5 .btn-admin-add {
+	border-color: #4dabf7 !important;
+	color: #4dabf7 !important;
+}
+
+.rank-a5 .btn-admin-add:hover {
+	background-color: #228be6 !important;
+	color: #ffffff !important;
+	border-color: #228be6 !important;
 }

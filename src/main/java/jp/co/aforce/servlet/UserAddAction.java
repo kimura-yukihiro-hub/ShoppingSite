@@ -20,7 +20,12 @@ public class UserAddAction extends Action {
 		String mailAddress = request.getParameter("mailAddress");
 
 		//2. 入力値の簡易バリデーション(不正な文字入力をチェック)
-		if (!memberId.matches("^[a-zA-Z0-9\\\\-]+$") || !password.matches("^[a-zA-Z0-9]+$")) {
+		if (!memberId.matches("^[a-zA-Z0-9\\\\-]+$") || !password.matches("^[a-zA-Z0-9\\-_\\.#\\$%]+$")) {
+			//不正文字検知時もエラー画面に合わせたタイトルとボタンをセット
+			request.setAttribute("errorTitle", "登録できませんでした");
+			request.setAttribute("errorBackUrl", "views/user-add.jsp");
+			request.setAttribute("errorBtnText", "登録画面へ戻る");
+			
 			request.setAttribute("errorMessage", "不正な入力が検出されました。");
 			return "login-error.jsp";
 		}
@@ -28,6 +33,9 @@ public class UserAddAction extends Action {
 		//データベースの会員番号重複チェック
 		UserDAO dao = new UserDAO();
 		if (dao.checkDuplicate(memberId)) {
+			request.setAttribute("errorTitle", "登録できませんでした");
+			request.setAttribute("errorBackUrl", "views/user-add.jsp"); // 新規登録JSPへ直接戻す
+			request.setAttribute("errorBtnText", "登録画面へ戻る");
 			// すでに同じ会員番号（ID）が使われている場合は、エラーメッセージをセットして突き返す
 			request.setAttribute("errorMessage", "入力された会員番号「" + memberId + "」はすでに使用されています。");
 			return "login-error.jsp";

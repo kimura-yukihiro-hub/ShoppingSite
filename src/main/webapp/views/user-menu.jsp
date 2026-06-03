@@ -37,9 +37,10 @@ response.setDateHeader("Expires", 0);
 					<button type="button" class="btn-menu btn-delete"
 						onclick="location.href='${pageContext.request.contextPath}/UserDelete.action'">削除</button>
 				</li>
+				<%--JavaScriptの confirm を使い、ユーザーが「OK」を押したときだけログアウトする --%>
 				<li>
 					<button type="button" class="btn-menu btn-logout"
-						onclick="location.href='${pageContext.request.contextPath}/Logout.action'">ログアウト</button>
+						onclick="if(confirm('本当にログアウトしますか？')) { location.href='${pageContext.request.contextPath}/Logout.action'; }">ログアウト</button>
 				</li>
 			</ul>
 		</nav>

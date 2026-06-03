@@ -11,12 +11,13 @@
 
 	<div class="error-container">
 		<div class="error-icon">⚠️</div>
-		<h2>ログインできませんでした</h2>
+		<h2>${not empty errorTitle ? errorTitle : 'ログインできませんでした'}</h2>
 
 		<p>${not empty errorMessage ? errorMessage : 'エラーもしくはパスワードが違います'}</p>
 
 		<button type="button" class="btn-back"
-			onclick="location.href='${pageContext.request.contextPath}/views/login-in.jsp'">ログイン画面へ戻る</button>
+			onclick="location.href='${pageContext.request.contextPath}/${not empty errorBackUrl ? errorBackUrl : "views/login-in.jsp"}'">
+			${not empty errorBtnText ? errorBtnText : 'ログイン画面へ戻る'}</button>
 	</div>
 
 </body>
