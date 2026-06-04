@@ -2,6 +2,7 @@ package jp.co.aforce.servlet;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import jp.co.aforce.beans.User;
 import jp.co.aforce.dao.UserDAO;
@@ -44,7 +45,18 @@ public class UserAddExecuteAction extends Action {
 
 		// 4. 実行結果に応じた画面遷移のコントロール
 		if (count > 0) {
-			return "user-add-success.jsp";
+			//セッション固定攻撃対策】古いセッションIDを完全に抹殺
+			HttpSession oldSession = request.getSession(false);
+			if (oldSession != null) {
+				oldSession.invalidate(); 
+			}
+			
+			//安全な全自動ログイン】新しいセッションIDを生成し、データを同期
+			HttpSession newSession = request.getSession(true);
+			newSession.setAttribute("loginUser", user); // マイページの「ようこそ〇〇さん！」へ直通
+
+			// 自動ログイン状態で登録完了画面へ
+			return "user-add-success.jsp"; // 完了画面JSP名（JSP側で10秒後にマイページへリフレッシュさせます）
 		} else {
 			request.setAttribute("errorMessage", "データベースへの会員登録に失敗しました。");
 			return "login-error.jsp";

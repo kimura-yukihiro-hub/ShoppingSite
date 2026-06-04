@@ -15,7 +15,7 @@ public class LoginAction extends Action {
 		String memberId = request.getParameter("memberId");
 		String password = request.getParameter("password");
 
-		if (!memberId.matches("^[a-zA-Z0-9\\-]+$") || !password.matches("^[a-zA-Z0-9]+$")) {
+		if (!memberId.matches("^[a-zA-Z0-9\\-]+$") || !password.matches("^[a-zA-Z0-9\\-_#\\$%]+$")) {
 			// もしJavaScriptをすり抜けて不正な文字が届いたら、即座にエラー画面へ突き返す
 			request.setAttribute("errorMessage", "不正な文字入力が検出されました。");
 			return "login-error.jsp";

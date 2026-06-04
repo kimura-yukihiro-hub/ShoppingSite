@@ -69,7 +69,7 @@ response.setDateHeader("Expires", 0);
 				<li>
 					<button type="button" class="btn-menu btn-logout"
 						onclick="if(confirm('本当にログアウトしますか？')) { location.href='${pageContext.request.contextPath}/Logout.action'; }">
-						安全にログアウト</button>
+						ログアウト</button>
 				</li>
 			</ul>
 		</nav>

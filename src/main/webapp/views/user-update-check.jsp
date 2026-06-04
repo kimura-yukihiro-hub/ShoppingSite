@@ -56,7 +56,7 @@
 			<div class="btn-area">
 				<button type="submit" class="btn-action-primary">変更確定</button>
 				<button type="button" class="btn-action-secondary"
-					onclick="location.href='${pageContext.request.contextPath}/views/user-update.jsp'">修正する</button>
+					onclick="history.back();">修正する</button>
 			</div>
 
 		</form>

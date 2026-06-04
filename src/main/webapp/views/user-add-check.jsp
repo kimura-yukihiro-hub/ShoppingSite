@@ -11,7 +11,9 @@
 <body>
 	<div class="form-container">
 		<h2>登録内容確認</h2>
-		<p style="font-size: 13px; opacity: 0.7; margin-bottom: 20px;">以下の内容で登録します。<br>よろしければ「登録確定」ボタンを押してください。</p>
+		<p style="font-size: 13px; opacity: 0.7; margin-bottom: 20px;">
+			以下の内容で登録します。<br>よろしければ「登録確定」ボタンを押してください。
+		</p>
 
 		<form
 			action="${pageContext.request.contextPath}/UserAddExecute.action"
@@ -58,7 +60,7 @@
 			<div class="btn-area">
 				<button type="submit" class="btn-action-primary">登録確定</button>
 				<button type="button" class="btn-action-secondary"
-					onclick="location.href='${pageContext.request.contextPath}/views/user-add.jsp'">修正する</button>
+					onclick="history.back();">修正する</button>
 			</div>
 
 		</form>

@@ -20,8 +20,9 @@
 			<div class="form-group">
 				<label>会員番号 (ID) <span
 					style="font-size: 11px; opacity: 0.6;">※変更不可</span></label> <input
-					type="text" name="memberId"
-					value="${sessionScope.loginUser.memberId}" readonly>
+					type="text" id="memberId" name="memberId"
+					value="${sessionScope.loginUser.memberId}" readonly> <span
+					id="memberId-error" class="error-msg"></span>
 			</div>
 
 			<%--お名前：姓と名が横に綺麗に1:1の幅で並びます --%>
@@ -40,16 +41,23 @@
 					</div>
 				</div>
 			</div>
-
+			<div class="form-group">
+				<label for="zipCode">郵便番号</label>
+				<!-- 最大7桁。ハイフンがあってもなくても動くようにJSで制御します -->
+				<input type="text" id="zipCode" name="zipCode"
+					placeholder="例: 1000001" maxlength="8"> <span
+					id="zipCode-error" class="error-msg"></span>
+			</div>
 			<div class="form-group">
 				<label for="address">住所</label> <input type="text" id="address"
 					name="address" value="${sessionScope.loginUser.address}" required>
 			</div>
 
 			<div class="form-group">
-				<label for="mailAddress">メールアドレス</label> <input type="email"
+				<label for="mailAddress">メールアドレス</label> <input type="text"
 					id="mailAddress" name="mailAddress"
-					value="${sessionScope.loginUser.mailAddress}" required>
+					value="${sessionScope.loginUser.mailAddress}" required> <span
+					id="mailAddress-error" class="error-msg"></span>
 			</div>
 
 			<%--パスワード：入力に全角が混じるとJSがネオンレッドのエラーをリアルタイムで出力します --%>

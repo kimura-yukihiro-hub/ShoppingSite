@@ -10,8 +10,11 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100vw !important;
 	height: 100vh;
 	transition: background-color 0.5s ease, color 0.5s ease;
+	overscroll-behavior: none !important;
+	overflow: hidden;
 	/* 画面切り替え時の色変化を滑らかに */
 }
 
@@ -78,7 +81,8 @@ body:not([class*="rank-"]):not(.error-page) {
 }
 
 .input-group {
-	margin-bottom: 16px;
+	position: relative !important;
+	margin-bottom: 28px;
 	text-align: left;
 }
 
@@ -99,6 +103,10 @@ body:not([class*="rank-"]):not(.error-page) {
 	background-color: #141414 !important;
 	color: #ffffff;
 	font-size: 15px;
+	transition: border-color 0.2s, box-shadow 0.2s;
+	line-height: 1 !important;
+	vertical-align: middle !important;
+	font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif !important;
 }
 
 .input-group input:-webkit-autofill,
@@ -114,12 +122,9 @@ body:not([class*="rank-"]):not(.error-page) {
 
 .input-group input:focus,
 .input-group input:active {
-	border-color: #ad222c;
-	/* カチッと選択した時は赤枠 */
+	border: 1px solid #ad222c !important;
 	background-color: #141414 !important;
-	/* 日本語入力中も絶対に黒背景を維持 */
 	color: #ffffff !important;
-	/* 文字色も白を維持 */
 	outline: none;
 }
 
@@ -150,9 +155,8 @@ body:not([class*="rank-"]):not(.error-page) {
 
 /* 1. 入力欄とボタンを重ねるための基準となる親要素 */
 .password-wrapper {
-	position: relative;
-	width: 100%;
-	display: block;
+	position: relative !important;
+	z-index: 10;
 }
 
 /* 2. パスワード入力欄の右側に、ボタンと文字が重ならないための余白を作る */
@@ -196,19 +200,26 @@ body:not([class*="rank-"]):not(.error-page) {
    ========================================================================== */
 
 .error-msg {
-	display: block;
-	color: #e63946;
-	font-size: 12px;
-	margin-top: 4px;
-	min-height: 18px;
+	position: absolute !important;
+	top: 100% !important;
+	left: 0 !important;
+	margin-top: 2px !important;
+	color: #ff6b6b;
+	font-size: 11px;
 	font-weight: bold;
-	letter-spacing: 0.5px;
+	white-space: nowrap;
+	padding: 0 !important;
+	z-index: 1 !important;
+	pointer-events: none;
+	height: 0 !important;
+	overflow: visible !important;
 }
 
 /* エラーが発生した入力ボックスを赤枠にする */
 .input-group input.is-invalid {
 	border-color: #e63946 !important;
-	box-shadow: 0 0 8px rgba(230, 57, 70, 0.4);
+	border: 1px solid #e63946 !important;
+	box-shadow: 0 0 8px rgba(230, 57, 70, 0.4) !important;
 }
 
 /* ==========================================================================
@@ -334,9 +345,9 @@ body:not([class*="rank-"]):not(.error-page) {
 	background-color: rgba(255, 255, 255, 0.08);
 	border: 1px solid rgba(255, 255, 255, 0.2);
 	color: #ffffff;
-	width: 430px;
+	width: 480px;
 	margin: 0 auto !important;
-	padding: 8px 30px !important;
+	padding: 4px 30px !important;
 	box-sizing: border-box;
 	border-radius: 12px;
 	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -344,7 +355,7 @@ body:not([class*="rank-"]):not(.error-page) {
 
 .form-container h2 {
 	margin: 0 0 4px 0 !important;
-	font-size: 18px;
+	font-size: 20px !important;
 	font-weight: bold;
 	color: #ffffff;
 	letter-spacing: 1px;
@@ -354,13 +365,14 @@ body:not([class*="rank-"]):not(.error-page) {
 }
 
 .form-group {
-	margin-bottom: 5px !important;
+	position: relative;
+	margin-bottom: 18px !important;
 }
 
 .form-group label {
 	display: block;
 	margin-bottom: 3px;
-	font-size: 13px;
+	font-size: 15px !important;
 	font-weight: 600;
 	color: #ffffff;
 	letter-spacing: 0.5px;
@@ -369,21 +381,28 @@ body:not([class*="rank-"]):not(.error-page) {
 /* 入力欄のスタイリッシュな透過デザイン */
 .form-group input[type="text"],
 .form-group input[type="password"],
+.form-group #zipCode,
+.form-group #passwordConfirm,
 .form-group input[type="email"] {
-	display: block;
+	display: inline-block;
 	width: 100%;
 	background-color: #ffffff;
 	color: #222222;
 	border: 2px solid rgba(255, 255, 255, 0.1);
 	box-sizing: border-box;
-	padding: 5px 12px;
+	padding: 5px 15px !important; 
+	height: 28px !important;
 	border-radius: 6px;
-	font-size: 14px;
+	font-size: 13px;
 	transition: border-color 0.2s, box-shadow 0.2s;
+	font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif !important;
+	line-height: 1 !important;
+	vertical-align: middle !important;
 }
 
 /* フォーカス時に枠線を発光させるエフェクト */
 .form-group input:focus {
+	border: 2px solid #64b5f6 !important;
 	border-color: #64b5f6;
 	box-shadow: 0 0 8px rgba(100, 181, 246, 0.5);
 	outline: none;
@@ -397,6 +416,11 @@ body:not([class*="rank-"]):not(.error-page) {
 	cursor: not-allowed;
 	border-style: dashed;
 	/* 変更できないことを直感的に伝える点線 */
+}
+
+.form-group input.is-invalid {
+	border: 2px solid #e63946 !important;
+	box-shadow: 0 0 8px rgba(230, 57, 70, 0.4) !important;
 }
 
 /* 姓・名の横並びを綺麗に保つ調整 */
@@ -417,16 +441,6 @@ body:not([class*="rank-"]):not(.error-page) {
 	border-radius: 6px;
 	font-size: 14px;
 	color: #ffffff;
-	font-weight: bold;
-}
-
-/* リアルタイムエラー：暗い背景でもしっかり目立つネオンレッド */
-.error-msg {
-	display: block;
-	color: #ff5252;
-	font-size: 11px;
-	margin-top: 2px;
-	min-height: 0px;
 	font-weight: bold;
 }
 

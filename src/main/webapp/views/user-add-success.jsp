@@ -5,9 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>会員登録完了</title>
-<!--5秒後に自動的にログイン画面へ遷移する命令 -->
+<!--10秒後に自動的にマイページ画面へ遷移する命令 -->
 <meta http-equiv="refresh"
-	content="10;URL=${pageContext.request.contextPath}/views/login-in.jsp">
+	content="10;URL=${pageContext.request.contextPath}/UserMenu.action">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
 </head>
@@ -20,16 +20,12 @@
 			ご登録ありがとうございます！<br> 会員情報の新規登録が<br>正常に完了いたしました。
 		</p>
 
-		<!--自動で戻ることをユーザーに優しく知らせるカウントダウン案内 -->
+		<!--自動でマイページ画面に遷移することをユーザーに優しく知らせるカウントダウン案内 -->
 		<p style="font-size: 12px; color: #aaaaaa; margin-bottom: 20px;">
-			⏰ 10秒後に自動的にログイン画面へ戻ります。</p>
-
-		<div
-			style="font-size: 13px; opacity: 0.7; margin-bottom: 25px; text-align: left; background: rgba(0, 0, 0, 0.1); padding: 12px; border-radius: 6px;">
-			※登録した会員番号とパスワードを入力してログインしてください。</div>
+			⏰ 10秒後に自動的にマイページ画面へ移動します。</p>
 		<div class="btn-area">
-			<a href="${pageContext.request.contextPath}/views/login-in.jsp"
-				class="btn-action-primary" style="text-decoration: none;">ログイン画面へ</a>
+			<a href="${pageContext.request.contextPath}/UserMenu.action"
+				class="btn-action-primary" style="text-decoration: none;">マイページ（トップ）へ</a>
 		</div>
 	</div>
 

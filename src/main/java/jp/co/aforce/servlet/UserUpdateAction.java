@@ -11,7 +11,7 @@ public class UserUpdateAction extends Action {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		//1.フォーム(user-update.jsp)から総ぢンされた変更後の値を取得
+		//1.フォーム(user-update.jsp)から送信された変更後の値を取得
 		String memberId = request.getParameter("memberId");
 		String lastName = request.getParameter("lastName");
 		String firstName = request.getParameter("firstName");
@@ -35,15 +35,37 @@ public class UserUpdateAction extends Action {
 			}
 		}
 
-		//2. パスワードの安全なバリデーション
-		if (password == null || !password.matches("^[a-zA-Z0-9\\-_\\.#\\$%]+$"))
+		//2. サーバーサイドでのバリデーション
+		String errorMessage = null;
 
-		{
+		if (password == null || mailAddress == null) {
+			errorMessage = "必須項目が入力されていません。";
+		}
+		//「半角・全角スペース」が万が一混入していた場合をシャットアウト
+		else if (password.contains(" ") || password.contains("　") || mailAddress.contains(" ")
+				|| mailAddress.contains("　")) {
+			errorMessage = "入力項目にスペース(空白)は使用できません。";
+		}
+		//パスワードの4文字以上制限のサーバーサイド二重チェック
+		else if (password.length() < 4) {
+			errorMessage = "パスワードは4文字以上で入力してください。";
+		}
+		//パスワードの文字種制限（半角英数字と指定記号: - _ . # $ %）
+		else if (!password.matches("^[a-zA-Z0-9\\-_#\\$%]+$")) {
+			errorMessage = "新しいパスワードに使用できない文字が含まれています。";
+		}
+		//メールアドレスの簡易的な形式チェック（JSPのすり抜け防止）
+		else if (!mailAddress.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+			errorMessage = "メールアドレスの形式が正しくありません。";
+		}
+
+		//バリデーションエラーがあった場合は、安全にマイページまたはエラー画面へ引き戻す
+		if (errorMessage != null) {
 			request.setAttribute("errorTitle", "変更できませんでした");
 			request.setAttribute("errorBackUrl", "UserMenu.action"); // 安全にマイページへ戻します
 			request.setAttribute("errorBtnText", "マイページへ戻る");
 
-			request.setAttribute("errorMessage", "不正な入力が検出されました。");
+			request.setAttribute("errorMessage", errorMessage);
 			return "login-error.jsp";
 		}
 
