@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +13,29 @@
 
 	<div class="error-container">
 		<div class="error-icon">⚠️</div>
-		<h2>${not empty errorTitle ? errorTitle : 'ログインできませんでした'}</h2>
+		<h2>
+			<c:out value="${not empty errorTitle ? errorTitle : 'ログインできませんでした'}" />
+		</h2>
 
-		<p>${not empty errorMessage ? errorMessage : 'エラーもしくはパスワードが違います'}</p>
+		<p>
+			<c:out
+				value="${not empty errorMessage ? errorMessage : 'エラーもしくはパスワードが違います'}" />
+		</p>
 
-		<button type="button" class="btn-back"
-			onclick="location.href='${pageContext.request.contextPath}/${not empty errorBackUrl ? errorBackUrl : "views/login-in.jsp"}'">
-			${not empty errorBtnText ? errorBtnText : 'ログイン画面へ戻る'}</button>
+		<c:choose>
+			<c:when test="${not empty errorBackUrl}">
+				<button type="button" class="btn-back"
+					onclick="location.href='${pageContext.request.contextPath}/<c:out value="${errorBackUrl}" />'">
+					<c:out value="${not empty errorBtnText ? errorBtnText : '戻る'}" />
+				</button>
+			</c:when>
+			<c:otherwise>
+				<button type="button" class="btn-back" onclick="history.back();">
+					<c:out
+						value="${not empty errorBtnText ? errorBtnText : 'ログイン画面へ戻る'}" />
+				</button>
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 </body>

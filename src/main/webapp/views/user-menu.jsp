@@ -22,13 +22,19 @@ response.setDateHeader("Expires", 0);
 		<div class="user-card">
 			<h3>マイページ</h3>
 			<p>
-				ようこそ、<strong>${sessionScope.loginUser.lastName}</strong>さん！
+				ようこそ、<strong>${sessionScope.loginUser.lastName}</strong>様！
 			</p>
 		</div>
 
 		<nav class="menu-links">
 			<h3>メインメニュー</h3>
 			<ul>
+				<!-- お買い物（商品一覧）へ進むボタン -->
+				<li>
+					<button type="button" class="btn-menu btn-shop"
+						onclick="location.href='${pageContext.request.contextPath}/ItemList.action'">🛒
+						お買い物へ進む</button>
+				</li>
 				<li>
 					<button type="button" class="btn-menu btn-update"
 						onclick="location.href='${pageContext.request.contextPath}/UserUpdateForm.action'">修正</button>

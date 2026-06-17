@@ -21,8 +21,8 @@
 				<label>会員番号 (ID) <span
 					style="font-size: 11px; opacity: 0.6;">※変更不可</span></label> <input
 					type="text" id="memberId" name="memberId"
-					value="${sessionScope.loginUser.memberId}" readonly> <span
-					id="memberId-error" class="error-msg"></span>
+					value="<c:out value='${sessionScope.loginUser.memberId}'/>"
+					readonly> <span id="memberId-error" class="error-msg"></span>
 			</div>
 
 			<%--お名前：姓と名が横に綺麗に1:1の幅で並びます --%>
@@ -30,16 +30,17 @@
 				<label>お名前</label>
 				<div class="name-flex-group">
 					<div>
-						<input type="text" name="lastName"
-							value="${sessionScope.loginUser.lastName}" required
-							placeholder="姓">
+						<input type="text" id="lastName" name="lastName" placeholder="姓"
+							maxlength="20"
+							value="<c:out value='${sessionScope.loginUser.lastName}'/>">
 					</div>
 					<div>
-						<input type="text" name="firstName"
-							value="${sessionScope.loginUser.firstName}" required
-							placeholder="名">
+						<input type="text" id="firstName" name="firstName" placeholder="名"
+							maxlength="20"
+							value="<c:out value='${sessionScope.loginUser.firstName}'/>">
 					</div>
 				</div>
+				<span id="name-error" class="error-msg"></span>
 			</div>
 			<div class="form-group">
 				<label for="zipCode">郵便番号</label>
@@ -50,14 +51,16 @@
 			</div>
 			<div class="form-group">
 				<label for="address">住所</label> <input type="text" id="address"
-					name="address" value="${sessionScope.loginUser.address}" required>
+					name="address" placeholder="郵便番号を入れると自動入力されます" maxlength="100"
+					value="<c:out value='${sessionScope.loginUser.address}'/>">
+				<span id="address-error" class="error-msg"></span>
 			</div>
 
 			<div class="form-group">
 				<label for="mailAddress">メールアドレス</label> <input type="text"
 					id="mailAddress" name="mailAddress"
-					value="${sessionScope.loginUser.mailAddress}" required> <span
-					id="mailAddress-error" class="error-msg"></span>
+					value="<c:out value='${sessionScope.loginUser.mailAddress}'/>">
+				<span id="mailAddress-error" class="error-msg"></span>
 			</div>
 
 			<%--パスワード：入力に全角が混じるとJSがネオンレッドのエラーをリアルタイムで出力します --%>
@@ -65,7 +68,7 @@
 				<label for="password">新しいパスワード</label>
 				<div class="password-wrapper">
 					<input type="password" id="password" name="password"
-						value="${sessionScope.loginUser.password}" required maxlength="32">
+						value="${sessionScope.loginUser.password}" maxlength="32">
 
 					<button type="button" id="toggle-password" class="btn-toggle-pw"
 						aria-label="パスワードを表示">
@@ -91,7 +94,7 @@
 				<label for="currentPassword">現在のパスワード（本人確認）</label>
 				<div class="password-wrapper">
 					<input type="password" id="currentPassword" name="currentPassword"
-						required placeholder="本人確認のため元のパスワードを入力" maxlength="32">
+						placeholder="本人確認のため元のパスワードを入力" maxlength="32">
 
 					<%-- 💡 JavaScript側（password-toggle.js）の第2の命令と100%完全に合致する一意のIDを設定します --%>
 					<button type="button" id="toggle-password-current"

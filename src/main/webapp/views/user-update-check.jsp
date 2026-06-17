@@ -20,23 +20,29 @@
 
 			<div class="form-group">
 				<label>会員番号 (ID)</label>
-				<div class="confirm-value">${updatedUser.memberId}</div>
+				<div class="confirm-value"><c:out value="${updatedUser.memberId}" /></div>
 			</div>
 
 			<div class="form-group">
 				<label>お名前</label>
-				<div class="confirm-value">${updatedUser.lastName}
-					${updatedUser.firstName}</div>
+				<div class="confirm-value">
+					<c:out value="${updatedUser.lastName}" />
+					<c:out value="${updatedUser.firstName}" />
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label>住所</label>
-				<div class="confirm-value">${updatedUser.address}</div>
+				<div class="confirm-value">
+					<c:out value="${updatedUser.address}" />
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label>メールアドレス</label>
-				<div class="confirm-value">${updatedUser.mailAddress}</div>
+				<div class="confirm-value">
+					<c:out value="${updatedUser.mailAddress}" />
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -45,13 +51,12 @@
 			</div>
 
 			<%--次のActionへ値を引き渡すための隠しパラメータ --%>
-			<input type="hidden" name="memberId" value="${updatedUser.memberId}">
-			<input type="hidden" name="lastName" value="${updatedUser.lastName}">
-			<input type="hidden" name="firstName"
-				value="${updatedUser.firstName}"> <input type="hidden"
-				name="address" value="${updatedUser.address}"> <input
-				type="hidden" name="mailAddress" value="${updatedUser.mailAddress}">
-			<input type="hidden" name="password" value="${updatedUser.password}">
+			<input type="hidden" name="memberId" value="<c:out value='${updatedUser.memberId}'/>">
+			<input type="hidden" name="lastName" value="<c:out value='${updatedUser.lastName}'/>">
+			<input type="hidden" name="firstName" value="<c:out value='${updatedUser.firstName}'/>">
+			<input type="hidden" name="address" value="<c:out value='${updatedUser.address}'/>">
+			<input type="hidden" name="mailAddress" value="<c:out value='${updatedUser.mailAddress}'/>">
+			<input type="hidden" name="password" value="<c:out value='${updatedUser.password}'/>">
 
 			<div class="btn-area">
 				<button type="submit" class="btn-action-primary">変更確定</button>

@@ -21,13 +21,15 @@
 				<label>お名前</label>
 				<div class="name-flex-group">
 					<div>
-						<input type="text" name="lastName" placeholder="姓" required>
+						<input type="text" id="lastName" name="lastName" placeholder="姓"
+							maxlength="20">
 					</div>
 					<div>
-
-						<input type="text" name="firstName" placeholder="名" required>
+						<input type="text" id="firstName" name="firstName" placeholder="名"
+							maxlength="20">
 					</div>
 				</div>
+				<span id="name-error" class="error-msg"></span>
 			</div>
 			<div class="form-group">
 				<label for="zipCode">郵便番号</label>
@@ -38,26 +40,26 @@
 			</div>
 			<div class="form-group">
 				<label for="address">住所</label> <input type="text" id="address"
-					name="address" required placeholder="郵便番号を入れると自動入力されます">
+					name="address" placeholder="郵便番号を入れると自動入力されます" maxlength="100">
+				<span id="address-error" class="error-msg"></span>
 			</div>
 
 			<div class="form-group">
 				<label for="mailAddress">メールアドレス</label> <input type="text"
-					id="mailAddress" name="mailAddress" required> <span
+					id="mailAddress" name="mailAddress"> <span
 					id="mailAddress-error" class="error-msg"></span>
 			</div>
 
 			<div class="form-group">
 				<label for="memberId">会員番号 (ID)</label> <input type="text"
-					id="memberId" name="memberId" required maxlength="10"> <span
+					id="memberId" name="memberId" maxlength="10"> <span
 					id="memberId-error" class="error-msg"></span>
 			</div>
 
 			<div class="form-group">
 				<label for="password">パスワード</label>
 				<div class="password-wrapper">
-					<input type="password" id="password" name="password" required
-						maxlength="32">
+					<input type="password" id="password" name="password" maxlength="32">
 
 					<button type="button" id="toggle-password" class="btn-toggle-pw"
 						aria-label="パスワードを表示">
@@ -81,7 +83,7 @@
 				<label for="passwordConfirm">パスワード（確認用）</label>
 				<div class="password-wrapper">
 					<input type="password" id="passwordConfirm" name="passwordConfirm"
-						required placeholder="もう一度パスワードを入力してください" maxlength="32">
+						placeholder="もう一度パスワードを入力してください" maxlength="32">
 
 					<button type="button" id="toggle-password-confirm"
 						class="btn-toggle-pw" aria-label="パスワードを表示">

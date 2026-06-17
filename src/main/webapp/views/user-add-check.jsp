@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,23 +23,31 @@
 			<div class="form-group">
 				<label>お名前</label>
 				<!--静的表示用ボックス .confirm-value を使用して綺麗にデータを並べる -->
-				<div class="confirm-value">${newUser.lastName}
-					${newUser.firstName}</div>
+				<div class="confirm-value">
+					<c:out value="${newUser.lastName}" />
+					<c:out value="${newUser.firstName}" />
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label>住所</label>
-				<div class="confirm-value">${newUser.address}</div>
+				<div class="confirm-value">
+					<c:out value="${newUser.address}" />
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label>メールアドレス</label>
-				<div class="confirm-value">${newUser.mailAddress}</div>
+				<div class="confirm-value">
+					<c:out value="${newUser.mailAddress}" />
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label>会員番号 (ID)</label>
-				<div class="confirm-value">${newUser.memberId}</div>
+				<div class="confirm-value">
+					<c:out value="${newUser.memberId}" />
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -47,14 +56,13 @@
 			</div>
 
 			<%--次のActionへ値を引き渡すための隠しパラメータ --%>
-			<input type="hidden" name="lastName" value="${newUser.lastName}">
-			<input type="hidden" name="firstName" value="${newUser.firstName}">
-			<input type="hidden" name="address" value="${newUser.address}">
-			<input type="hidden" name="mailAddress"
-				value="${newUser.mailAddress}"> <input type="hidden"
-				name="memberId" value="${newUser.memberId}"> <input
-				type="hidden" name="password" value="${newUser.password}"> <input
-				type="hidden" name="meatRank" value="${newUser.meatRank}">
+			<input type="hidden" name="lastName" value="<c:out value='${newUser.lastName}'/>">
+			<input type="hidden" name="firstName" value="<c:out value='${newUser.firstName}'/>">
+			<input type="hidden" name="address" value="<c:out value='${newUser.address}'/>">
+			<input type="hidden" name="mailAddress" value="<c:out value='${newUser.mailAddress}'/>">
+			<input type="hidden" name="memberId" value="<c:out value='${newUser.memberId}'/>">
+			<input type="hidden" name="password" value="<c:out value='${newUser.password}'/>">
+			<input type="hidden" name="meatRank" value="<c:out value='${newUser.meatRank}'/>">
 
 			<%--縦並びのスタイリッシュなボタンエリア --%>
 			<div class="btn-area">

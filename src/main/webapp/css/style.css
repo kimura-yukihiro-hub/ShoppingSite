@@ -55,6 +55,14 @@ btn-back:hover,
 	transform: translateY(-2px);
 }
 
+body.item-list-page {
+	height: auto !important;
+	min-height: 100vh !important;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	display: block !important;
+}
+
 /* ==========================================================================
    2. ログイン画面専用（login-in.jsp）
    ========================================================================== */
@@ -147,6 +155,20 @@ body:not([class*="rank-"]):not(.error-page) {
 .btn-register:hover {
 	background-color: #bf9f5a;
 	color: #141414;
+}
+
+/* ゲストリンクの初期状態 */
+
+.link-guest {
+	color: #aaaaaa;
+	font-size: 13px;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+.link-guest:hover {
+	color: #ff5252;
+	text-decoration: underline;
 }
 
 /* ==========================================================================
@@ -390,7 +412,7 @@ body:not([class*="rank-"]):not(.error-page) {
 	color: #222222;
 	border: 2px solid rgba(255, 255, 255, 0.1);
 	box-sizing: border-box;
-	padding: 5px 15px !important; 
+	padding: 5px 15px !important;
 	height: 28px !important;
 	border-radius: 6px;
 	font-size: 13px;
@@ -449,7 +471,6 @@ body:not([class*="rank-"]):not(.error-page) {
 	margin-top: 8px;
 	display: flex;
 	flex-direction: column;
-	/* ボタンを押しやすく縦並びにスタック */
 	gap: 5px;
 }
 
@@ -485,7 +506,6 @@ body:not([class*="rank-"]):not(.error-page) {
 	border-radius: 6px;
 	font-size: 15px;
 	text-decoration: none;
-	/* 💡 下線を消去 */
 	cursor: pointer;
 	transition: background-color 0.2s, border-color 0.2s;
 }
@@ -532,151 +552,325 @@ body:not([class*="rank-"]):not(.error-page) {
 }
 
 /* ==========================================================================
-   会員（ランク）別デザインテーマ
+  焼肉店の格付けコンセプト（全画面・会員ランク連動スタイル）
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   ランク1: 一般会員
-   -------------------------------------------------------------------------- */
-
-.rank-a1 {
-	background-color: #f2ede2;
-	color: #333333;
+  ランク1：活気のあるカジュアル大衆牛焼肉
+      -------------------------------------------------------------------------- */
+body.rank-a1 {
+	background-color: #121212 !important;
+	color: #ffffff !important;
 }
 
+.rank-a1 .cart-main-container,
+.rank-a1 .list-container,
+.rank-a1 .info-confilm-section,
+.rank-a1 .items-confilm-section,
+.rank-a1 .summary-box,
 .rank-a1 .menu-container {
-	background-color: #ffffff;
-	border: 1px solid #dcd6d0;
-	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+	background-color: #222222 !important;
+	border: 1px solid #e53935 !important;
+	box-shadow: 0 4px 15px rgba(229, 57, 53, 0.2) !important;
 }
 
-.rank-a1 .menu-links h2 {
-	border-bottom: 1px solid #dcd6d0;
-	color: #555555;
-}
-
-.rank-a1 .btn-menu {
-	background-color: #ffffff;
-	color: #333333 !important;
-	border: 1px solid #cccccc;
-}
-
-.rank-a1 .btn-update:hover,
-.rank-a1 .btn-delete:hover,
-.rank-a1 .btn-logout:hover {
-	background-color: #5c4033;
+.rank-a1 h1,
+.rank-a1 h2,
+.rank-a1 h3,
+.rank-a1 .menu-links h3 {
+	border-left-color: #e53935 !important;
 	color: #ffffff !important;
-	border-color: #5c4033;
+}
+
+.rank-a1 .btn-shop,
+.rank-a1 .btn-action-primary,
+.rank-a1 .summary-actions .btn-action-primary,
+.rank-a1 .execute-form .btn-execute-order {
+	background: #e53935 !important;
+	color: #ffffff !important;
+}
+
+.rank-a1 .btn-shop:hover {
+	background: #b71c1c !important;
+}
+
+.rank-a1 .menu-links ul li .btn-update,
+.rank-a1 .menu-links ul li .btn-delete,
+.rank-a1 .menu-links ul li .btn-logout {
+	background-color: #1a1a1a !important;
+	color: #999999 !important;
+	border: 1px solid #333333 !important;
+	transition: all 0.2s ease;
+}
+
+.rank-a1 .menu-links ul li .btn-update:hover,
+.rank-a1 .menu-links ul li .btn-delete:hover,
+.rank-a1 .menu-links ul li .btn-logout:hover {
+	background-color: #1a1a1a !important;
+	border-color: #444444 !important;
+	color: #ffffff !important;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+.rank-a1 .menu-links ul li .btn-update:active,
+.rank-a1 .menu-links ul li .btn-delete:active,
+.rank-a1 .menu-links ul li .btn-logout:active {
+	transform: translateY(0);
 }
 
 /* --------------------------------------------------------------------------
- ランク2: 熟成会員
+  ランク2：シックな焼き肉屋
    -------------------------------------------------------------------------- */
-
-.rank-a2 {
-
-	background-color: #3a2c28;
-	color: #ffffff;
+body.rank-a2 {
+	background-color: #0f0a09 !important;
+	color: #e5e5e5 !important;
 }
 
+.rank-a2 .cart-main-container,
+.rank-a2 .list-container,
+.rank-a2 .info-confilm-section,
+.rank-a2 .items-confilm-section,
+.rank-a2 .summary-box,
 .rank-a2 .menu-container {
-	background-color: rgba(0, 0, 0, 0.45);
-	border: 1px solid rgba(255, 255, 255, 0.12);
-	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+	background-color: #171210 !important;
+	border: 1px solid #7c5d4b !important;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5) !important;
 }
 
+.rank-a2 h1,
+.rank-a2 h2,
+.rank-a2 h3,
 .rank-a2 .menu-links h3 {
-	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-	color: #ffffff;
+	border-left-color: #bf9f5a !important;
+	color: #e5e5e5 !important;
 }
 
-.rank-a2 .rank-badge {
-	background: linear-gradient(135deg, #a8a8a8 0%, #f0f0f0 50%, #7c7c7c 100%);
-	color: #1a1a1a;
-	font-weight: bold;
+.rank-a2 .menu-links ul li .btn-shop,
+.rank-a2 .btn-action-primary,
+.rank-a2 .summary-actions .btn-action-primary,
+.rank-a2 .execute-form .btn-execute-order {
+	background: #ffffff !important;
+	color: #111111 !important;
+	font-weight: bold !important;
+	border: 1px solid #ffffff !important;
+	box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1) !important;
+	transition: all 0.2s ease;
 }
 
-.rank-a2 .btn-menu {
-	background-color: #5a4a42;
+.rank-a2 .menu-links ul li .btn-shop:hover,
+.rank-a2 .btn-action-primary:hover,
+.rank-a2 .summary-actions .btn-action-primary:hover,
+.rank-a2 .execute-form .btn-execute-order:hover {
+	background: #cccccc !important;
+	border-color: #cccccc !important;
+	color: #111111 !important;
+	box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2) !important;
+}
+
+.rank-a2 .menu-links ul li button.btn-shop:active,
+.rank-a2 .menu-links ul li .btn-shop:active,
+.rank-a2 .btn-action-primary:active,
+.rank-a2 .summary-actions .btn-action-primary:active,
+.rank-a2 .execute-form .btn-execute-order:active {
+	background: #eeeeee !important;
+	border-color: #eeeeee !important;
+	color: #111111 !important;
+	transform: translateY(1px) !important;
+	box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1) !important;
+}
+
+.rank-a2 .menu-links ul li .btn-update,
+.rank-a2 .menu-links ul li .btn-delete,
+.rank-a2 .menu-links ul li .btn-logout {
+	background-color: #222222 !important;
+	color: #aaaaaa !important;
+	border: 1px solid #444444 !important;
+	transition: all 0.2s ease;
+}
+
+.rank-a2 .menu-links ul li .btn-update:hover,
+.rank-a2 .menu-links ul li .btn-delete:hover,
+.rank-a2 .menu-links ul li .btn-logout:hover {
+	background-color: #222222 !important;
+	border-color: #555555 !important;
 	color: #ffffff !important;
-	border: 1px solid #6b5950;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
 }
 
-.rank-a2 .btn-update:hover,
-.rank-a2 .btn-delete:hover,
-.rank-a2 .btn-logout:hover {
-	background-color: #bf9f5a;
-	color: #1a1a1a !important;
-	border-color: #bf9f5a;
-	box-shadow: 0 4px 15px rgba(191, 159, 90, 0.4);
+.rank-a2 .menu-links ul li .btn-update:active,
+.rank-a2 .menu-links ul li .btn-delete:active,
+.rank-a2 .menu-links ul li .btn-logout:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* --------------------------------------------------------------------------
-  ランク3: 特選会員
-    -------------------------------------------------------------------------- */
-.rank-a3 {
-	background-color: #120507;
-	color: #f2e9d8;
-}
 
-.rank-a3 .menu-container {
-	background-color: #5a1827;
-	border: 2px solid #5a1827;
-	box-shadow: 0 12px 35px rgba(90, 24, 39, 0.2);
-	color: #f2e9d8;
-}
-
-.rank-a3 .menu-links h3 {
-	border-bottom: 1px solid rgba(242, 233, 216, 0.2);
-	color: #f2e9d8;
-}
-
-.rank-a3 .btn-menu {
-	background-color: #ebd8b3;
-	color: #5a1827 !important;
-	border: 1px solid #ebd8b3;
-}
-
-.rank-a3 .btn-update:hover,
-.rank-a3 .btn-delete:hover,
-.rank-a3 .btn-logout:hover {
-	background-color: #a3704c;
-	color: #ebd8b3 !important;
-	border-color: #a3704c;
-	box-shadow: 0 4px 12px rgba(163, 112, 76, 0.35);
-}
 
 /* --------------------------------------------------------------------------
- ランク4: 極上プレミアム会員
+  ランク3：隠れ家的な焼き肉屋
    -------------------------------------------------------------------------- */
-
-.rank-a4 {
-	background-color: #0c0a09;
-	color: #ffffff;
+body.rank-a3 {
+	background-color: #050102 !important;
+	color: #f7dcd1 !important;
 }
 
+.rank-a3 .cart-main-container,
+.rank-a3 .list-container,
+.rank-a3 .info-confilm-section,
+.rank-a3 .items-confilm-section,
+.rank-a3 .summary-box,
+.rank-a3 .menu-container {
+	background-color: #140407 !important;
+	border: 1px solid #d81b60 !important;
+	box-shadow: 0 0 25px rgba(216, 27, 96, 0.5) !important;
+}
+
+.rank-a3 h1,
+.rank-a3 h2,
+.rank-a3 h3,
+.rank-a3 .menu-links h3 {
+	border-left-color: #d81b60 !important;
+	color: #ffffff !important;
+}
+
+.rank-a3 .menu-links ul li .btn-shop,
+.rank-a3 .btn-action-primary,
+.rank-a3 .summary-actions .btn-action-primary,
+.rank-a3 .execute-form .btn-execute-order {
+	background: #d81b60 !important;
+	color: #ffffff !important;
+	font-weight: bold !important;
+	border: 1px solid #d81b60 !important;
+	box-shadow: 0 0 15px rgba(216, 27, 96, 0.3) !important;
+	transition: all 0.2s ease;
+}
+
+.rank-a3 .menu-links ul li .btn-shop:hover,
+.rank-a3 .btn-action-primary:hover,
+.rank-a3 .summary-actions .btn-action-primary:hover,
+.rank-a3 .execute-form .btn-execute-order:hover {
+	background: #f48fb1 !important;
+	color: #240a10 !important;
+	border-color: #f48fb1 !important;
+	box-shadow: 0 0 25px rgba(244, 143, 177, 0.6) !important;
+}
+
+.rank-a3 .menu-links ul li button.btn-shop:active,
+.rank-a3 .menu-links ul li .btn-shop:active,
+.rank-a3 .btn-action-primary:active,
+.rank-a3 .summary-actions .btn-action-primary:active,
+.rank-a3 .execute-form .btn-execute-order:active {
+	background: #e1668d !important;
+	border-color: #e1668d !important;
+	color: #240a10 !important;
+	transform: translateY(1px) !important;
+	box-shadow: 0 1px 4px rgba(244, 143, 177, 0.3) !important;
+}
+
+.rank-a3 .menu-links ul li .btn-update,
+.rank-a3 .menu-links ul li .btn-delete,
+.rank-a3 .menu-links ul li .btn-logout {
+	background-color: #1a1a1a !important;
+	color: #cccccc !important;
+	border: 1px solid #333333 !important;
+	transition: all 0.2s ease;
+}
+
+.rank-a3 .menu-links ul li .btn-update:hover,
+.rank-a3 .menu-links ul li .btn-delete:hover,
+.rank-a3 .menu-links ul li .btn-logout:hover {
+	background-color: #1a1a1a !important;
+	border-color: #444444 !important;
+	color: #ffffff !important;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+}
+
+.rank-a3 .menu-links ul li .btn-update:active,
+.rank-a3 .menu-links ul li .btn-delete:active,
+.rank-a3 .menu-links ul li .btn-logout:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+  ランク4：至高のVIPルーム
+   -------------------------------------------------------------------------- */
+body.rank-a4 {
+	background-color: #000000 !important;
+	color: #ffffff !important;
+}
+
+.rank-a4 .cart-main-container,
+.rank-a4 .list-container,
+.rank-a4 .info-confilm-section,
+.rank-a4 .items-confilm-section,
+.rank-a4 .summary-box,
 .rank-a4 .menu-container {
-	background: linear-gradient(135deg, #1f0306 0%, #0c0a09 100%);
-	border: 2px solid rgba(212, 175, 55, 0.8);
-	box-shadow: 0 15px 40px rgba(212, 175, 55, 0.25);
+	background: #0d0b0a !important;
+	border: 2px solid transparent !important;
+	border-image: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728) 1 !important;
+	box-shadow: 0 0 35px rgba(212, 175, 55, 0.6) !important;
 }
 
-.rank-a4 .user-card h3 {
-	background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7);
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
+.rank-a4 h1,
+.rank-a4 h2,
+.rank-a4 h3,
+.rank-a4 .user-card h3,
+.rank-a4 .menu-links h3 {
+	background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7) !important;
+	-webkit-background-clip: text !important;
+	background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+	border-left: 4px solid #bf953f !important;
+	padding-left: 10px;
 }
 
-.rank-a4 .btn-menu {
-	background-color: transparent;
-	color: #d4af37 !important;
-	border: 1px solid rgba(212, 175, 55, 0.6);
-}
-
-.rank-a4 .btn-menu:hover {
-	background: linear-gradient(to right, #bf953f, #fcf6ba);
+.rank-a4 .btn-shop,
+.rank-a4 .btn-action-primary,
+.rank-a4 .summary-actions .btn-action-primary,
+.rank-a4 .execute-form .btn-execute-order {
+	background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7) !important;
 	color: #0c0a09 !important;
+	font-weight: 900 !important;
+	border: none !important;
+	box-shadow: 0 0 20px rgba(252, 246, 186, 0.6), 0 4px 15px rgba(179, 135, 40, 0.6) !important;
+}
+
+.rank-a4 .btn-shop:hover,
+.rank-a4 .btn-action-primary:hover,
+.rank-a4 .summary-actions .btn-action-primary:hover,
+.rank-a4 .execute-form .btn-execute-order:hover {
+	background: linear-gradient(to right, #ffffff, #d4af37, #ffffff) !important;
+	box-shadow: 0 0 35px rgba(212, 175, 55, 0.9) !important;
+}
+
+.rank-a4 .menu-links ul li .btn-update,
+.rank-a4 .menu-links ul li .btn-delete,
+.rank-a4 .menu-links ul li .btn-logout {
+	background-color: transparent !important;
+	color: rgba(212, 175, 55, 0.6) !important;
+	border: 1px solid rgba(212, 175, 55, 0.4) !important;
+	transition: all 0.2s ease;
+}
+
+.rank-a4 .menu-links ul li .btn-update:hover,
+.rank-a4 .menu-links ul li .btn-delete:hover,
+.rank-a4 .menu-links ul li .btn-logout:hover {
+	background-color: transparent !important;
+	border-color: rgba(212, 175, 55, 0.9) !important;
+	color: #d4af37 !important;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2) !important;
+}
+
+.rank-a4 .menu-links ul li .btn-update:active,
+.rank-a4 .menu-links ul li .btn-delete:active,
+.rank-a4 .menu-links ul li .btn-logout:active {
+	transform: translateY(0);
 }
 
 /* --------------------------------------------------------------------------
@@ -753,4 +947,2922 @@ body:not([class*="rank-"]):not(.error-page) {
 	background-color: #228be6 !important;
 	color: #ffffff !important;
 	border-color: #228be6 !important;
+}
+
+/* ==========================================================================
+  5.商品一覧画面（item-list.jsp）専用のスタイリッシュ透過ダークデザイン
+   ========================================================================== */
+
+.list-container {
+	width: 1000px !important;
+	max-width: 95% !important;
+	margin: 30px auto !important;
+	background-color: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 16px;
+	padding: 24px 32px !important;
+	box-sizing: border-box;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ヘッダーエリアの配置 */
+.list-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+	padding-bottom: 14px !important;
+	margin-bottom: 20px !important;
+}
+
+.list-header h1 {
+	margin: 0;
+	font-size: 22px;
+	font-weight: bold;
+	color: #ffffff;
+	letter-spacing: 1px;
+}
+
+.list-header h1 span {
+	display: block;
+	font-size: 11px;
+	color: rgba(255, 255, 255, 0.4);
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	margin-top: 2px;
+}
+
+.header-user-nav {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+/* 検索＆ソートコントロールバー（横一列配置） */
+
+.control-bar {
+	background-color: rgba(255, 255, 255, 0.05);
+	border-radius: 8px;
+	padding: 12px 20px !important;
+	margin-bottom: 16px !important;
+}
+
+.search-sort-form {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+}
+
+.search-box {
+	display: flex;
+	gap: 8px;
+	flex: 1;
+}
+
+.search-box input[type="text"] {
+	flex: 1;
+	background-color: #ffffff;
+	color: #222222;
+	border: 1px solid #3a3a3a;
+	padding: 6px 12px !important;
+	height: 32px !important;
+	border-radius: 6px;
+	font-size: 13px;
+	box-sizing: border-box;
+}
+
+.btn-search {
+	background-color: #ff6b6b;
+	color: #ffffff;
+	border: none;
+	padding: 0 16px !important;
+	height: 32px !important;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.btn-search:hover {
+	background-color: #ff5252;
+}
+
+.sort-box {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
+	color: #ffffff;
+}
+
+.sort-box select {
+	background-color: #ffffff;
+	color: #222222;
+	border: 1px solid #3a3a3a;
+	padding: 4px 8px !important;
+	height: 32px !important;
+	border-radius: 6px;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+/* クイック肉種類フィルターナビ */
+
+.category-nav {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 24px !important;
+}
+
+.cat-link {
+	display: inline-block;
+	padding: 6px 16px !important;
+	background-color: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: rgba(255, 255, 255, 0.7);
+	text-decoration: none;
+	font-size: 13px;
+	border-radius: 20px;
+	transition: all 0.2s;
+}
+
+.cat-link:hover,
+.cat-link.active {
+	background-color: #ff6b6b;
+	color: #ffffff;
+	border-color: #ff6b6b;
+	box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+}
+
+/* 肉のカードが横並びに3列で並ぶグリッド設定 */
+
+.item-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr) !important;
+	gap: 24px;
+}
+
+/* 肉のカード1件ずつのスタイル */
+
+.item-card {
+	position: relative;
+	background-color: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 12px;
+	padding: 16px !important;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.item-card:hover {
+	transform: translateY(-4px);
+	/* マウスを乗せると浮き上がるエフェクト */
+	border-color: rgba(255, 107, 107, 0.3);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* 肉の種類カテゴリバッジ */
+
+.badge-meat {
+	position: absolute !important;
+	bottom: 8px !important;
+	right: 8px !important;
+	top: auto !important;
+	left: auto !important;
+	z-index: 10;
+	padding: 3px 8px !important;
+	font-size: 11px;
+	font-weight: bold;
+	color: #ffffff;
+	border-radius: 4px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.badge-meat.type-牛 {
+	background-color: #c0392b;
+}
+
+.badge-meat.type-豚 {
+	background-color: #e84393;
+}
+
+.badge-meat.type-鶏 {
+	background-color: #d35400;
+}
+
+/* 商品画像ラッパー */
+
+.item-image-wrapper {
+	position: relative !important;
+	width: 100%;
+	height: 160px;
+	background-color: #1a1a1a;
+	border-radius: 8px;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 14px !important;
+}
+
+.item-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* 商品情報エリア */
+
+.item-info h3 {
+	margin: 4px 0 6px 0 !important;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.item-desc {
+	margin: 0 0 12px 0 !important;
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.6);
+	line-height: 1.5;
+	height: 36px;
+	overflow: hidden;
+	display: -webkit-box !important;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	-webkit-box-orient: vertical !important;
+}
+
+.item-price {
+	margin: 0 0 4px 0 !important;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ff6b6b;
+}
+
+.item-price span {
+	font-size: 11px;
+	color: rgba(255, 255, 255, 0.5);
+	margin-left: 4px;
+}
+
+.item-stock {
+	margin: 0 0 14px 0 !important;
+	font-size: 11px;
+	color: #2ecc71;
+}
+
+.item-stock.out-of-stock {
+	color: #95a5a6;
+}
+
+/* ナビゲーションボタン */
+
+.btn-nav,
+.btn-detail {
+	display: inline-block;
+	text-decoration: none;
+	text-align: center;
+	font-size: 13px;
+	font-weight: bold;
+	border-radius: 6px;
+	transition: background-color 0.2s;
+}
+
+.btn-nav {
+	padding: 6px 14px !important;
+	background-color: rgba(255, 255, 255, 0.1);
+	color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-nav:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-nav.btn-highlight {
+	background-color: #ff6b6b;
+	border-color: #ff6b6b;
+}
+
+.btn-nav.btn-highlight:hover {
+	background-color: #ff5252;
+}
+
+.btn-detail {
+	width: 100%;
+	padding: 8px 0 !important;
+	background-color: transparent;
+	color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	cursor: pointer;
+}
+
+.btn-detail:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-color: #ffffff;
+}
+
+/* ==========================================================================
+   検索エラー画面 (.no-items-msg) 
+   ========================================================================== */
+
+.list-container .no-items-msg,
+.no-items-msg {
+	display: block !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	grid-column: 1 / -1 !important;
+	text-align: center !important;
+	padding: 60px 20px !important;
+	box-sizing: border-box !important;
+}
+
+.list-container .no-items-msg p,
+.no-items-msg p {
+	font-size: 15px !important;
+	color: #cccccc !important;
+	margin: 0 auto 30px auto !important;
+	letter-spacing: 0.5px !important;
+	text-align: center !important;
+	width: 100% !important;
+	display: block !important;
+	white-space: nowrap !important;
+}
+
+.list-container .no-items-msg .btn-action-primary,
+.no-items-msg .btn-action-primary {
+	display: inline-block !important;
+	width: auto !important;
+	min-width: 200px !important;
+	padding: 12px 35px !important;
+	font-size: 15px !important;
+	font-weight: bold !important;
+	text-decoration: none !important;
+	border-radius: 6px !important;
+	background: #007bff !important;
+	color: #ffffff !important;
+	text-align: center !important;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+	transition: all 0.2s ease !important;
+
+	margin: 0 auto !important;
+}
+
+.list-container .no-items-msg .btn-action-primary:hover,
+.no-items-msg .btn-action-primary:hover {
+	background: #0056b3 !important;
+	transform: translateY(-2px) !important;
+	box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5) !important;
+}
+
+/* ==========================================================================
+   6. 商品詳細画面 (item-detail.jsp) 専用スタイル
+   ========================================================================== */
+
+.item-detail-page .list-header {
+	margin-top: 0 !important;
+	padding-top: 10px !important;
+	padding-bottom: 8px !important;
+}
+
+.item-detail-page .detail-title {
+	margin: 5px 0 2px 0 !important;
+	padding-bottom: 2px !important;
+	font-size: 26px !important;
+}
+
+.item-detail-page .purchase-action-box {
+	padding: 15px 20px !important;
+}
+
+.item-detail-page .detail-stock {
+	margin-bottom: 15px !important;
+}
+
+.item-detail-page .quantity-selector {
+	margin-bottom: 12px !important;
+}
+
+/*メイン詳細レイアウト */
+
+.detail-layout {
+	display: flex;
+	gap: 40px;
+	margin-top: 15px !important;
+	padding: 15px 25px !important;
+	background: #111;
+	border-radius: 12px;
+	border: 1px solid #222;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/*肉の画像配置エリア */
+
+.detail-image-block {
+	flex: 1;
+	text-align: center;
+	background: #1a1a1a;
+	border-radius: 8px;
+	padding: 10px !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 280px !important;
+	border: 1px solid #252525;
+}
+
+.detail-img {
+	max-width: 100%;
+	max-height: 350px;
+	height: auto;
+	border-radius: 6px;
+	object-fit: cover;
+}
+
+/* 肉の情報・注文操作エリア */
+
+.detail-info-block {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	text-align: left !important;
+}
+
+/* 肉の説明テキスト上段 */
+
+.item-detail-badges {
+	display: flex !important;
+	gap: 8px !important;
+	margin-bottom: 15px !important;
+	position: static !important;
+}
+
+.item-detail-badges .badge-meat {
+	position: static !important;
+	top: auto !important;
+	left: auto !important;
+	right: auto !important;
+	bottom: auto !important;
+	margin: 0 !important;
+	display: inline-block !important;
+}
+
+.detail-desc {
+	font-size: 15px !important;
+	line-height: 1.8 !important;
+	color: #cccccc !important;
+	margin-bottom: 20px !important;
+	text-align: left !important;
+	display: block !important;
+	width: 100% !important;
+	white-space: pre-line !important;
+	min-height: auto !important;
+	max-height: 150px !important;
+	overflow-y: auto !important;
+	padding-right: 5px !important;
+	-ms-overflow-style: none !important;
+	scrollbar-width: none !important;
+}
+
+/* 価格・在庫確認・購入フォーム下段BOX */
+
+.purchase-action-box {
+	background: #161616;
+	padding: 25px;
+	border-radius: 8px;
+	border: 1px solid #2a2a2a;
+}
+
+.detail-price {
+	font-size: 30px;
+	color: #ff5252;
+	font-weight: bold;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: baseline;
+	gap: 5px;
+}
+
+.price-unit {
+	font-size: 14px;
+	color: #aaa;
+	font-weight: normal;
+}
+
+/* 在庫状況のカラー切り替え */
+
+.detail-stock {
+	font-size: 13px;
+	margin-bottom: 25px;
+	font-weight: bold;
+}
+
+.detail-stock.in-stock {
+	color: #66bb6a;
+	/* 在庫あり時は緑 */
+}
+
+.detail-stock.out-of-stock {
+	color: #ff5252;
+	/* 売り切れ時は赤 */
+}
+
+/* 数量選択 */
+
+.quantity-selector {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.quantity-selector label {
+	color: #bbb;
+	font-size: 14px;
+}
+
+.quantity-selector select {
+	background: #252525;
+	color: #fff;
+	border: 1px solid #444;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 14px;
+	cursor: pointer;
+	min-width: 80px;
+}
+
+/* 牛肉のバッジ */
+.item-badges-detail .badge-meat.type-牛 {
+	background: #ff5252 !important;
+	background-color: #ff5252 !important;
+	color: #ffffff !important;
+}
+
+/* 豚肉のバッジ */
+.item-badges-detail .badge-meat.type-豚 {
+	background: #e91e63 !important;
+	background-color: #e91e63 !important;
+	color: #ffffff !important;
+}
+
+/* 鶏肉のバッジ */
+.item-badges-detail .badge-meat.type-鶏 {
+	background: #ff9800 !important;
+	background-color: #ff9800 !important;
+	color: #ffffff !important;
+}
+
+/* コミットボタン共通設定 */
+
+.purchase-action-box .btn-action-primary {
+	width: 100%;
+	padding: 14px;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	background: #ff5252;
+	color: #fff;
+	border: none;
+}
+
+.purchase-action-box .btn-action-primary:hover {
+	background: #ff3333;
+	box-shadow: 0 0 15px rgba(255, 82, 82, 0.4);
+}
+
+/* 完売ボタン */
+
+.btn-disabled {
+	width: 100%;
+	background: #333;
+	color: #777;
+	padding: 14px;
+	font-size: 16px;
+	font-weight: bold;
+	border: none;
+	border-radius: 6px;
+	cursor: not-allowed;
+}
+
+/* 下部バックナビゲーションエリア */
+
+.footer-nav {
+	text-align: center;
+	margin-top: 25px;
+}
+
+.footer-nav a {
+	color: #aaaaaa;
+	font-size: 14px;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	transition: color 0.2s;
+}
+
+.footer-nav a:hover {
+	color: #ffffff;
+}
+
+/* ==========================================================================
+   7. 買い物かご画面 (cart-list.jsp) 専用スタイル
+   ========================================================================== */
+
+/* カート画面全体のメインコンテナ */
+
+.cart-main-container {
+	margin-top: 30px;
+	padding: 25px;
+	background: #111;
+	border-radius: 12px;
+	border: 1px solid #222;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.cart-main-container h2 {
+	font-size: 22px;
+	color: #fff;
+	margin-bottom: 25px;
+	border-left: 4px solid #ff5252;
+	padding-left: 12px;
+}
+
+/* テーブルのラッパー（横スクロール対応） */
+
+.cart-table-wrapper {
+	width: 100%;
+	max-height: 250px;
+	overflow-y: auto !important;
+	overflow-x: auto;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #222;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* カート内商品一覧テーブル */
+
+.cart-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+.cart-table th {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background: #1a1a1a;
+	color: #aaa;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 15px;
+	border-bottom: 2px solid #2d2d2d;
+}
+
+.cart-table td {
+	padding: 18px 15px;
+	border-bottom: 1px solid #222;
+	color: #ccc;
+	vertical-align: middle;
+}
+
+.cart-table tbody tr:hover {
+	background: rgba(255, 255, 255, 0.02);
+}
+
+/* 各セル個別の調整 */
+
+.td-img {
+	width: 100px;
+	text-align: center;
+}
+
+.td-name {
+	min-width: 200px;
+}
+
+.td-price {
+	width: 120px;
+	font-weight: bold;
+}
+
+.td-quantity {
+	width: 100px;
+	text-align: center;
+}
+
+.td-subtotal {
+	width: 130px;
+	color: #ff5252;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.td-action {
+	width: 100px;
+	text-align: center;
+}
+
+/* 商品画像 */
+
+.cart-item-img {
+	width: 70px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 4px;
+	border: 1px solid #333;
+	background: #222;
+}
+
+/* 商品名とバッジ */
+
+.cart-item-title {
+	display: block;
+	color: #fff;
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+
+.cart-item-badge {
+	display: inline-block;
+	font-size: 11px;
+	background: #252525;
+	color: #aaa;
+	padding: 2px 6px;
+	border-radius: 3px;
+	border: 1px solid #333;
+}
+
+
+
+/* 数量セレクトボックス */
+
+.cart-select {
+	background: #252525;
+	color: #fff;
+	border: 1px solid #444;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-size: 14px;
+	cursor: pointer;
+	outline: none;
+}
+
+.cart-select:focus {
+	border-color: #ff5252;
+}
+
+/* フォームのインライン化 */
+
+.inline-form {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+/* 削除ボタン */
+
+.btn-delete-item {
+	background: transparent;
+	color: #bbb;
+	border: 1px solid #444;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 13px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.btn-delete-item:hover {
+	background: #c62828;
+	color: #fff;
+	border-color: #c62828;
+}
+
+/* ==========================================================================
+   ツインバッジ（2連ラベル）スタイル
+   ========================================================================== */
+
+/* 商品一覧のバッジ用コンテナ*/
+
+.item-badges {
+	position: absolute !important;
+	bottom: 10px !important;
+	right: 10px !important;
+	display: flex !important;
+	gap: 6px !important;
+	z-index: 10 !important;
+	top: auto !important;
+	left: auto !important;
+}
+
+.item-badges .badge-meat {
+	position: static !important;
+	top: auto !important;
+	left: auto !important;
+	margin: 0 !important;
+}
+
+.list-container .item-card .item-badges .badge-meat.status-fresh,
+.item-badges .badge-meat.status-fresh,
+.badge-meat.status-fresh {
+	background: #2e7d32 !important;
+	background-color: #2e7d32 !important;
+	color: #ffffff !important;
+}
+
+.list-container .item-card .item-badges .badge-meat.status-aged,
+.item-badges .badge-meat.status-aged,
+.badge-meat.status-aged {
+	background: #e65100 !important;
+	background-color: #e65100 !important;
+	color: #ffffff !important;
+	border: 1px solid #ffb74d !important;
+}
+
+/* ==========================================================================
+  ヘッダーのカートアイコン ＆ 通知バッジ
+   ========================================================================== */
+
+.header-user-nav {
+	display: flex !important;
+	align-items: center;
+	gap: 15px;
+}
+
+.btn-cart-nav {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	background-color: #222222;
+	color: #ffffff;
+	border: 1px solid #333333;
+	padding: 8px 16px;
+	border-radius: 20px;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+.btn-cart-nav:hover {
+	background-color: #333333;
+	border-color: #444444;
+	transform: translateY(-1px);
+}
+
+.btn-cart-nav .cart-badge {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	background-color: #ff5252;
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: 900;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 4px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 2px 8px rgba(255, 82, 82, 0.5);
+	box-sizing: border-box;
+}
+
+
+
+/* ==========================================================================
+   8. 金額計算BOX ＆ アクションエリア
+   ========================================================================== */
+
+.cart-summary-area {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 12px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* 金額BOX */
+
+.summary-box {
+	background: #161616;
+	border: 1px solid #2a2a2a;
+	border-radius: 8px;
+	padding: 15px 20px;
+	width: 320px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.summary-row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 12px;
+	font-size: 14px;
+	color: #aaa;
+}
+
+.summary-row strong {
+	color: #fff;
+}
+
+
+.summary-row.total-row {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px dashed #333;
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.grand-total-price {
+	color: #ff5252 !important;
+	font-size: 20px;
+}
+
+/* ボタンの並びエリア */
+
+.summary-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-end;
+	gap: 10px;
+	width: 100%;
+	max-width: 320px;
+	box-sizing: border-box;
+	margin-top: 5px;
+}
+
+.summary-actions form {
+	margin: 0;
+	padding: 0;
+	display: block;
+	width: 100%;
+}
+
+/* お買い物を続けるリンク */
+
+.btn-continue {
+	color: #aaa;
+	font-size: 14px;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: color 0.2s;
+	order: 1;
+	text-align: right;
+	padding-right: 5px;
+}
+
+.btn-continue:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+/* 購入手続きへ進むボタン */
+
+.summary-actions .btn-action-primary {
+	display: block;
+	width: 100%;
+	padding: 12px 20px;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 6px;
+	cursor: pointer;
+	border: none;
+	background: #ff5252;
+	color: #fff;
+	white-space: nowrap;
+	text-align: center;
+	box-sizing: border-box;
+	transition: all 0.2s ease;
+}
+
+.summary-actions .btn-action-primary:hover {
+	background: #ff3333;
+	box-shadow: 0 0 15px rgba(255, 82, 82, 0.4);
+}
+
+/* カートが空っぽの時のBOX */
+
+.empty-cart-box {
+	text-align: center;
+	padding: 60px 20px;
+}
+
+.empty-cart-box p {
+	font-size: 15px;
+	color: #cccccc;
+	margin-bottom: 35px;
+	letter-spacing: 0.5px;
+}
+
+.empty-cart-box .btn-action-primary {
+	display: inline-block;
+	width: auto;
+	min-width: 200px;
+	padding: 12px 30px;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	border-radius: 6px;
+	background: #ff5252;
+	color: #ffffff;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+	transition: all 0.2s ease;
+}
+
+
+.empty-cart-box .btn-action-primary:hover {
+	background: #ff3333;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(255, 82, 82, 0.4);
+}
+
+/* ==========================================
+   9. 確認画面用の2カラムレイアウト
+   ========================================== */
+
+.preview-split-layout {
+	display: flex !important;
+	gap: 30px;
+	align-items: flex-start;
+	width: 100%;
+}
+
+/* 左側：お届け先 ＆ 商品一覧 */
+
+.preview-left-block {
+	flex: 7;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+/* 右側：金額計算 ＆ 確定ボタン */
+
+.preview-right-block {
+	flex: 3;
+	position: sticky;
+	top: 20px;
+	min-width: 320px;
+}
+
+/* 金額BOXの中の各行の横並び */
+
+.sammary-row,
+.preview-split-layout .summary-row {
+	display: flex !important;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+	font-size: 14px;
+}
+
+.execute-form .btn-execute-order {
+	display: block;
+	width: 100%;
+	padding: 15px;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+/* ------------------------------------------
+   ご注文商品リストの横並び配置
+   ------------------------------------------ */
+
+/* 1商品分の行 */
+
+.preview-item-row {
+	display: flex !important;
+	align-items: center;
+	gap: 20px;
+	padding: 15px 0;
+	border-bottom: 1px dashed #2a2a2a;
+	width: 100%;
+}
+
+.preview-item-row:last-child {
+	border-bottom: none;
+}
+
+/* 商品画像のサイズをカート画面に合わせて適正化 */
+
+.preview-item-img {
+	width: 80px;
+	height: 60px;
+	object-fit: cover;
+	border-radius: 4px;
+	border: 1px solid #333;
+	background: #222;
+	flex-shrink: 0;
+}
+
+/* 商品の詳細テキストエリア */
+
+.preview-item-detail {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+/* 商品名 */
+
+.preview-item-title {
+	font-weight: bold;
+	font-size: 15px;
+	color: #fff;
+}
+
+/* 「生・鶏肉・モモ」などのサブ情報 */
+
+.preview-item-sub {
+	font-size: 12px;
+	color: #aaa;
+}
+
+/* 数量と価格の表示エリア */
+
+.preview-item-price-qty {
+	text-align: right;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 120px;
+}
+
+/* 「1,180円 × 1」の部分 */
+
+.preview-item-qty {
+	font-size: 13px;
+	color: #aaa;
+}
+
+/* 右端の小計金額 */
+
+.preview-item-subtotal {
+	font-weight: bold;
+	font-size: 16px;
+	color: #ff5252;
+}
+
+/* 商品リスト全体を包むラッパー */
+
+.preview-items-list {
+	width: 100%;
+	max-height: 280px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 5px;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* 注文確定フォーム */
+
+.preview-right-block .execute-form {
+	margin-bottom: 15px !important;
+	width: 100%;
+}
+
+/* 戻るエリア */
+
+.preview-back-area {
+	text-align: center;
+	width: 100%;
+}
+
+.btn-continue,
+.preview-back-area .btn-continue {
+	display: inline-block;
+	color: #aaa;
+	font-size: 13px;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.preview-back-area .btn-continue:hover {
+	color: #ff5252;
+	text-decoration: underline;
+}
+
+/* ==========================================================================
+   10. ご購入完了画面（purchase-success.jsp）
+   ========================================================================== */
+
+
+.purchase-success-page {
+	background-color: #0c0a09 !important;
+	color: #ffffff !important;
+}
+
+.success-main-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 50vh;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 20px 0;
+}
+
+/* 中央のお礼カード */
+.success-box {
+	width: 100%;
+	max-width: 550px;
+	text-align: center;
+	padding: 45px 30px;
+	border-radius: 12px;
+	box-sizing: border-box;
+	background-color: #111111 !important;
+	border: 1px solid #222222 !important;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+.success-icon {
+	font-size: 50px;
+	margin-bottom: 20px;
+}
+
+.success-box h2 {
+	font-size: 24px;
+	margin-bottom: 25px;
+	font-weight: bold;
+	border: none !important;
+	padding: 0 !important;
+	color: #ffffff !important;
+}
+
+.success-msg {
+	font-size: 15px;
+	line-height: 1.8;
+	margin-bottom: 15px;
+	letter-spacing: 0.5px;
+	color: #ffffff !important;
+}
+
+.success-sub {
+	font-size: 13px;
+	color: #999 !important;
+	margin-bottom: 35px;
+}
+
+/* 明細エリアの装飾 */
+
+.success-details-wrapper {
+	margin: 25px 0;
+	background: #1a1a1a;
+	border: 1px solid #2d2d2d;
+	border-radius: 6px;
+	padding: 15px 20px;
+	text-align: left;
+}
+
+.success-details-wrapper h3 {
+	font-size: 14px;
+	color: #aaa !important;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #2d2d2d;
+	padding-bottom: 5px;
+}
+
+.success-item-row {
+	display: flex;
+	justify-content: space-between;
+	font-size: 13px;
+	margin-bottom: 8px;
+	color: #ccc !important;
+}
+
+.success-item-name {
+	flex: 1;
+}
+
+.success-item-qty {
+	width: 60px;
+	text-align: right;
+}
+
+.success-item-subtotal {
+	width: 100px;
+	text-align: right;
+	color: #fff !important;
+}
+
+.success-summary {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px dashed #333;
+}
+
+.success-summary-row {
+	display: flex;
+	justify-content: space-between;
+	font-size: 13px;
+	color: #aaa !important;
+	margin-bottom: 6px;
+}
+
+.success-total-row {
+	font-size: 15px;
+	color: #fff !important;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.success-total-row strong {
+	color: #ff5252 !important;
+}
+
+/* マイページへ戻るボタン */
+
+.success-actions .btn-to-menu {
+	display: inline-block;
+	width: auto;
+	min-width: 220px;
+	padding: 14px 30px;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	box-sizing: border-box;
+	background: #ff5252 !important;
+	color: #ffffff !important;
+	border: none !important;
+}
+
+.success-actions .btn-to-menu:hover {
+	background: #ff3333 !important;
+	box-shadow: 0 0 15px rgba(255, 82, 82, 0.4) !important;
+}
+
+/* ==========================================================================
+   11. 管理者専用：商品追加・編集画面の画像ドロップエリア ＆ エラー表示用スタイル
+   ========================================================================== */
+
+/* 画像ドロップエリアの基本枠 */
+
+.drop-zone {
+	border: 2px dashed #555;
+	border-radius: 8px;
+	padding: 20px;
+	text-align: center;
+	background: #1a1a1a;
+	cursor: pointer;
+	transition: background 0.3s, border-color 0.3s;
+}
+
+/* 画像をドラッグしてエリア上に重ねたとき（アクティブ状態） */
+
+.drop-zone.drag-over {
+	background: #2a2a2a;
+	border-color: #ff9900;
+}
+
+/* ドロップエリア内の案内テキスト */
+
+.drop-zone p {
+	margin: 0 0 10px 0;
+	color: #888;
+}
+
+
+/* プレビュー画像を表示する外枠 */
+.preview-container {
+	margin-top: 10px;
+}
+
+/* プレビュー画像自体のサイズ制限 */
+
+.preview-image {
+	max-width: 100%;
+	max-height: 150px;
+	border-radius: 4px;
+	border: 1px solid #333;
+}
+
+/* 必須チェック等で弾かれた時のエラーメッセージ枠 */
+
+.err-msg {
+	color: #ff3333;
+	font-weight: bold;
+	margin-bottom: 15px;
+	background: #2a1111;
+	padding: 10px;
+	border: 1px solid #551111;
+	border-radius: 4px;
+}
+
+/* 編集画面：現在登録されている画像名の案内テキスト */
+
+.current-img-info {
+	font-size: 0.9em;
+	color: #aaa;
+	margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   12. 管理者専用：商品管理一覧画面（admin-item-list.jsp）用スタイル
+   ========================================================================== */
+
+/* メインテーブルを囲むコンテナ枠 */
+
+.admin-table-container {
+	padding: 20px;
+	background: #111;
+	border: 1px solid #222;
+	border-radius: 8px;
+	margin-top: 20px;
+	max-height: 500px;
+	overflow-y: auto;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* 管理用データテーブルの基本設定 */
+
+.admin-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 15px;
+	color: #fff;
+	text-align: left;
+	min-width: 900px;
+}
+
+/* テーブルの見出し(th)とデータセル(td)*/
+.admin-table th,
+.admin-table td {
+	padding: 12px;
+	border-bottom: 1px solid #333;
+	font-size: 14px;
+	white-space: nowrap;
+}
+
+/* テーブルの見出し（ヘッダー行） */
+.admin-table th {
+	background: #1a1a1a;
+	color: #ff9900;
+	font-weight: bold;
+	position: sticky;
+	top: -20px;
+	z-index: 5;
+}
+
+/* 行にマウスホバーした際のエフェクト */
+
+.admin-table tr:hover {
+	background: #1c1c1c;
+}
+
+/* 一覧用の小さなサムネイル画像 */
+
+.admin-thumb {
+	width: 60px;
+	height: 45px;
+	object-fit: cover;
+	border-radius: 4px;
+	border: 1px solid #333;
+}
+
+/*特に文字数が多くなりがちな「商品名」の列だけ、残りの横幅を広く割り当てる */
+
+.admin-table td:nth-child(3) {
+	width: 40%;
+	white-space: normal;
+}
+
+.admin-table th:last-child {
+	text-align: center !important;
+}
+
+/* 各種操作リンク（編集・削除）の共通ボタンベース */
+
+.btn-action-sm {
+	padding: 6px 12px;
+	font-size: 12px;
+	border-radius: 4px;
+	text-decoration: none;
+	display: inline-block;
+	margin-right: 5px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+/* 編集用ボタン（緑系） */
+
+.btn-edit-sm {
+	background: #28a745;
+	color: #fff;
+	border: 1px solid #218838;
+}
+
+.btn-edit-sm:hover {
+	background: #218838;
+}
+
+/* 削除用ボタン（赤系） */
+
+.btn-delete-sm {
+	background: #dc3545;
+	color: #fff;
+	border: 1px solid #c82333;
+}
+
+.btn-delete-sm:hover {
+	background: #c82333;
+}
+
+/* ミニバッジ（肉の状態用）の共通ベース */
+
+.badge-status-sm {
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 11px;
+	font-weight: bold;
+	display: inline-block;
+}
+
+.status-aged-sm {
+	background: #e65100 !important;
+	color: #ffffff !important;
+	border: 1px solid #ffb74d !important;
+}
+
+.status-fresh-sm {
+	background: #2e7d32 !important;
+	color: #ffffff !important;
+}
+
+/* ==========================================================================
+   13. 管理者専用：新規商品登録（item-add.jsp）＆ 編集画面用スタイル
+   ========================================================================== */
+
+.menu-container:has(.item-form-box),
+body.rank-a5:has(.item-form-box) .menu-container {
+	max-width: 1200px !important;
+	width: 95% !important;
+	margin: 0 auto !important;
+}
+
+.item-form-box {
+	padding: 15px 25px !important;
+	background: #111111 !important;
+	border: 1px solid #222222 !important;
+	border-radius: 8px !important;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+	max-width: 1100px !important;
+	margin: 0 auto !important;
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 0 4%;
+	width: 95% !important;
+}
+
+.item-form-box .form-group {
+	width: 48% !important;
+	box-sizing: border-box !important;
+	margin-bottom: 10px !important;
+	text-align: left !important;
+}
+
+/* 項目の見出しラベル */
+
+.item-form-box .form-group label {
+	display: block !important;
+	font-size: 14px !important;
+	font-weight: bold !important;
+	color: #ffffff !important;
+	margin-bottom: 4px !important;
+	letter-spacing: 0.5px;
+}
+
+/* 「(必須)」マーカー */
+
+.item-form-box .form-group label span {
+	color: #ff3333 !important;
+	font-size: 11px !important;
+	margin-left: 5px !important;
+	font-weight: normal !important;
+}
+
+/* 通常の入力フォーム */
+
+.item-form-box .form-group input[type="text"],
+.item-form-box .form-group input[type="number"],
+.item-form-box .cart-select {
+	width: 100% !important;
+	padding: 8px 12px !important;
+	background: #1a1a1a !important;
+	border: 1px solid #333333 !important;
+	border-radius: 4px !important;
+	color: #ffffff !important;
+	font-size: 14px !important;
+	box-sizing: border-box !important;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* 商品説明 */
+
+.item-form-box .form-group textarea {
+	width: 100% !important;
+	background: #1a1a1a !important;
+	border: 1px solid #333333 !important;
+	border-radius: 4px !important;
+	color: #ffffff !important;
+	font-size: 14px !important;
+	box-sizing: border-box !important;
+	padding: 8px 12px !important;
+	resize: none !important;
+	height: 72px !important;
+	min-height: 72px !important;
+}
+
+/* フォーカス時のオレンジ発光 */
+
+.item-form-box .form-group input:focus,
+.item-form-box .form-group textarea:focus,
+.item-form-box .cart-select:focus {
+	outline: none !important;
+	border-color: #ff9900 !important;
+	box-shadow: 0 0 5px rgba(255, 153, 0, 0.3) !important;
+}
+
+.item-form-box .form-group input::placeholder,
+.item-form-box .form-group textarea::placeholder {
+	color: #555555 !important;
+}
+
+/* 画像ドラッグ＆ドロップエリア */
+
+.item-form-box .form-group .drop-zone {
+	border: 2px dashed #444444 !important;
+	border-radius: 6px !important;
+	padding: 0 10px !important;
+	text-align: center !important;
+	background: #161616 !important;
+	cursor: pointer !important;
+	transition: background 0.3s, border-color 0.3s;
+	box-sizing: border-box !important;
+	height: 72px !important;
+	display: flex !important;
+	flex-direction: column !important;
+	justify-content: center !important;
+	align-items: center !important;
+}
+
+.item-form-box .form-group .drop-zone.drag-over {
+	background: #222222 !important;
+	border-color: #ff9900 !important;
+}
+
+.item-form-box .form-group .drop-zone p {
+	margin: 0 0 2px 0 !important;
+	color: #888888 !important;
+	font-size: 13px !important;
+}
+
+/* 画像プレビューエリア */
+
+.item-form-box .form-group .preview-container {
+	margin-top: 0 !important;
+	padding: 0 !important;
+	width: 100% !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+}
+
+.item-form-box .form-group .preview-image {
+	max-width: 100% !important;
+	max-height: 56px !important;
+	border-radius: 4px !important;
+	border: 1px solid #222222 !important;
+	object-fit: contain;
+}
+
+/* 画像が未選択のときに画像割れアイコンを隠す設定 */
+
+.item-form-box .form-group .preview-image[src=""],
+.item-form-box .form-group .preview-image:not([src]) {
+	display: none !important;
+}
+
+/* 一番下のボタンエリア */
+
+.item-form-box .button-area {
+	width: 100% !important;
+	margin-top: 15px !important;
+	padding-bottom: 5px !important;
+	display: flex !important;
+	flex-direction: row !important;
+	justify-content: center !important;
+	align-items: center !important;
+	gap: 20px !important;
+}
+
+.item-form-box .button-area button,
+.item-form-box .button-area a {
+	width: 180px !important;
+	min-width: 180px !important;
+	max-width: 180px !important;
+	padding: 8px 0 !important;
+	text-align: center !important;
+	line-height: 1.2 !important;
+	box-sizing: border-box !important;
+	margin: 0 !important;
+}
+
+/* ==========================================================================
+   14. 管理者専用：販売傾向分析画面（admin-sales-dashbord.jsp）用スタイル
+   ========================================================================== */
+
+html:has(.page-admin-sales-dashboard),
+body.page-admin-sales-dashboard {
+	height: 100vh !important;
+	max-height: 100vh !important;
+	overflow: hidden !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+}
+
+/* 全体を囲むコンテナ */
+
+.page-admin-sales-dashboard .list-container {
+	height: 100vh !important;
+	max-height: 100vh !important;
+	padding: 15px 20px !important;
+	width: 65% !important;
+	max-width: 65% !important;
+	display: flex !important;
+	margin: 0 auto !important;
+	flex-direction: column !important;
+	justify-content: space-between !important;
+	box-sizing: border-box !important;
+}
+
+/* ヘッダーのレイアウト調整 */
+
+.page-admin-sales-dashboard .list-header {
+	margin-bottom: 10px !important;
+	padding: 0 !important;
+	flex-shrink: 0 !important;
+}
+
+.page-admin-sales-dashboard .list-header h1 {
+	font-size: 24px !important;
+}
+
+/* 実績サマリーカード */
+
+.page-admin-sales-dashboard .analytics-card-container {
+	display: flex !important;
+	margin-bottom: 10px !important;
+	width: 100% !important;
+	flex-shrink: 0 !important;
+}
+
+.page-admin-sales-dashboard .analytics-card {
+	width: 100% !important;
+	background: #111111 !important;
+	border: 1px solid #222222 !important;
+	padding: 10px 20px !important;
+	border-radius: 8px !important;
+	text-align: center !important;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+	box-sizing: border-box !important;
+}
+
+.page-admin-sales-dashboard .analytics-card .sales-total-text {
+	color: #ff9900 !important;
+	font-size: 28px !important;
+	font-weight: bold !important;
+	margin: 0 !important;
+	line-height: 1.2 !important;
+}
+
+/* タブ切り替えシステム全体のラッパー */
+
+.page-admin-sales-dashboard .analytics-tabs-wrapper {
+	flex: 1 !important;
+	display: flex !important;
+	flex-direction: column !important;
+	min-height: 0 !important;
+	margin-bottom: 15px !important;
+	width: 100% !important;
+}
+
+/* ラジオボタンは画面から隠す */
+
+.page-admin-sales-dashboard .analytics-tabs-wrapper input[type="radio"] {
+	display: none !important;
+}
+
+/* タブボタンの横並びコンテナ */
+
+.page-admin-sales-dashboard .tab-button-container {
+	display: flex !important;
+	gap: 5px !important;
+	margin-bottom: -1px !important;
+	flex-shrink: 0 !important;
+}
+
+/* タブボタンの基本デザイン */
+
+.page-admin-sales-dashboard .tab-label {
+	display: inline-block !important;
+	padding: 10px 20px !important;
+	font-size: 14px !important;
+	font-weight: bold !important;
+	color: #888888 !important;
+	background: #161616 !important;
+	border: 1px solid #222222 !important;
+	border-bottom: none !important;
+	border-radius: 6px 6px 0 0 !important;
+	cursor: pointer !important;
+	transition: all 0.2s ease !important;
+}
+
+.page-admin-sales-dashboard .tab-label:hover {
+	color: #ffffff !important;
+	background: #1c1c1c !important;
+}
+
+/* ボタンが押された（選択された）タブ */
+
+.page-admin-sales-dashboard #tab-products:checked~.tab-button-container .label-products,
+.page-admin-sales-dashboard #tab-categories:checked~.tab-button-container .label-categories {
+	color: #ffffff !important;
+	background: #111111 !important;
+	border-top: 3px solid #ff9900 !important;
+	padding-top: 8px !important;
+}
+
+/* テーブルを包む中身コンテナ */
+
+.page-admin-sales-dashboard .tab-content-container {
+	flex: 1 !important;
+	position: relative !important;
+	min-height: 0 !important;
+}
+
+/* すべての共通テーブルコンテナの背景と枠線 */
+
+.page-admin-sales-dashboard .admin-table-container {
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	background: #111111 !important;
+	border: 1px solid #222222 !important;
+	border-radius: 0 8px 8px 8px !important;
+	padding: 0 20px 15px 20px !important;
+	box-sizing: border-box !important;
+	display: flex !important;
+	flex-direction: column !important;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+	display: none !important;
+}
+
+/* 下部の「会員ランク別」コンテナ */
+
+.page-admin-sales-dashboard .list-container>.admin-table-container {
+	position: relative !important;
+	flex: 1 !important;
+	min-height: 0 !important;
+	width: 100% !important;
+	border-radius: 8px !important;
+	display: flex !important;
+	padding-top: 15px !important;
+}
+
+/* ラジオボタンの選択状況に応じた切り替え表示 */
+
+.page-admin-sales-dashboard #tab-products:checked~.tab-content-container .content-products,
+.page-admin-sales-dashboard #tab-categories:checked~.tab-content-container .content-categories {
+	display: flex !important;
+}
+
+/* テーブル見出し（h3）のサイズ拡大と余白調整 */
+
+.page-admin-sales-dashboard .admin-table-container h3 {
+	white-space: nowrap !important;
+	font-size: 15px !important;
+	color: #ffffff !important;
+	margin-top: 12px !important;
+	margin-bottom: 8px !important;
+	flex-shrink: 0 !important;
+}
+
+.page-admin-sales-dashboard .admin-table-container p {
+	font-size: 12px !important;
+	line-height: 1.4 !important;
+	margin-top: 0 !important;
+	margin-bottom: 6px !important;
+	color: #aaaaaa !important;
+	flex-shrink: 0 !important;
+}
+
+/* テーブル全体のレイアウト調整 */
+
+.page-admin-sales-dashboard .admin-table {
+	width: 100% !important;
+	table-layout: fixed !important;
+	margin-bottom: 0 !important;
+	border-collapse: collapse !important;
+}
+
+.page-admin-sales-dashboard .tab-content-container .admin-table {
+	width: 100% !important;
+	table-layout: auto !important;
+}
+
+.page-admin-sales-dashboard .admin-table th,
+.page-admin-sales-dashboard .admin-table td {
+	font-size: 13px !important;
+	padding: 12px 15px !important;
+	vertical-align: middle !important;
+	border-bottom: 1px solid #222222 !important;
+	white-space: nowrap !important;
+	overflow: hidden;
+}
+
+/* 1列目（順位バッジ） */
+
+.page-admin-sales-dashboard .tab-content-container .admin-table th:nth-child(1),
+.page-admin-sales-dashboard .tab-content-container .admin-table td:nth-child(1) {
+	text-align: center !important;
+	width: 15% !important;
+}
+
+/* 2列目（商品名・部位カテゴリ）と3列目（総購入数） */
+.page-admin-sales-dashboard .tab-content-container .admin-table th:nth-child(2),
+.page-admin-sales-dashboard .tab-content-container .admin-table td:nth-child(2),
+.page-admin-sales-dashboard .tab-content-container .admin-table th:nth-child(3),
+.page-admin-sales-dashboard .tab-content-container .admin-table td:nth-child(3) {
+	width: 30% !important;
+	text-align: center !important;
+	text-overflow: ellipsis !important;
+}
+
+/* 4列目（合計売上高） */
+.page-admin-sales-dashboard .tab-content-container .admin-table th:nth-child(4),
+.page-admin-sales-dashboard .tab-content-container .admin-table td:nth-child(4) {
+	text-align: right !important;
+	width: 25% !important;
+}
+
+/* 下部（会員ランク別）テーブルの各列の幅比率 */
+
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table th:nth-child(1),
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table td:nth-child(1) {
+	width: 30% !important;
+	text-align: right !important;
+}
+
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table th:nth-child(2),
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table td:nth-child(2) {
+	width: 12% !important;
+	text-align: right !important;
+}
+
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table th:nth-child(3),
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table td:nth-child(3) {
+	width: 18% !important;
+	text-align: right !important;
+}
+
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table th:nth-child(4),
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table td:nth-child(4) {
+	width: 23% !important;
+	text-align: right !important;
+}
+
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table th:nth-child(5),
+.page-admin-sales-dashboard .list-container>.admin-table-container .admin-table td:nth-child(5) {
+	width: 22% !important;
+	text-align: right !important;
+}
+
+/* テーブル見出し（th） */
+
+.page-admin-sales-dashboard .admin-table th {
+	background-color: #111111 !important;
+	background: #111111 !important;
+	color: #ffffff !important;
+	font-weight: bold !important;
+	position: sticky !important;
+	top: 0 !important;
+	z-index: 10 !important;
+	padding-top: 12px !important;
+	padding-bottom: 12px !important;
+}
+
+/* テーブル行のホバー効果 */
+
+.page-admin-sales-dashboard .admin-table tbody tr:hover {
+	background: #161616 !important;
+}
+
+/* バッジのサイズ */
+
+.page-admin-sales-dashboard .admin-table td .badge-status-sm {
+	padding: 4px 6px !important;
+	font-size: 11px !important;
+	display: inline-block !important;
+	text-align: center !important;
+}
+
+/* 強調テキスト */
+
+.page-admin-sales-dashboard .admin-table td .text-highlight {
+	color: #ff9900 !important;
+	font-weight: bold !important;
+}
+
+.page-admin-sales-dashboard .admin-sales-search-area {
+	background: #111111 !important;
+	border: 1px solid #222222 !important;
+	padding: 12px 20px !important;
+	border-radius: 8px !important;
+	margin-bottom: 15px !important;
+	display: flex !important;
+	justify-content: center !important;
+}
+
+.page-admin-sales-dashboard .admin-sales-search-form {
+	display: flex !important;
+	align-items: center !important;
+	gap: 12px !important;
+	color: #888 !important;
+	font-size: 13px !important;
+}
+
+.page-admin-sales-dashboard .admin-sales-search-form input[type="date"] {
+	background: #000 !important;
+	border: 1px solid #333 !important;
+	color: #fff !important;
+	padding: 5px 8px !important;
+	border-radius: 4px !important;
+	cursor: pointer !important;
+	color-scheme: dark !important;
+}
+
+/* 絞り込むボタンのスタイル */
+
+.page-admin-sales-dashboard .admin-sales-search-form button {
+	background: #ff9900 !important;
+	color: #000 !important;
+	border: none !important;
+	padding: 5px 15px !important;
+	border-radius: 4px !important;
+	font-weight: bold !important;
+	cursor: pointer !important;
+}
+
+.page-admin-sales-dashboard .admin-sales-search-form button:hover {
+	background: #e68a00 !important;
+}
+
+/* リセットリンク */
+
+.page-admin-sales-dashboard .admin-sales-search-form a {
+	color: #666 !important;
+	text-decoration: underline !important;
+	font-size: 12px !important;
+}
+
+.page-admin-sales-dashboard .admin-sales-search-form a:hover {
+	color: #fff !important;
+}
+
+/* ==========================================================================*/
+/*   前月比較エリア*/
+/*   ========================================================================== */
+
+.page-admin-sales-dashboard .comparison-result {
+	margin-top: 10px !important;
+	padding-top: 10px !important;
+	border-top: 1px solid #222222 !important;
+	font-size: 13px !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	gap: 8px !important;
+}
+
+.page-admin-sales-dashboard .comparison-label {
+	color: #888888 !important;
+	font-size: 12px !important;
+}
+
+.page-admin-sales-dashboard .comparison-value {
+	font-weight: bold !important;
+	font-size: 14px !important;
+}
+
+/* 好調時 */
+
+.page-admin-sales-dashboard .comparison-value.up {
+	color: #ff9900 !important;
+}
+
+/* 要改善時 */
+
+.page-admin-sales-dashboard .comparison-value.down {
+	color: #aaaaaa !important;
+}
+
+/* タブの切り替え表示制御 */
+
+.content-products,
+.content-categories,
+.content-members {
+	display: block;
+}
+
+/* ラジオボタンで切り替えるための基本制御 */
+
+#tab-products:checked~.tab-content-container .content-products {
+	display: flex !important;
+}
+
+#tab-categories:checked~.tab-content-container .content-categories {
+	display: flex !important;
+}
+
+#tab-members:checked~.tab-content-container .content-members {
+	display: flex !important;
+}
+
+.chart-box {
+	position: relative;
+	width: 100%;
+	height: 350px;
+	/* ここが重要：最低限の高さを指定します */
+	min-height: 350px;
+	margin-bottom: 20px;
+}
+
+/* 管理者ダッシュボード専用のグラフ表示設定 */
+.page-admin-sales-dashboard .chart-box {
+	position: relative;
+	width: 100%;
+	height: 350px;
+	/* グラフの高さを確保 */
+	min-height: 350px;
+	margin-bottom: 20px;
+}
+
+/* グラフが非表示状態でサイズが0になるのを防ぐための調整 */
+.page-admin-sales-dashboard .admin-table-container {
+	width: 100%;
+}
+
+/* ==========================================================================
+   15. 管理者専用メインメニュー（admin-menu.jsp）の左右2列（ダッシュボード）
+   ========================================================================== */
+
+/* 画面全体のレイアウト：左列（自分）と右列（店舗管理）を真横に並べる親枠 */
+
+.admin-dashboard-container {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: stretch !important;
+	justify-content: space-between !important;
+	gap: 4% !important;
+	max-width: 1100px !important;
+	width: 95% !important;
+	margin: 40px auto 0 auto !important;
+	box-sizing: border-box !important;
+}
+
+/* 左列パネル（管理者プロファイル ＆ 修正削除） */
+
+.dashboard-left-panel {
+	width: 32% !important;
+	min-width: 32% !important;
+	max-width: 32% !important;
+	box-sizing: border-box !important;
+}
+
+.admin-info-badge-box {
+	font-size: 13px !important;
+	text-align: left !important;
+	background: rgba(0, 0, 0, 0.3) !important;
+	padding: 12px !important;
+	border-radius: 6px !important;
+	margin-top: 15px !important;
+	border: 1px solid #4a545c !important;
+	line-height: 1.5 !important;
+}
+
+/* 左列の「自分自身の操作ボタン」を縦に並べるエリア */
+
+.left-action-area {
+	margin-top: 15px !important;
+	display: flex !important;
+	flex-direction: column !important;
+	gap: 8px !important;
+}
+
+.left-action-area .btn-menu {
+	width: 100% !important;
+	margin: 0 !important;
+	padding: 10px 0 !important;
+	box-sizing: border-box !important;
+}
+
+/* 右列パネル（すべてのシステム管理） */
+
+.dashboard-right-panel {
+	width: 64% !important;
+	min-width: 64% !important;
+	max-width: 64% !important;
+	box-sizing: border-box !important;
+	background: #111111 !important;
+	border: 1px solid #222222 !important;
+	border-radius: 8px !important;
+	padding: 25px !important;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dashboard-right-panel h3 {
+	margin-top: 20px !important;
+	margin-bottom: 8px !important;
+}
+
+.dashboard-right-panel h3:first-child {
+	margin-top: 0 !important;
+}
+
+.dashboard-right-panel ul {
+	margin-bottom: 15px !important;
+}
+
+.dashboard-right-panel ul:last-child {
+	margin-bottom: 0 !important;
+}
+
+/* ==========================================================================
+   16. 管理者専用：別の管理者アカウントを追加（admin-user-add.jsp）用スタイル
+   ========================================================================== */
+
+/* 自動生成ボタンのスタイル */
+.item-form-box .form-group #btn-generate-pw {
+	width: auto !important;
+	min-width: 0 !important;
+	max-width: max-content !important;
+	padding: 5px 12px !important;
+	font-size: 12px !important;
+	margin-top: 6px !important;
+	display: inline-block !important;
+	cursor: pointer !important;
+	font-weight: bold !important;
+}
+
+/* サーバーサイドエラーのスタイル */
+.item-form-box .err-msg {
+	color: #ff3333 !important;
+	font-weight: bold !important;
+	background: #2a1111 !important;
+	padding: 10px !important;
+	border: 1px solid #551111 !important;
+	border-radius: 4px !important;
+	margin-bottom: 15px !important;
+	width: 100% !important;
+	box-sizing: border-box !important;
+	text-align: left !important;
+	font-size: 13px !important;
+}
+
+/* 本人確認ラベルのスタイル */
+.item-form-box .form-group label.admin-auth-label {
+	color: #ff9900 !important;
+}
+
+/* ==========================================================================
+   左右独立2カラム配置 ＆ エラー重なり・目玉ズレ完全防止
+   ========================================================================== */
+
+/* フォーム全体を左右2カラムに分割するコンテナ設定 */
+
+.item-form-box.validated-form {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	justify-content: space-between !important;
+	gap: 0 !important;
+}
+
+/* 左右それぞれの縦並びカラムの幅と並びを設定 */
+
+.item-form-box .form-column-left,
+.item-form-box .form-column-right {
+	width: 48% !important;
+	display: flex !important;
+	flex-direction: column !important;
+	box-sizing: border-box !important;
+}
+
+.item-form-box .form-group {
+	display: flex !important;
+	flex-direction: column !important;
+	height: auto !important;
+	min-height: min-content !important;
+	margin-bottom: 25px !important;
+}
+
+.item-form-box .err-msg,
+.item-form-box .button-area {
+	width: 100% !important;
+	clear: both !important;
+}
+
+/* パスワード表示切り替えのラッパー */
+
+.item-form-box .password-wrapper {
+	position: relative !important;
+	width: 100% !important;
+	height: max-content !important;
+	display: block !important;
+	z-index: 10 !important;
+}
+
+.item-form-box .password-wrapper input {
+	width: 100% !important;
+	padding-right: 46px !important;
+	box-sizing: border-box !important;
+}
+
+/* 目のマークのボタン */
+
+.item-form-box .btn-toggle-pw {
+	position: absolute !important;
+	right: 12px !important;
+	top: 50% !important;
+	transform: translateY(-50%) !important;
+	background: none !important;
+	border: none !important;
+	cursor: pointer !important;
+	padding: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	color: #777777 !important;
+	outline: none !important;
+	z-index: 15 !important;
+	height: auto !important;
+	transition: color 0.2s ease, transform 0.1s ease !important;
+}
+
+/* 目のマークにマウスを乗せたときの演出 */
+
+.item-form-box .btn-toggle-pw:hover {
+	color: #bf9f5a !important;
+}
+
+/* 目のマークをクリックした瞬間の微かな沈み込み */
+
+.item-form-box .btn-toggle-pw:active {
+	transform: translateY(-50%) scale(0.9) !important;
+}
+
+.item-form-box #currentAdminPassword {
+	width: 100% !important;
+	padding-right: 46px !important;
+	box-sizing: border-box !important;
+}
+
+.item-form-box #currentAdminPassword {
+	width: 100% !important;
+	padding-right: 46px !important;
+	box-sizing: border-box !important;
+}
+
+.item-form-box #currentAdminPassword-error {
+	display: block !important;
+	position: absolute !important;
+	top: 100% !important;
+	left: 0 !important;
+	margin-top: 2px !important;
+	color: #ff6b6b !important;
+	font-size: 11px !important;
+	font-weight: bold !important;
+	white-space: nowrap !important;
+	width: max-content !important;
+	overflow: visible !important;
+	z-index: 5 !important;
+}
+
+/* リアルタイムバリデーションエラーメッセージ */
+
+.item-form-box .form-group {
+	display: flex !important;
+	flex-direction: column !important;
+	position: relative !important;
+	margin-bottom: 28px !important;
+	height: auto !important;
+}
+
+.item-form-box .form-group .error-msg {
+	display: block !important;
+	position: absolute !important;
+	top: 100% !important;
+	left: 0 !important;
+	margin-top: 2px !important;
+	color: #ff6b6b !important;
+	font-size: 11px !important;
+	font-weight: bold !important;
+	white-space: nowrap !important;
+	width: max-content !important;
+	overflow: visible !important;
+	z-index: 5 !important;
+}
+
+.item-form-box .form-column-left .form-group:last-child {
+	position: relative !important;
+	margin-bottom: 28px !important;
+	height: auto !important;
+}
+
+/* ==========================================================================
+   17. 管理者専用：顧客管理一覧画面（admin-user-list.jsp）用スタイル
+   ========================================================================== */
+
+/* コンテナ枠：商品管理画面と統一感を出すための設定 */
+.admin-customer-container {
+	max-width: 1200px;
+	margin: 40px auto;
+	background: #111;
+	/* 商品管理の背景色に合わせる */
+	padding: 30px;
+	border-radius: 8px;
+	border: 1px solid #222;
+}
+
+.admin-customer-container h1 {
+	color: #fff;
+	font-size: 1.5rem;
+	margin-bottom: 20px;
+}
+
+.admin-customer-container h1 span {
+	display: block;
+	font-size: 0.8rem;
+	color: #888;
+	margin-top: 5px;
+}
+
+/* テーブルスタイル：.admin-table クラスと共通化 */
+.admin-user-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	color: #e0e0e0;
+}
+
+.admin-user-table th {
+	background: #1a1a1a;
+	padding: 15px;
+	text-align: left;
+	border-bottom: 2px solid #333;
+	color: #ff9900;
+	/* 商品管理と同じオレンジ系ヘッダー */
+}
+
+.admin-user-table td {
+	padding: 15px;
+	border-bottom: 1px solid #333;
+}
+
+/* 操作ボタンエリアの調整 */
+.col-action {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+}
+
+/* ヘッダーとデータセルを揃える */
+.admin-user-table th,
+.admin-user-table td {
+	text-align: center;
+}
+
+/* ボタンデザイン：既存の共通スタイルを最大限活用 */
+.btn-user-action {
+	padding: 6px 12px;
+	border-radius: 4px;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 5px;
+	display: inline-block;
+}
+
+.btn-user-edit {
+	background: #28a745;
+	color: white;
+	border: 1px solid #218838;
+}
+
+.btn-user-delete {
+	background: #dc3545;
+	color: white;
+	border: 1px solid #c82333;
+}
+
+/* 区分バッジの調整 */
+.badge-user-status {
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.user-status-admin {
+	background: #d4af37;
+	color: #000;
+}
+
+.user-status-general {
+	background: #555;
+	color: #fff;
+}
+
+/* 会員一覧表示エリアをスクロール対応にする */
+.customer-list-box {
+	max-height: 60vh;
+	overflow-y: auto;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* Chrome, Safari用 スクロールバー非表示 */
+.customer-list-box::-webkit-scrollbar {
+	display: none;
+}
+
+/* スクロール時にテーブルのヘッダーが隠れないようにする工夫 */
+.admin-user-table thead {
+	position: sticky;
+	top: 0;
+	background-color: #1a1a1a;
+	z-index: 10;
+}
+
+/* ==========================================================================
+   18. 管理者削除確認画面用スタイル
+   ========================================================================== */
+
+
+/* 管理者削除確認画面だけ、全体コンテナの幅を制限 */
+.menu-container.admin-customer-container.delete-confirm-page {
+	max-width: 600px !important;
+	margin: 0 auto;
+	padding: 30px !important;
+}
+
+/* フォーム全体を囲むコンテナの調整 */
+.delete-confirm-page.item-form-box {
+	padding: 30px;
+	margin: 40px auto;
+	max-width: 600px !important;
+	width: 90%;
+	background-color: #1a1a1a;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.delete-confirm-page.item-form-box p {
+	line-height: 1.6;
+	margin: 0;
+}
+
+/* フォームグループ（ラベルと入力欄の親） */
+.delete-confirm-page.form-group {
+	position: relative;
+	width: 100%;
+	max-width: 400px;
+	display: flex;
+	flex-direction: column;
+}
+
+/* パスワード入力欄 */
+.delete-confirm-page.form-group input[type="password"],
+.delete-confirm-page.form-group input[type="text"] {
+	padding: 10px;
+	padding-right: 40px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* 目のアイコンボタンの配置 */
+.delete-confirm-page.toggle-password-btn {
+	position: absolute;
+	right: 10px;
+	top: 70%;
+	transform: translateY(-50%);
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	z-index: 10;
+	padding: 0;
+	display: flex;
+	align-items: center;
+}
+
+.delete-confirm-page.toggle-password-btn:hover {
+	color: #333;
+}
+
+.delete-confirm-page.toggle-password-btn svg {
+	width: 20px;
+	height: 20px;
+	color: #666;
+}
+
+.delete-confirm-page #currentAdminPassword {
+	width: 100%;
+	padding: 10px;
+	padding-right: 45px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+/* バリデーションエラーメッセージ */
+.delete-confirm-page.error-msg {
+	color: #ff4444;
+	font-size: 0.85em;
+	margin-top: 5px;
+	display: block;
+	min-height: 1.2em;
+}
+
+/* エラー時の入力枠 */
+.delete-confirm-page input.is-invalid {
+	border: 2px solid #ff4444 !important;
+}
+
+/* 削除実行ボタンとキャンセルボタンのエリア設定 */
+.delete-confirm-page.btn-area {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+/* ボタン共通のサイズ制限 */
+.delete-confirm-page.btn-user-delete,
+.delete-confirm-page.btn-menu {
+	width: 200px;
+	padding: 10px 20px;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+/* 削除実行ボタン */
+.delete-confirm-page.btn-user-delete {
+	background-color: #d9534f;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.delete-confirm-page.btn-user-delete:hover {
+	background-color: #c9302c;
+}
+
+/* 警告文エリア */
+.delete-confirm-page.warning-area {
+	margin-bottom: 20px;
+	/* パスワード入力欄との間に隙間を作る */
+}
+
+/* ==========================================================================
+   19. 会員情報編集画面用スタイル（.edit-page 専用・グリッド配置）
+   ========================================================================== */
+
+/* 全体コンテナの幅を制限 */
+.edit-page.menu-container.admin-customer {
+	max-width: 800px !important;
+	/* 横並びにするため全体の幅を少し広げました */
+	margin: 0 auto;
+	padding: 30px !important;
+	box-sizing: border-box !important;
+}
+
+/* ヘッダーのスタイル */
+.edit-page .list-header h1 {
+	color: #fff;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+/* フォーム全体を囲むコンテナ（Gridレイアウト化） */
+.edit-page .item-form-box.customer-list-box form {
+	display: grid !important;
+	grid-template-columns: 1fr 1fr;
+	/* 左右2分割（50%ずつ） */
+	gap: 20px 30px;
+	/* 縦の隙間20px、横の隙間30px */
+	width: 100% !important;
+}
+
+/* フォームの外枠コンテナ自体の余白調整 */
+.edit-page .item-form-box.customer-list-box {
+	padding: 40px;
+	margin: 0 auto;
+	background-color: #1a1a1a;
+	border-radius: 8px;
+	box-sizing: border-box !important;
+	width: 100% !important;
+}
+
+/* 各項目のグループ化（Gridアイテム化に伴う調整） */
+.edit-page .item-form-box.customer-list-box .form-group {
+	margin-bottom: 0 !important;
+	/* Gridのgapで制御するためマージンは0に */
+	width: 100% !important;
+	box-sizing: border-box !important;
+}
+
+/* 1行目: 会員番号(左) と 氏名(右) を配置 */
+.edit-page .item-form-box.customer-list-box .form-group:nth-of-type(1) {
+	grid-column: 1;
+}
+
+.edit-page .item-form-box.customer-list-box .form-group:nth-of-type(2) {
+	grid-column: 2;
+}
+
+/* 2行目: メールアドレス(左) と 住所(右) を配置 */
+.edit-page .item-form-box.customer-list-box .form-group:nth-of-type(3) {
+	grid-column: 1;
+}
+
+.edit-page .item-form-box.customer-list-box .form-group:nth-of-type(4) {
+	grid-column: 2;
+}
+
+/* 3行目: 会員ランク変更(左下) に配置 */
+.edit-page .item-form-box.customer-list-box .form-group:nth-of-type(5) {
+	grid-column: 1;
+	align-self: end;
+	/* 下揃えにしてボタンの高さと合わせる */
+}
+
+/* 3行目: ボタンエリア(右下) に配置 */
+.edit-page .item-form-box.customer-list-box .btn-area {
+	grid-column: 2;
+	display: flex !important;
+	flex-direction: column !important;
+	/* ボタン同士は縦並び */
+	align-items: stretch !important;
+	/* ボタンの横幅をエリアいっぱいに広げる */
+	gap: 12px;
+	margin-top: 0 !important;
+	/* 上部マージンをリセット */
+	align-self: end;
+	/* 下揃え */
+}
+
+/* ラベルのスタイル */
+.edit-page .item-form-box.customer-list-box .form-group label {
+	display: block !important;
+	margin-bottom: 8px;
+	color: #ff9800;
+	/* オレンジ色のアクセント */
+	font-weight: bold;
+	font-size: 14px;
+}
+
+/* 固定表示テキストの装飾 */
+.edit-page .item-form-box.customer-list-box .form-static-text {
+	display: block !important;
+	width: 100% !important;
+	background-color: #2a2a2a;
+	padding: 12px;
+	border-radius: 4px;
+	color: #eee;
+	margin: 0;
+	font-size: 16px;
+	box-sizing: border-box !important;
+}
+
+/* ランク選択セレクトボックスのスタイル */
+.edit-page .item-form-box.customer-list-box select.form-control {
+	display: block !important;
+	width: 100% !important;
+	padding: 12px;
+	background-color: #2a2a2a;
+	color: white;
+	border: 1px solid #444;
+	border-radius: 4px;
+	cursor: pointer;
+	box-sizing: border-box !important;
+	font-size: 16px;
+}
+
+/* セレクトボックスのフォーカス時 */
+.edit-page .item-form-box.customer-list-box select.form-control:focus {
+	outline: none;
+	border-color: #ff9800;
+}
+
+/* ボタン共通のスタイル */
+.edit-page .item-form-box.customer-list-box .btn-user-action,
+.edit-page .item-form-box.customer-list-box .btn-menu {
+	display: block !important;
+	width: 100% !important;
+	/* 右半分のエリア幅いっぱいに広げる */
+	padding: 12px 20px;
+	text-align: center;
+	border-radius: 4px;
+	text-decoration: none;
+	font-weight: bold;
+	box-sizing: border-box !important;
+	font-size: 15px;
+}
+
+/* 更新ボタン */
+.edit-page .item-form-box.customer-list-box .btn-user-action.btn-user-edit {
+	background-color: #4caf50;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+.edit-page .item-form-box.customer-list-box .btn-user-action.btn-user-edit:hover {
+	background-color: #45a049;
+}
+
+/* キャンセルボタン */
+.edit-page .item-form-box.customer-list-box .btn-menu {
+	background-color: #666;
+	color: white;
+}
+
+.edit-page .item-form-box.customer-list-box .btn-menu:hover {
+	background-color: #555;
+}
+
+/* ==========================================
+   20. スマホ・タブレット用レスポンシブ対応
+   ========================================== */
+@media (max-width: 600px) {
+	.cart-summary-area {
+		align-items: center;
+	}
+
+	.summary-box {
+		width: 100%;
+	}
+
+	.summary-actions {
+		flex-direction: column-reverse;
+		gap: 15px;
+		width: 100%;
+	}
+
+	.summary-actions form,
+	.summary-actions .btn-action-primary {
+		width: 100%;
+		text-align: center;
+	}
 }

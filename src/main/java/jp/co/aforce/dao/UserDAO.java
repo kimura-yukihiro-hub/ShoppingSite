@@ -3,6 +3,8 @@ package jp.co.aforce.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.co.aforce.beans.User;
 
@@ -11,7 +13,8 @@ public class UserDAO extends DAO {
 		User user = null;
 
 		//実行するSQL文
-		String sql = "select * from users where member_id = ? and password = ?";
+		String sql = "select member_id, password, last_name, first_name, address, mail_address, meat_rank "
+				+ "from users where member_id = ? and password = ?";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement st = con.prepareStatement(sql)) {
@@ -171,4 +174,80 @@ public class UserDAO extends DAO {
 
 	}
 
+	// 全会員情報をデータベースから取得するメソッド
+	public List<User> searchAll() throws Exception {
+		//リストを初期化
+		List<User> userList = new ArrayList<>();
+
+		//全聚徳するSQL
+		String sql = "select * from users";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement st = con.prepareStatement(sql);
+				ResultSet rs = st.executeQuery()) {
+
+			while (rs.next()) {
+				User user = new User();
+				user.setMemberId(rs.getString("MEMBER_ID"));
+				user.setPassword(rs.getString("PASSWORD"));
+				user.setLastName(rs.getString("LAST_NAME"));
+				user.setFirstName(rs.getString("FIRST_NAME"));
+				user.setAddress(rs.getString("ADDRESS"));
+				user.setMailAddress(rs.getString("MAIL_ADDRESS"));
+				user.setMeatRank(rs.getInt("MEAT_RANK"));
+
+				// リストに追加
+				userList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return userList;
+	}
+
+	// 管理者（meat_rank が 5）のみをデータベースから取得するメソッド
+	public List<User> searchAllAdmins() throws Exception {
+		List<User> adminList = new ArrayList<>();
+
+		// ランクが5のユーザーだけを抽出するSQL
+		String sql = "select * from users where meat_rank = 5";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement st = con.prepareStatement(sql);
+				ResultSet rs = st.executeQuery()) {
+
+			while (rs.next()) {
+				User user = new User();
+				user.setMemberId(rs.getString("MEMBER_ID"));
+				user.setPassword(rs.getString("PASSWORD"));
+				user.setLastName(rs.getString("LAST_NAME"));
+				user.setFirstName(rs.getString("FIRST_NAME"));
+				user.setAddress(rs.getString("ADDRESS"));
+				user.setMailAddress(rs.getString("MAIL_ADDRESS"));
+				user.setMeatRank(rs.getInt("MEAT_RANK"));
+				adminList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return adminList;
+	}
+
+	//会員ランクを更新するメソッド
+	public int updateRank(String memberId, int meatRank) throws Exception {
+
+		// ランクのみを更新するSQL
+		String sql = "update users set meat_rank = ? where member_id = ?";
+
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql)) {
+
+			st.setInt(1, meatRank);
+			st.setString(2, memberId);
+
+			return st.executeUpdate();
+		}
+	}
 }

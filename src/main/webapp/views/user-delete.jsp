@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,20 +23,26 @@
 		<div class="form-group">
 			<label>現在の会員番号 (ID)</label>
 			<div class="confirm-value"
-				style="border-color: rgba(255, 82, 82, 0.2);">${sessionScope.loginUser.memberId}</div>
+				style="border-color: rgba(255, 82, 82, 0.2);">
+				<c:out value="${sessionScope.loginUser.memberId}" />
+			</div>
 		</div>
 
 		<div class="form-group">
 			<label>お名前</label>
 			<div class="confirm-value"
-				style="border-color: rgba(255, 82, 82, 0.2);">${sessionScope.loginUser.lastName}
-				${sessionScope.loginUser.firstName}</div>
+				style="border-color: rgba(255, 82, 82, 0.2);">
+				<c:out value="${sessionScope.loginUser.lastName}" />
+				<c:out value="${sessionScope.loginUser.firstName}" />
+			</div>
 		</div>
 
 		<div class="form-group">
 			<label>メールアドレス</label>
 			<div class="confirm-value"
-				style="border-color: rgba(255, 82, 82, 0.2);">${sessionScope.loginUser.mailAddress}</div>
+				style="border-color: rgba(255, 82, 82, 0.2);">
+				<c:out value="${sessionScope.loginUser.mailAddress}" />
+			</div>
 		</div>
 
 		<%--実際に削除処理を実行するアクションへポスト --%>
@@ -45,7 +52,7 @@
 
 			<%-- 誰のデータを消すかを特定するため、会員番号を hidden で送信 --%>
 			<input type="hidden" name="memberId"
-				value="${sessionScope.loginUser.memberId}">
+				value="<c:out value='${sessionScope.loginUser.memberId}'/>">
 
 			<%--退会確定前の最終本人確認（パスワード入力欄） --%>
 			<div class="form-group"

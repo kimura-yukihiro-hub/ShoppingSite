@@ -1,6 +1,6 @@
 /**
- * パスワード表示・非表示(目玉アイコン)切り替え・共通バリデーションスクリプト
- * ログイン画面、会員情報変更画面のどちらでも安全に動作します。
+ * パスワード表示・非表示(目玉アイコン)切り替えスクリプト（完全決定版）
+ * ログイン画面、会員情報新規登録画面、会員情報変更画面、管理者追加画面のすべてで安全に動作します。
  */
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	// ==========================================================================
-	// 1. 新しいパスワード / 通常ログイン用パスワードの表示切り替え
+	// 1. 新しいパスワード / 通常ログイン用パスワードの表示切り替え（右側・上）
 	// ==========================================================================
 	const passwordInput = document.getElementById('password');
 	const toggleButton = document.getElementById('toggle-password');
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	if (passwordInput && toggleButton && eyeIcon) {
 		toggleButton.style.position = "absolute";
-		toggleButton.style.zIndex = "20"; 
+		toggleButton.style.zIndex = "20";
 		toggleButton.style.cursor = "pointer";
 
 		toggleButton.addEventListener('click', function(e) {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	if (currentInput && toggleCurrentBtn && eyeIconCurrent) {
 		toggleCurrentBtn.style.position = "absolute";
-		toggleCurrentBtn.style.zIndex = "20"; /* 💡 10から20に修正（エラーメッセージをすり抜ける） */
+		toggleCurrentBtn.style.zIndex = "20";
 		toggleCurrentBtn.style.cursor = "pointer";
 
 		toggleCurrentBtn.addEventListener('click', function(e) {
@@ -62,14 +62,17 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	// ==========================================================================
-	// 3. パスワード（確認用・新規登録画面用）の制御
+	// 3. パスワード（確認用・新規登録画面用＆管理者追加画面用）の制御（右側・下）
 	// ==========================================================================
-	
 	const confirmInput = document.getElementById('passwordConfirm');
 	const toggleConfirmBtn = document.getElementById('toggle-password-confirm');
 	const eyeIconConfirm = document.getElementById('eye-icon-confirm');
-	
+
 	if (confirmInput && toggleConfirmBtn && eyeIconConfirm) {
+		toggleConfirmBtn.style.position = "absolute";
+		toggleConfirmBtn.style.zIndex = "20";
+		toggleConfirmBtn.style.cursor = "pointer";
+
 		toggleConfirmBtn.addEventListener('click', function(e) {
 			e.preventDefault(); e.stopPropagation();
 			togglePasswordVisibility(confirmInput, toggleConfirmBtn, eyeIconConfirm);
@@ -77,7 +80,25 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	// ==========================================================================
-	// 4. ログインフォーム専用のバリデーション（入力チェック）処理の復活
+	// 4. 💡あなたの現在のパスワード（管理者追加画面・本人確認用、左側・下）の制御
+	// ==========================================================================
+	const adminCurrentInput = document.getElementById('currentAdminPassword');
+	const toggleAdminCurrentBtn = document.getElementById('toggle-password-admin-current');
+	const eyeIconAdminCurrent = document.getElementById('eye-icon-admin-current');
+
+	if (adminCurrentInput && toggleAdminCurrentBtn && eyeIconAdminCurrent) {
+		toggleAdminCurrentBtn.style.position = "absolute";
+		toggleAdminCurrentBtn.style.zIndex = "20";
+		toggleAdminCurrentBtn.style.cursor = "pointer";
+
+		toggleAdminCurrentBtn.addEventListener('click', function(e) {
+			e.preventDefault(); e.stopPropagation();
+			togglePasswordVisibility(adminCurrentInput, toggleAdminCurrentBtn, eyeIconAdminCurrent);
+		});
+	}
+
+	// ==========================================================================
+	// 5. ログインフォーム専用のバリデーション（入力チェック）処理
 	// ==========================================================================
 	const loginForm = document.getElementById('login-form');
 	const memberIdInput = document.getElementById('memberId');

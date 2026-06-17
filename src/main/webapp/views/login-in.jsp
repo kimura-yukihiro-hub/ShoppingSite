@@ -48,6 +48,12 @@
 			<button type="button" class="btn-register"
 				onclick="location.href='${pageContext.request.contextPath}/views/user-add.jsp'">新規会員登録</button>
 		</form>
+
+		<!-- ゲストとして商品一覧(サーバー経由)へ直接戻るための動線 -->
+		<div>
+			<a href="${pageContext.request.contextPath}/ItemList.action"
+				class="link-guest"> ログインせずに商品一覧を見る（ゲスト） </a>
+		</div>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/password-toggle.js"></script>
 </body>

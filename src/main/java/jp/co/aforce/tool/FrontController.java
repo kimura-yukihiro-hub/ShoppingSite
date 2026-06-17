@@ -9,75 +9,112 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class FrontController
- */
 @WebServlet("*.action")
+@jakarta.servlet.annotation.MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+		maxFileSize = 1024 * 1024 * 10, // 10MB
+		maxRequestSize = 1024 * 1024 * 50 // 50MB
+)
 public class FrontController extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response); // doGetが呼ばれてもdoPostにバトンタッチする
+		doPost(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		try {
+			// リクエストおよびレスポンスの文字化けを防止するエンコーディングの確定
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+
 			String path = request.getServletPath();
-			if (!path.equalsIgnoreCase("/Login.action") && !path.equalsIgnoreCase("/UserAdd.action")
-					&& !path.equalsIgnoreCase("/UserAddExecute.action")) {
 
-				// 現在のセッションの部屋を取得（存在しない場合は新しく作らない）
-				HttpSession session = request.getSession(false);
-
-				// セッション自体がない、またはセッションの中にログインユーザーの記憶（loginUser）がない場合
-				if (session == null || session.getAttribute("loginUser") == null) {
-					request.getRequestDispatcher("/views/login-in.jsp").forward(request, response);
-					return;
-				}
-
-				//管理者画面の不正アクセス防止ガード(認可チェック)
-				// 1. セッションからログインしているユーザーの情報をBeanとして取得
+			// 1. 管理者専用ページのガードレール
+			HttpSession session = request.getSession(false);
+			if (session != null && session.getAttribute("loginUser") != null) {
 				jp.co.aforce.beans.User loginUser = (jp.co.aforce.beans.User) session.getAttribute("loginUser");
 
-				//2. ブラウザが要求してきたURL（アクション名）が「/Admin」から始まっているか判定
-				if (path.startsWith("/Admin")) {
-
-					//3. もし管理者用URLなのに、肉ランクが「5(管理者)」でなければ即座にブロック
+				// URLパスが "/admin" から始まる特権エリアへの不正進入をブロック
+				if (path.toLowerCase().startsWith("/admin")) {
 					if (loginUser.getMeatRank() != 5) {
 						request.setAttribute("errorTitle", "アクセス権限がありません");
-						request.setAttribute("errorMessage", "このページは管理者専用です。一般ユーザーはアクセスできません。");
-						request.setAttribute("errorBackUrl", "UserMenu.action"); // ボタンを押したら安全に一般マイページへ戻す
+						request.setAttribute("errorMessage", "このページは最高級管理者専用です。一般ユーザーのアカウントではアクセスできません。");
+						request.setAttribute("errorBackUrl", "UserMenu.action");
 						request.setAttribute("errorBtnText", "マイページへ戻る");
-
-						// データベースや本来のActionクラスへ一切触れさせずにエラー画面へフォワード
 						request.getRequestDispatcher("/views/login-error.jsp").forward(request, response);
-						return; // ここで通信を強制終了させてハッカーをシャットアウト
+						return;
 					}
 				}
 			}
-			String name = "jp.co.aforce.servlet." + path.substring(1).replace(".action", "Action");
 
-			// リフレクションで、文字列から自動的にActionクラスを実体化
-			Action action = (Action) Class.forName(name).getDeclaredConstructor().newInstance();
+			// 2. URLをクラス名（Action名）にパースして特定する分岐処理
+			String actionName = path.substring(1).replace(".action", "");
+			String className;
 
-			// 各Actionのexecute()メソッドを呼び出す
-			String url = action.execute(request, response);
-			if (url != null) {
-				if (url.startsWith("redirect:")) {
-					// 「redirect:」の文字を切り取って、そのURLへリダイレクトさせる
-					String redirectUrl = url.replace("redirect:", "");
-					response.sendRedirect(request.getContextPath() + "/" + redirectUrl);
-				} else {
-					request.getRequestDispatcher("/views/" + url).forward(request, response);
-				}
+			if (actionName.equalsIgnoreCase("itemdetail")) {
+				className = "ItemDetailAction";
+			} else if (actionName.equalsIgnoreCase("itemlist")) {
+				className = "ItemListAction";
+			} else if (actionName.equalsIgnoreCase("login")) {
+				className = "LoginAction";
+			} else if (actionName.equalsIgnoreCase("itemdelete")) {
+				className = "ItemDeleteAction";
+			} else if (actionName.equalsIgnoreCase("itemedit")) {
+				className = "ItemEditAction";
+			} else if (actionName.equalsIgnoreCase("itemupdate")) {
+				className = "ItemUpdateAction";
+			} else if (actionName.equalsIgnoreCase("adminsales")) {
+				className = "AdminSalesAction";
+			} else {
+				className = actionName.substring(0, 1).toUpperCase() + actionName.substring(1) + "Action";
 			}
-		} catch (Exception e) {
+
+			// 3. Javaのリフレクション（動的生成）を使って、文字列から対象のActionクラスを実体化
+			Action action = (Action) Class.forName("jp.co.aforce.servlet." + className)
+					.getDeclaredConstructor()
+					.newInstance();
+
+			// 4. 親クラス（Action）に定義された自動検門所メソッド「start」を起動！
+			String url = action.start(request, response);
+
+			// 5. Actionクラスから返ってきた戻り値の文字列に応じて、フォワードとリダイレクトを鮮やかに切り替え
+			if (url.startsWith("redirect:")) {
+				// 重複送信（ブラウザのリロードによる二重決済や二重登録）を防ぐためのリダイレクト
+				response.sendRedirect(request.getContextPath() + "/" + url.replace("redirect:", ""));
+			} else {
+				// 通常の画面表示用フォワード（共通して /views/ フォルダ内のJSPへ案内）
+				request.getRequestDispatcher("/views/" + url).forward(request, response);
+			}
+
+		} catch (ClassNotFoundException e) {
+			// URLに対応するActionクラス（Javaファイル）が物理的に見つからなかった場合の404系エラーガード
 			e.printStackTrace();
-			//自分では解決できない重大なエラー（例外）が発生したときに、それをTomcatに報告して、処理を安全に強制終了させる命令
-			throw new ServletException(e);
+			request.setAttribute("errorTitle", "ページが見つかりません");
+			request.setAttribute("errorMessage", "リクエストされたURLに対応するアクション（" + e.getMessage() + "）が存在しないか、現在メンテナンス中です。");
+			request.setAttribute("errorBackUrl", "login-in.jsp");
+			request.setAttribute("errorBtnText", "トップ画面へ戻る");
+			forwardToErrorPage(request, response);
+
+		} catch (Exception e) {
+			// それ以外の未知のシステムエラーや致命的なクラッシュはここで一網打尽
+			e.printStackTrace();
+			request.setAttribute("errorTitle", "システムエラー");
+			request.setAttribute("errorMessage", "大変申し訳ありません。リクエストの転送処理中にコントローラー層で予期せぬ重大な例外が発生しました。");
+			request.setAttribute("errorBackUrl", "login-in.jsp");
+			request.setAttribute("errorBtnText", "トップ画面へ戻る");
+			forwardToErrorPage(request, response);
 		}
 	}
 
+	//エラー画面（login-error.jsp）へのフォワードを安全に実行する内部共通補助メソッド
+
+	private void forwardToErrorPage(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.getRequestDispatcher("/views/login-error.jsp").forward(request, response);
+		} catch (Exception ex) {
+			ex.printStackTrace(); // 万が一JSPそのものが消失していた場合の最終ログ出力
+		}
+	}
 }

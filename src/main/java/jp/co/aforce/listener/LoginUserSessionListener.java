@@ -40,7 +40,6 @@ public class LoginUserSessionListener implements HttpSessionAttributeListener {
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		// セッションに "loginUser" が保存されたとき
 		if ("loginUser".equals(event.getName())) {
-
 			User user = (User) event.getValue();
 			if (user != null) {
 				// ログイン成功時にマップに登録する
@@ -70,7 +69,7 @@ public class LoginUserSessionListener implements HttpSessionAttributeListener {
 	public void sessionDestroyed(HttpSessionEvent se) {
 		HttpSession session = se.getSession();
 
-		// サーバーのメモリを全スキャンし、消滅したセッションと同じものを完全に削除してロックを解放する
+		// サーバーのメモリからセッションが完全消滅したとき、マップ内からも連動して削除し、重複ログインロックを解放する
 		loginUsers.values().removeIf(savedSession -> {
 			try {
 				return savedSession.getId().equals(session.getId());
@@ -81,6 +80,6 @@ public class LoginUserSessionListener implements HttpSessionAttributeListener {
 	}
 
 	public void sessionCreated(HttpSessionEvent se) {
-		//新規セッション作成時はなにもしない
+		// 新規セッション作成時はなにもしない
 	}
 }
