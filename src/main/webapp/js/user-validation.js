@@ -1,8 +1,8 @@
 /**
- * 会員情報新規登録＆変更＆管理者追加画面共通：リアルタイム＆送信時バリデーション（user-validation.js - 最終完全版）
+ * 会員情報新規登録＆変更＆管理者追加画面共通：リアルタイム＆送信時バリデーション
  */
 document.addEventListener("DOMContentLoaded", function() {
-	// 💡 フォーム要素の取得
+	// フォーム要素の取得
 	const form = document.querySelector(".validated-form") || document.querySelector(".item-form-box");
 	if (!form) return;
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		if (element) element.textContent = "";
 	}
 
-	// 各種入力項目・エラー表示スパンの要素取得（💡最上部で1回だけ宣言することで重複エラーを防止）
+	// 各種入力項目・エラー表示スパンの要素取得（最上部で1回だけ宣言することで重複エラーを防止）
 	const lastNameInput = document.getElementById("lastName");
 	const firstNameInput = document.getElementById("firstName");
 	const nameError = document.getElementById("name-error");
@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		if (!currentPasswordInput || !currentPasswordError) return true;
 		const value = currentPasswordInput.value;
 
-		// 💡 解決：一回入力してバックスペース等で完全に消した瞬間、即座に必須エラーへ復帰させる
+		// 一回入力してバックスペース等で完全に消した瞬間、即座に必須エラーへ復帰させる
 		if (value === "") {
 			applyNeonRedStyle(currentPasswordError, "⚠️ 本人確認のため、現在のパスワードを入力してください。");
 			return false;
@@ -356,6 +356,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		if (hasError) {
 			e.preventDefault(); // JavaのAction/Servletへの送信動作を停止
+
+			// エラーがある最初の要素を探してフォーカス
+			const firstErrorInput = form.querySelector(".is-invalid") || form.querySelector("input:invalid");
+			if (firstErrorInput) {
+				firstErrorInput.focus();
+			}
 			alert("正しく入力されていない項目があります。\n赤文字の指示に従って修正してください。");
 		}
 	});

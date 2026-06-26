@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>退会完了</title>
 <meta http-equiv="refresh"
-	content="10;URL=${pageContext.request.contextPath}/Login.action">
+	content="10;URL=${pageContext.request.contextPath}/views/login-in.jsp">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
 </head>
@@ -23,7 +23,7 @@
 		<p class="timer-msg">⏰ 10秒後に自動的にログイン画面へ戻ります。</p>
 
 		<div class="btn-area">
-			<a href="${pageContext.request.contextPath}/Login.action"
+			<a href="${pageContext.request.contextPath}/views/login-in.jsp"
 				class="btn-action-primary">ログイン画面へ</a>
 		</div>
 	</div>

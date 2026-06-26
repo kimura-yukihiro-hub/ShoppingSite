@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 <link rel="stylesheet" href="/ShoppingSite/css/style.css">
 </head>
 <body>
-	<div class="form-container">
+	<div class="form-container user-update-page">
 		<h2>会員情報変更</h2>
 		<p style="font-size: 13px; opacity: 0.7; margin-bottom: 20px;">変更したい項目を入力してください。</p>
 
@@ -96,7 +97,6 @@
 					<input type="password" id="currentPassword" name="currentPassword"
 						placeholder="本人確認のため元のパスワードを入力" maxlength="32">
 
-					<%-- 💡 JavaScript側（password-toggle.js）の第2の命令と100%完全に合致する一意のIDを設定します --%>
 					<button type="button" id="toggle-password-current"
 						class="btn-toggle-pw" aria-label="パスワードを表示">
 						<svg id="eye-icon-current" xmlns="http://w3.org" width="18"

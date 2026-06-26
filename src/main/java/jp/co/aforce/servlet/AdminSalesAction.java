@@ -62,7 +62,6 @@ public class AdminSalesAction extends Action {
 			request.setAttribute("typeStats", typeStats);
 			request.setAttribute("categoryStats", categoryStats);
 			request.setAttribute("productStats", productStats);
-			System.out.println("DEBUG: categoryStats size = " + (categoryStats != null ? categoryStats.size() : "null"));
 
 			return "admin-sales-dashbord.jsp";
 

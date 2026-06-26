@@ -22,9 +22,20 @@ public class LoginAction extends Action {
 			String memberId = request.getParameter("memberId");
 			String password = request.getParameter("password");
 
+			if (memberId == null || password == null || memberId.trim().isEmpty() || password.trim().isEmpty()) {
+				request.setAttribute("errorTitle", "入力エラー");
+				request.setAttribute("errorMessage", "会員番号とパスワードを入力してください。");
+				request.setAttribute("errorBackUrl", "views/login-in.jsp");
+				request.setAttribute("errorBtnText", "ログイン画面へ戻る");
+				return "login-error.jsp";
+			}
+
 			if (!memberId.matches("^[a-zA-Z0-9\\-]+$") || !password.matches("^[a-zA-Z0-9\\-_#\\$%]+$")) {
 				// もしJavaScriptをすり抜けて不正な文字が届いたら、即座にエラー画面へ突き返す
-				request.setAttribute("errorMessage", "不正な文字入力が検出されました。");
+				request.setAttribute("errorTitle", "入力内容エラー");
+				request.setAttribute("errorMessage", "使用できない文字が含まれています。");
+				request.setAttribute("errorBackUrl", "views/login-in.jsp");
+				request.setAttribute("errorBtnText", "ログイン画面へ戻る");
 				return "login-error.jsp";
 			}
 			//UserDAOを呼び出して一致する会員を検索
@@ -37,11 +48,18 @@ public class LoginAction extends Action {
 				//二重ログインのブロック処理
 				if (jp.co.aforce.listener.LoginUserSessionListener.isLoggedIn(memberId)) {
 					// すでに別の場所でログインされている場合は、専用のエラー画面へ移動させる
-					request.setAttribute("errorMessage", "このアカウントはすでに<br>別の端末でログイン中です。");
+					request.setAttribute("errorTitle", "二重ログイン禁止");
+					request.setAttribute("errorMessage", "このアカウントはすでに別の端末でログイン中です。");
+					request.setAttribute("errorBackUrl", "views/login-in.jsp");
+					request.setAttribute("errorBtnText", "ログイン画面へ戻る");
 					return "login-error.jsp";
 				}
 
-				//ログイン成功の時
+				// 購入合計金額をDBから取得してBeanにセット
+				long totalAmount = dao.getTotalPurchaseAmount(loginUser.getMemberId());
+				loginUser.setTotalPurchaseAmount(totalAmount);
+
+				// ログイン成功の時
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUser", loginUser);
 				// ログインしたまま画面を30分放置すると、自動的にログインの記憶が消滅する安全装置が発動する
@@ -60,13 +78,18 @@ public class LoginAction extends Action {
 			} else {
 				//ログイン失敗の時
 				//ユーザーが見つからなかった場合は、エラー専用画面へ移動
-				request.setAttribute("errorMessage", "会員番号もしくは<br>パスワードが違います");
+				request.setAttribute("errorTitle", "ログイン失敗");
+				request.setAttribute("errorMessage", "会員番号もしくはパスワードが違います。");
+				request.setAttribute("errorBackUrl", "views/login-in.jsp");
+				request.setAttribute("errorBtnText", "ログイン画面へ戻る");
 				return "login-error.jsp";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorTitle", "ログインシステムエラー");
 			request.setAttribute("errorMessage", "認証処理中に、サーバーまたはデータベースで予期せぬ重大なエラーが発生しました。時間をおいて再度お試しください。");
+			request.setAttribute("errorBackUrl", "views/login-in.jsp");
+			request.setAttribute("errorBtnText", "ログイン画面へ戻る");
 			return "login-error.jsp";
 		}
 	}

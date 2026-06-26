@@ -15,25 +15,55 @@
 	<div class="list-container">
 
 		<header class="list-header">
-			<h1>
-				厳選肉専門店 <span>Premium Meat Selection</span>
-			</h1>
-			<div class="header-user-nav">
-				<c:choose>
-					<c:when test="${not empty sessionScope.loginUser}">
-						<span class="welcome-msg">ようこそ、<strong><c:out
-									value="${sessionScope.loginUser.lastName}" /></strong> 様
-						</span>
-						<a href="${pageContext.request.contextPath}/UserMenu.action"
-							class="btn-nav">マイページ</a>
-					</c:when>
-					<c:otherwise>
-						<span class="welcome-msg">ゲスト 様</span>
-						<a href="${pageContext.request.contextPath}/views/login-in.jsp"
-							class="btn-nav btn-highlight">ログイン</a>
-					</c:otherwise>
-				</c:choose>
+			<div class="header-top">
+				<h1>
+					厳選肉専門店 <span>Premium Meat Selection</span>
+				</h1>
+				<div class="header-user-nav">
+					<c:choose>
+						<c:when test="${not empty sessionScope.loginUser}">
+							<span class="welcome-msg">ようこそ、<strong><c:out
+										value="${sessionScope.loginUser.lastName}" /></strong> 様
+							</span>
+							<a href="${pageContext.request.contextPath}/UserMenu.action"
+								class="btn-nav">マイページ</a>
+						</c:when>
+						<c:otherwise>
+							<span class="welcome-msg">ゲスト 様</span>
+							<a href="${pageContext.request.contextPath}/views/login-in.jsp"
+								class="btn-nav btn-highlight">ログイン</a>
+						</c:otherwise>
+					</c:choose>
+				</div>
 			</div>
+
+			<%-- ログイン時のみランクゲージを表示 --%>
+			<c:if test="${not empty sessionScope.loginUser}">
+				<div class="header-rank-status">
+					<div class="rank-header-info">
+						<span class="current-rank"> ランク: <strong
+							class="rank-text-color">${rankName}</strong>
+						</span>
+
+						<%-- ランクに応じて表示を切り替える --%>
+						<span class="next-rank-amount"> <c:choose>
+								<%-- 最高ランクのときは何も出力しない --%>
+								<c:when test="${loginUser.meatRank >= 4}">
+								</c:when>
+								<%-- それ以外はメッセージを表示 --%>
+								<c:otherwise>
+            次のランクまであと <strong><fmt:formatNumber
+											value="${remainingAmount}" pattern="#,###" /> 円</strong>
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</div>
+					<div class="header-gauge-bar">
+						<div class="gauge-progress"
+							style="width: ${rankProgressPercent}%;"></div>
+					</div>
+				</div>
+			</c:if>
 		</header>
 
 		<main class="cart-main-container">
@@ -78,16 +108,28 @@
 												action="${pageContext.request.contextPath}/CartUpdate.action"
 												method="post" class="inline-form">
 												<input type="hidden" name="itemId"
-													value="${cartItem.item.itemId}"> <select
-													name="quantity" onchange="this.form.submit();"
+													value="${cartItem.item.itemId}">
+
+												<%-- 在庫上限（最大10）と実際の在庫数の小さい方を計算 --%>
+												<c:set var="maxStock"
+													value="${not empty cartItem.item.stock ? cartItem.item.stock : 0}" />
+												<c:set var="limit" value="${maxStock > 10 ? 10 : maxStock}" />
+
+												<select name="quantity" onchange="this.form.submit();"
 													class="cart-select">
-													<%-- 在庫上限（最大10）までループ --%>
-													<c:forEach var="i" begin="1"
-														end="${cartItem.item.stock > 10 ? 10 : cartItem.item.stock}">
-														<option value="${i}"
-															${cartItem.quantity == i ? 'selected' : ''}>${i}
-														</option>
-													</c:forEach>
+													<c:choose>
+														<c:when test="${limit > 0}">
+															<c:forEach var="i" begin="1" end="${limit}">
+																<option value="${i}"
+																	${cartItem.quantity == i ? 'selected' : ''}>
+																	${i}</option>
+															</c:forEach>
+														</c:when>
+														<c:otherwise>
+															<%-- 万が一在庫が0の場合、無効なオプションを表示 --%>
+															<option value="0" disabled>在庫切れ</option>
+														</c:otherwise>
+													</c:choose>
 												</select>
 											</form>
 										</td>
@@ -124,9 +166,8 @@
 							<c:if var="hasDiscount"
 								test="${not empty discountRatePercent && discountRatePercent > 0}">
 								<div class="summary-row discount-row">
-									<span class="discount-label">✨ <c:out
-											value="${rankName}" />特典 (<c:out
-											value="${discountRatePercent}" />%OFF)：
+									<span class="discount-label"> <c:out value="${rankName}" />特典
+										(<c:out value="${discountRatePercent}" />%OFF)：
 									</span> <strong class="discount-price">-<fmt:formatNumber
 											value="${discountAmount}" pattern="#,###" /> 円
 									</strong>

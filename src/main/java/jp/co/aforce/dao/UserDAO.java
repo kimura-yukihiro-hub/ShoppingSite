@@ -9,6 +9,24 @@ import java.util.List;
 import jp.co.aforce.beans.User;
 
 public class UserDAO extends DAO {
+
+	// 購入合計金額を取得するメソッド
+	public long getTotalPurchaseAmount(String memberId) throws Exception {
+		long total = 0;
+		String sql = "select sum(price * quantity) from purchases where member_id = ?";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement st = con.prepareStatement(sql)) {
+			st.setString(1, memberId);
+			try (ResultSet rs = st.executeQuery()) {
+				if (rs.next()) {
+					total = rs.getLong(1);
+				}
+			}
+		}
+		return total;
+	}
+
 	public User search(String memberId, String password) throws Exception {
 		User user = null;
 
@@ -174,6 +192,33 @@ public class UserDAO extends DAO {
 
 	}
 
+	// 会員番号(ID)を元に1人の会員情報を取得するメソッド
+	public User getUserById(String memberId) throws Exception {
+		User user = null;
+		String sql = "select * from users where member_id = ?";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement st = con.prepareStatement(sql)) {
+
+			st.setString(1, memberId);
+
+			try (ResultSet rs = st.executeQuery()) {
+				if (rs.next()) {
+					user = new User();
+					user.setMemberId(rs.getString("MEMBER_ID"));
+					user.setPassword(rs.getString("PASSWORD"));
+					user.setLastName(rs.getString("LAST_NAME"));
+					user.setFirstName(rs.getString("FIRST_NAME"));
+					user.setAddress(rs.getString("ADDRESS"));
+					user.setMailAddress(rs.getString("MAIL_ADDRESS"));
+					user.setMeatRank(rs.getInt("MEAT_RANK"));
+					user.setLastPurchaseDate(rs.getTimestamp("LAST_PURCHASE_DATE"));
+				}
+			}
+		}
+		return user;
+	}
+
 	// 全会員情報をデータベースから取得するメソッド
 	public List<User> searchAll() throws Exception {
 		//リストを初期化
@@ -235,6 +280,17 @@ public class UserDAO extends DAO {
 		return adminList;
 	}
 
+	// 現在時刻で最終購入日を更新するメソッド
+	public void updateLastPurchaseDate(String memberId) throws Exception {
+		// 現在時刻(NOW)で最終購入日を更新するSQL
+		String sql = "update users set last_purchase_date = now() where member_id = ?";
+		try (Connection con = this.getConnection();
+				PreparedStatement st = con.prepareStatement(sql)) {
+			st.setString(1, memberId);
+			st.executeUpdate();
+		}
+	}
+
 	//会員ランクを更新するメソッド
 	public int updateRank(String memberId, int meatRank) throws Exception {
 
@@ -246,6 +302,20 @@ public class UserDAO extends DAO {
 
 			st.setInt(1, meatRank);
 			st.setString(2, memberId);
+
+			return st.executeUpdate();
+		}
+	}
+
+	// パスワードを更新するメソッド
+	public int updatePassword(int memberId, String password) throws Exception {
+		// パスワードを更新するSQL
+		String sql = "update users set password = ? where member_id = ?";
+
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql)) {
+			st.setString(1, password);
+			st.setInt(2, memberId);
 
 			return st.executeUpdate();
 		}

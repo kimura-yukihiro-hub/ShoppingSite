@@ -9,6 +9,10 @@ import jp.co.aforce.tool.Action;
 
 public class UserAddAction extends Action {
 
+	public UserAddAction() {
+		this.requireLogin = false;
+	}
+
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		try {

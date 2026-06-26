@@ -65,6 +65,14 @@ public class FrontController extends HttpServlet {
 				className = "ItemEditAction";
 			} else if (actionName.equalsIgnoreCase("itemupdate")) {
 				className = "ItemUpdateAction";
+			} else if (actionName.equalsIgnoreCase("lotbulkupdate")) {
+				className = "LotBulkUpdateAction";
+			} else if (actionName.equalsIgnoreCase("adminview")) {
+				className = "AdminViewAction";
+			} else if (actionName.equalsIgnoreCase("itemadd")) {
+				className = "ItemAddAction";
+			} else if (actionName.equalsIgnoreCase("lotdetail")) {
+				className = "LotDetailAction";
 			} else if (actionName.equalsIgnoreCase("adminsales")) {
 				className = "AdminSalesAction";
 			} else {

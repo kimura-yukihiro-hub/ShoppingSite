@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,13 +38,29 @@
 					<div class="success-items-list">
 						<c:forEach var="cartItem" items="${successCart}">
 							<div class="success-item-row">
-								<span class="success-item-name"><c:out
-										value="${cartItem.item.itemName}" /></span> <span
-									class="success-item-qty"><c:out
-										value="${cartItem.quantity}" /> パック</span> <span
-									class="success-item-subtotal"> <fmt:formatNumber
-										value="${cartItem.subtotal}" pattern="#,###" /> 円
-								</span>
+								<%-- 上段：商品名・数量・金額 --%>
+								<div class="success-item-header">
+									<span class="success-item-name"><c:out
+											value="${cartItem.item.itemName.replaceAll('\\\\s*\\\\(.*\\\\)', '')}" /></span>
+									<span class="success-item-qty"> <c:out
+											value="${cartItem.quantity}" /> パック
+									</span> <span class="success-item-subtotal"> <fmt:formatNumber
+											value="${cartItem.subtotal}" pattern="#,###" /> 円
+									</span>
+								</div>
+
+								<%-- 下段：ロット番号 (headerの外に出す) --%>
+								<div class="success-item-lot">
+									(ロットNo:
+									<c:choose>
+										<c:when test="${fn:length(cartItem.serialNumber) > 30}">
+											<c:out value="${fn:substring(cartItem.serialNumber, 0, 30)}" />...</c:when>
+										<c:otherwise>
+											<c:out value="${cartItem.serialNumber}" />
+										</c:otherwise>
+									</c:choose>
+									)
+								</div>
 							</div>
 						</c:forEach>
 					</div>

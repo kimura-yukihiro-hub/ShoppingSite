@@ -9,9 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import jp.co.aforce.beans.CartItem;
 import jp.co.aforce.tool.Action;
 
+//買い物かご（カート）内の特定商品の数量を変更（上書き）するアクションクラス
 
- //買い物かご（カート）内の特定商品の数量を変更（上書き）するアクションクラス
- 
 public class CartUpdateAction extends Action {
 
 	public CartUpdateAction() {
@@ -22,6 +21,15 @@ public class CartUpdateAction extends Action {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		try {
+			// パラメータのバリデーション
+			String itemIdStr = request.getParameter("itemId");
+			String quantityStr = request.getParameter("quantity");
+
+			if (itemIdStr == null || !itemIdStr.matches("\\d+") ||
+					quantityStr == null || !quantityStr.matches("\\d+")) {
+				throw new IllegalArgumentException("不正なパラメータです");
+			}
+			
 			// 1. カート画面のドロップダウンから送信された「商品ID」と「新しく選択された数量」を取得
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
 			int quantity = Integer.parseInt(request.getParameter("quantity"));

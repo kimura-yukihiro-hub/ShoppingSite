@@ -3,9 +3,11 @@ package jp.co.aforce.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.aforce.beans.CartItem;
+import jp.co.aforce.beans.Purchase;
 import jp.co.aforce.beans.User;
 
 public class PurchaseDAO extends DAO {
@@ -40,6 +42,7 @@ public class PurchaseDAO extends DAO {
 		Connection con = null;
 		PreparedStatement stPurchase = null;
 		PreparedStatement stStock = null;
+		PreparedStatement stTotal = null;
 
 		try {
 			con = this.getConnection();
@@ -47,13 +50,17 @@ public class PurchaseDAO extends DAO {
 			// オートコミットをオフにして、すべてのSQLが成功した時だけ確定させる
 			con.setAutoCommit(false);
 
-			//1. 購入履歴テーブル
+			// 1. 購入履歴テーブル
 			String sqlPurchase = "insert into purchases (member_id, item_id, quantity, price, purchase_date) values (?, ?, ?, ?, NOW())";
 			stPurchase = con.prepareStatement(sqlPurchase);
 
-			//2. 商品テーブル(items)の在庫を引くSQL
+			// 2. 商品テーブル(items)の在庫を引くSQL
 			String sqlStock = "update items set stock = stock - ? where item_id = ?";
 			stStock = con.prepareStatement(sqlStock);
+
+			// 3. 計金額を加算するSQL
+			String sqlTotal = "update users set total_purchase_amount = total_purchase_amount + ? where member_id = ?";
+			stTotal = con.prepareStatement(sqlTotal);
 
 			// カートに入っている商品の数だけ、ループでSQLを実行する
 			for (CartItem cartItem : cart) {
@@ -69,6 +76,11 @@ public class PurchaseDAO extends DAO {
 				stStock.setInt(1, cartItem.getQuantity());
 				stStock.setInt(2, cartItem.getItem().getItemId());
 				stStock.executeUpdate();
+
+				// 累計金額の加算
+				stTotal.setInt(1, cartItem.getSubtotal());
+				stTotal.setString(2, user.getMemberId());
+				stTotal.executeUpdate();
 			}
 
 			// すべての処理が成功したら、DBに反映する
@@ -102,6 +114,13 @@ public class PurchaseDAO extends DAO {
 					e.printStackTrace();
 				}
 			}
+			if (stTotal != null) {
+				try {
+					stTotal.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 			if (con != null) {
 				try {
 					con.setAutoCommit(true);
@@ -111,5 +130,48 @@ public class PurchaseDAO extends DAO {
 				}
 			}
 		}
+	}
+
+	// ユーザーの購入履歴を全件取得するメソッド
+	public List<Purchase> getPurchaseHistory(String memberId) throws Exception {
+		List<Purchase> list = new ArrayList<>();
+		String sql = "SELECT p.*, i.item_name FROM purchases p " +
+				"JOIN items i ON p.item_id = i.item_id " +
+				"WHERE p.member_id = ? ORDER BY p.purchase_date DESC";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement st = con.prepareStatement(sql)) {
+			st.setString(1, memberId);
+			try (ResultSet rs = st.executeQuery()) {
+				while (rs.next()) {
+					Purchase p = new Purchase();
+					p.setPurchaseId(rs.getInt("purchase_id"));
+					p.setMemberId(rs.getString("member_id"));
+					p.setItemId(rs.getInt("item_id"));
+					p.setItemName(rs.getString("item_name"));
+					p.setQuantity(rs.getInt("quantity"));
+					p.setPrice(rs.getInt("price"));
+					p.setPurchaseDate(rs.getTimestamp("purchase_date"));
+					list.add(p);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return list;
+	}
+
+	// 直近で挿入された購入IDを取得するメソッド
+	public int getLastPurchaseId() throws Exception {
+		String sql = "SELECT LAST_INSERT_ID()";
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);
+				ResultSet rs = st.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		}
+		return 0;
 	}
 }

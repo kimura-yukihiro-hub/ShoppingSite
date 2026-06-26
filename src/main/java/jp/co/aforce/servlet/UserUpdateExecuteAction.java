@@ -41,7 +41,9 @@ public class UserUpdateExecuteAction extends Action {
 			} else {
 				// 確定直前にセッションが切れてしまった場合のガード
 				request.setAttribute("errorTitle", "セッションタイムアウト");
-				request.setAttribute("errorMessage", "長期間操作がなかったため、セッションが切断されました。一度ログインし直してください。");
+				request.setAttribute("errorMessage", "長期間操作がなかったため、セッションが切断されました。再度ログインし直してください。");
+				request.setAttribute("errorBackUrl", "views/login-in.jsp");
+				request.setAttribute("errorBtnText", "ログイン画面へ");
 				return "login-error.jsp";
 			}
 

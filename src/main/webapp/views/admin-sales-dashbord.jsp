@@ -183,53 +183,12 @@
 		</div>
 
 		<script>
-    // サーバーからデータを取得し、JavaScript用変数として定義
     // 商品ランキングデータ
-<!--    const productData = {-->
-<!--        names: [-->
-<!--            <c:forEach var="p" items="${productStats}" varStatus="status">-->
-<!--                <c:set var="cleanName" value="${fn:contains(p.productName, '(') ? fn:substringBefore(p.productName, '(') : p.productName}" />-->
-<!--                "${fn:replace(fn:replace(cleanName, "'", "\\'"), "\"", "\\\"")}"${!status.last ? ',' : ''}-->
-<!--            </c:forEach>-->
-<!--        ],-->
-<!--        sales: [-->
-<!--            <c:forEach var="p" items="${productStats}" varStatus="status">-->
-<!--                ${p.totalSales}${!status.last ? ',' : ''}-->
-<!--            </c:forEach>-->
-<!--        ]-->
-<!--    };-->
-    
- // 人気部位ランキングデータ
-
-<!--   const partData = {-->
-<!--		names: [-->
-<!--			<c:forEach var="pt" items="${partStats}" varStatus="status">-->
-<!--				<c:set var="cleanPart" value="${fn:contains(pt.partName, '(') ? fn:substringBefore(pt.partName, '(') : pt.partName}" />-->
-<!--				"${fn:replace(fn:replace(cleanPart, "'", "\\'"), "\"", "\\\"")}"${!status.last ? ',' : ''}-->
-<!--			</c:forEach>-->
-<!--		],-->
-<!--		sales: [-->
-<!--			<c:forEach var="pt" items="${partStats}" varStatus="status">-->
-<!--				${pt.totalSales}${!status.last ? ',' : ''}-->
-<!--			</c:forEach>-->
-<!--		]-->
-<!--	};-->
-<!--const partData = {-->
-<!--        names: [-->
-<!--            "ヒレ",-->
-<!--            "タン",-->
-<!--            "肩ロース",-->
-<!--            "カルビ",-->
-<!--            "バラ"-->
-<!--        ],-->
-<!--        sales: [-->
-<!--            17940, 17880, 9960, 7440, 5920-->
-<!--        ]-->
-<!--    };-->
-const productData = {
+    const productData = {
         names: [
             <c:forEach var="p" items="${productStats}" varStatus="status">
-                "${fn:replace(fn:replace(p.productName, "'", "\\'"), "\"", "\\\"")}"${!status.last ? ',' : ''}
+                <c:set var="cleanName" value="${fn:contains(p.productName, '(') ? fn:substringBefore(p.productName, '(') : p.productName}" />
+                "${fn:replace(fn:replace(cleanName, "'", "\\'"), "\"", "\\\"")}"${!status.last ? ',' : ''}
             </c:forEach>
         ],
         sales: [
@@ -238,24 +197,21 @@ const productData = {
             </c:forEach>
         ]
     };
-
-    // 部位データ
-    const partData = {
-        names: [
-            <c:forEach var="c" items="${categoryStats}" varStatus="status">
-                "${fn:replace(fn:replace(c.category, "'", "\\'"), "\"", "\\\"")}"${!status.last ? ',' : ''}
-            </c:forEach>
-        ],
-        sales: [
-            <c:forEach var="c" items="${categoryStats}" varStatus="status">
-                ${c.totalSales}${!status.last ? ',' : ''}
-            </c:forEach>
-        ]
-    };
     
-    console.log("productData:", productData);
-    console.log("partData:", partData);
-
+ // 人気部位ランキングデータ
+    const partData = {
+            names: [
+                <c:forEach var="c" items="${categoryStats}" varStatus="status">
+                    <c:set var="name" value="${fn:replace(fn:replace(c.category, \"'\", \"\\\\'\"), \"\\\"\", \"\\\\\\\"\")}" />
+                    "${fn:trim(name)}"${!status.last ? ',' : ''}
+                </c:forEach>
+            ],
+            sales: [
+                <c:forEach var="c" items="${categoryStats}" varStatus="status">
+                    ${c.totalSales}${!status.last ? ',' : ''}
+                </c:forEach>
+            ]
+        };
 console.log("読み込み成功:", productData, partData);
 </script>
 

@@ -53,11 +53,16 @@
 
 				<div class="info-text-area">
 					<div class="item-detail-badges">
+						<%-- 数値の 1 を比較対象にする --%>
 						<span
-							class="badge-meat ${item.meatStatus == '熟成' ? 'status-aged' : 'status-fresh'}"><c:out
-								value="${item.meatStatus}" /></span> <span
-							class="badge-meat type-${item.meatType}"><c:out
-								value="${item.meatType}" />肉・<c:out value="${item.category}" /></span>
+							class="badge-meat ${item.meatStatus == 1 ? 'status-aged' : 'status-fresh'}">
+							<c:choose>
+								<c:when test="${item.meatStatus == 1}">熟成</c:when>
+								<c:otherwise>生</c:otherwise>
+							</c:choose>
+						</span> <span class="badge-meat type-${item.meatType}"> <c:out
+								value="${item.meatType}" />肉・<c:out value="${item.category}" />
+						</span>
 					</div>
 					<h2 class="detail-title">
 						<c:out value="${item.itemName}" />
@@ -69,49 +74,42 @@
 				</div>
 
 
-				<div class="purchase-action-box">
+				<%-- 在庫情報を変数にセット --%>
+				<c:set var="maxStock"
+					value="${not empty item.stock ? item.stock : 0}" />
+				<c:set var="limit" value="${maxStock > 10 ? 10 : maxStock}" />
 
+				<div class="purchase-action-box">
 					<p
-						class="detail-stock ${item.stock ==0 ? 'out-of-stock' : 'in-stock'}">
+						class="detail-stock ${maxStock == 0 ? 'out-of-stock' : 'in-stock'}">
 						<c:choose>
-							<c:when test="${item.stock > 0}">
-							● 在庫あり （残り <c:out value="${item.stock}" /> パック）
-						</c:when>
+							<c:when test="${maxStock > 0}">
+                ● 在庫あり （残り <c:out value="${maxStock}" /> パック）
+            </c:when>
 							<c:otherwise>
-							⚠️ 申し訳ありません、現在売り切れです
-						</c:otherwise>
+                ⚠️ 申し訳ありません、現在売り切れです
+            </c:otherwise>
 						</c:choose>
 					</p>
 
-					<c:choose>
-						<c:when test="${item.stock > 0}">
-							<c:set var="escapedItemName">
-								<c:out value="${item.itemName}" />
-							</c:set>
-							<form action="${pageContext.request.contextPath}/CartAdd.action"
-								method="post"
-								onsubmit="return confirm('「${escapedItemName}」をカートに追加しますか？');">
+					<c:if test="${maxStock > 0}">
+						<form action="${pageContext.request.contextPath}/CartAdd.action"
+							method="post"
+							onsubmit="return confirm('「${item.itemName}」をカートに追加しますか？');">
+							<input type="hidden" name="itemId" value="${item.itemId}">
 
-								<input type="hidden" name="itemId" value="${item.itemId}">
-
-								<div class="quantity-selector">
-									<label for="quantity">購入数量</label> <select name="quantity"
-										id="quantity">
-										<c:forEach var="i" begin="1"
-											end="${item.stock > 10 ? 10 : item.stock}">
-											<option value="${i}">${i}</option>
-										</c:forEach>
-									</select>
-								</div>
-
-								<button type="submit" class="btn-action-primary">🛒
-									カートに入れる</button>
-							</form>
-						</c:when>
-						<c:otherwise>
-							<button class="btn-disabled" disabled>完売いたしました</button>
-						</c:otherwise>
-					</c:choose>
+							<div class="quantity-selector">
+								<label for="quantity">購入数量</label> <select name="quantity"
+									id="quantity">
+									<c:forEach var="i" begin="1" end="${limit}">
+										<option value="${i}">${i}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<button type="submit" class="btn-action-primary">🛒
+								カートに入れる</button>
+						</form>
+					</c:if>
 				</div>
 			</div>
 		</main>

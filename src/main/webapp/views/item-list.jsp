@@ -67,8 +67,7 @@
 				<div class="sort-box">
 					<label for="sortType">並び替え：</label> <select name="sortType"
 						id="sortType" onchange="this.form.submit();">
-						<option value="item_id_asc"
-							${sortType == 'item_id_asc' ? 'selected' : ''}>標準（おすすめ順）</option>
+						<option value="default" ${sortType == 'default' ? 'selected' : ''}>標準（おすすめ順）</option>
 						<option value="new_arrival"
 							${sortType == 'new_arrival' ? 'selected' : ''}>新着順</option>
 						<option value="price_asc"
@@ -77,6 +76,8 @@
 							${sortType == 'price_desc' ? 'selected' : ''}>価格の高い順 ↓</option>
 						<option value="name_asc"
 							${sortType == 'name_asc' ? 'selected' : ''}>商品名順（50音）</option>
+						<option value="name_desc"
+							${sortType == 'name_desc' ? 'selected' : ''}>商品名 逆順（50音）</option>
 					</select>
 				</div>
 			</form>
@@ -85,7 +86,7 @@
 		<!--4. クイック肉種類フィルターナビ -->
 		<nav class="category-nav">
 			<a
-				href="${pageContext.request.contextPath}/ItemList.action?keyword=<c:out value='${keyword}'/>&sortType=<c:out value='${sortType}'/>"
+				href="${pageContext.request.contextPath}/ItemList.action?reset=true"
 				class="cat-link ${empty meatType ? 'active' : ''}">全商品</a> <a
 				href="${pageContext.request.contextPath}/ItemList.action?meatType=牛&keyword=<c:out value='${keyword}'/>&sortType=<c:out value='${sortType}'/>"
 				class="cat-link ${meatType == '牛' ? 'active' : ''}">🐂 牛肉</a> <a
@@ -103,19 +104,20 @@
 					<!-- 各商品をループ処理で全自動でカード配置していきます -->
 					<c:forEach var="item" items="${itemList}">
 						<div class="item-card">
-
 							<div class="item-image-wrapper">
 								<img
 									src="${pageContext.request.contextPath}/img/<c:out value='${not empty item.imagePath ? item.imagePath : "no-image.jpg"}'/>"
 									alt="${item.itemName}" class="item-img"
 									onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/no-image.jpg';">
 
-								<!--状態とカテゴリのバッジを独立させて横並びにするコンテナ -->
 								<div class="item-badges">
+									<%-- meatStatusが 1なら「熟成」、0なら「生」と表示 --%>
 									<span
-										class="badge-meat ${item.meatStatus == '熟成' ? 'status-aged' : 'status-fresh'}">${item.meatStatus}</span>
-									<span class="badge-meat type-${item.meatType}"><c:out
-											value="${item.meatType}" />肉・<c:out value="${item.category}" /></span>
+										class="badge-meat ${item.meatStatus == 1 ? 'status-aged' : 'status-fresh'}">
+										${item.meatStatus == 1 ? '熟成' : '生'} </span> <span
+										class="badge-meat type-${item.meatType}"> <c:out
+											value="${item.meatType}" />肉・<c:out value="${item.category}" />
+									</span>
 								</div>
 							</div>
 
@@ -123,32 +125,30 @@
 								<h3>
 									<c:out value="${item.itemName}" />
 								</h3>
-								<p class="item-desc">
-									<c:out value="${item.description}" />
-								</p>
 								<p class="item-price">
 									<fmt:formatNumber value="${item.price}" pattern="#,###" />
 									<span>円 (税抜)</span>
 								</p>
 
-								<p class="item-stock ${item.stock == 0 ? 'out-of-stock' : ''}">
+								<%-- 状態ごとに独立したカードなので、在庫表示もシンプルに --%>
+								<p class="item-stock in-stock">
 									在庫：
-									<c:choose>
-										<c:when test="${item.stock > 0}">
-											<c:out value="${item.stock}" /> パック</c:when>
-										<c:otherwise>売り切れ</c:otherwise>
-									</c:choose>
+									<c:out value="${item.stock}" />
+									パック
+									<c:if test="${item.stock <= 5}">
+										<span style="color: #d9534f; font-weight: bold;">
+											(残りわずか)</span>
+									</c:if>
 								</p>
 
 								<div class="card-action-area">
 									<a
-										href="${pageContext.request.contextPath}/ItemDetail.action?itemId=${item.itemId}"
+										href="${pageContext.request.contextPath}/ItemDetail.action?itemId=${item.itemId}&meatStatus=${item.meatStatus}"
 										class="btn-detail">詳細を見る</a>
 								</div>
 							</div>
 						</div>
 					</c:forEach>
-
 				</c:when>
 				<c:otherwise>
 					<div class="no-items-msg">
@@ -159,8 +159,8 @@
 				</c:otherwise>
 			</c:choose>
 		</main>
-
+		<button id="scrollToTopBtn" class="scroll-top-btn">▲</button>
 	</div>
-
+	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 </html>

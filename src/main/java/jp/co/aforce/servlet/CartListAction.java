@@ -9,14 +9,11 @@ import jakarta.servlet.http.HttpSession;
 
 import jp.co.aforce.beans.CartItem;
 import jp.co.aforce.beans.User;
+import jp.co.aforce.dao.LotDAO;
 import jp.co.aforce.tool.Action;
-
-//買い物かご（カート）内の一覧表示、JSP連動型会員ランク割引、および軽減税率（8%）の計算を管理するアクションクラス
-
 public class CartListAction extends Action {
 
 	public CartListAction() {
-		// カート一覧は未ログイン状態でも閲覧可能にする
 		this.requireLogin = false;
 	}
 
@@ -25,68 +22,76 @@ public class CartListAction extends Action {
 		try {
 			HttpSession session = request.getSession();
 
-			// 1. セッションから買い物かご（リスト）を取得。なければ空のリストを生成
+			// 1. カート取得
 			@SuppressWarnings("unchecked")
 			List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 			if (cart == null) {
 				cart = new ArrayList<>();
+			} else {
+				// 各カート商品の現在のリアルタイム在庫数をチェックする
+				LotDAO lotDAO = new LotDAO();
+				for (CartItem cartItem : cart) {
+					int available = lotDAO.getAvailableStock(cartItem.getItem().getItemId());
+					// カートの数量が在庫を超えていたらフラグを立てる等の処理が可能
+					request.setAttribute("stock_" + cartItem.getItem().getItemId(), available);
+				}
 			}
 
-			// 2. 割引前定価の合計（税抜）を集計
+			// 2. 割引前定価の合計（税抜）集計
 			int rawSubtotal = 0;
-
 			for (CartItem cartItem : cart) {
 				rawSubtotal += cartItem.getItem().getPrice() * cartItem.getQuantity();
 			}
 
-			// 3. 【修正】会員ランクに応じた割引率の決定
+			// 3. 会員ランク情報の取得と計算
 			double discountRate = 0.0;
-			String rankName = "一般会員 (ランク1)";
+			String rankName = "ゲスト";
+			long targetAmount = 10000; // ゲストの初期値
+			double progress = 0.0;
 
 			User loginUser = (User) session.getAttribute("loginUser");
+
 			if (loginUser != null) {
-				int rank = loginUser.getMeatRank();
-				if (rank == 2) {
-					discountRate = 0.02;
-					rankName = "ゴールド会員 (ランク2)";
-				} else if (rank == 3) {
-					discountRate = 0.03;
-					rankName = "プラチナ会員 (ランク3)";
-				} else if (rank == 4) {
-					discountRate = 0.05;
-					rankName = "VIP会員 (ランク4)";
-				} else if (rank == 5) {
-					rankName = "最高級管理者 (ランク5)";
-				}
-			} else {
-				rankName = "ゲストユーザー";
+				// Beanのメソッドで一元管理
+				targetAmount = loginUser.getNextRankGoal();
+				discountRate = loginUser.getDiscountRate();
+				rankName = loginUser.getMeatRankName();
+
+				// 進捗計算
+				long currentTotal = loginUser.getTotalPurchaseAmount();
+				progress = (double) currentTotal / targetAmount * 100;
+				if (progress > 100)
+					progress = 100;
 			}
 
-			// 4. 【修正】割引後合計を計算し、端数処理を適用
-			// rawSubtotal から割引額を引き算する方式に変更します
+			// 4. 金額計算
 			int discountAmount = (int) (rawSubtotal * discountRate);
 			int totalWithoutTax = rawSubtotal - discountAmount;
-
 			int tax = (int) (totalWithoutTax * 0.08);
 			int grandTotal = totalWithoutTax + tax;
 
-			// 5. cart-list.jsp のレシート内訳側へ、一分の隙もない計算データを引き渡す
+			// 5. JSPへのデータ受け渡し
 			request.setAttribute("cart", cart);
-			request.setAttribute("subtotalWithoutTax", rawSubtotal); // 割引前の定価合計
-			request.setAttribute("discountRatePercent", discountRate); // 「2」「3」「5」などの数値表示用
-			request.setAttribute("rankName", rankName); // 適用された会員ランク名
-			request.setAttribute("discountAmount", discountAmount); // 割引された差額
-			request.setAttribute("totalWithoutTax", totalWithoutTax); // 割引後の税抜合計
-			request.setAttribute("tax", tax); // 8%の消費税額
-			request.setAttribute("grandTotal", grandTotal); // 最終税込金額
+			request.setAttribute("subtotalWithoutTax", rawSubtotal);
+			request.setAttribute("discountRatePercent", discountRate * 100); // 表示用(%)
+			request.setAttribute("rankName", rankName);
+			request.setAttribute("discountAmount", discountAmount);
+			request.setAttribute("totalWithoutTax", totalWithoutTax);
+			request.setAttribute("tax", tax);
+			request.setAttribute("grandTotal", grandTotal);
 
-			// 6. 買い物かご一覧画面のJSPファイル名を返す
+			// ランク表示用
+			long remaining = (loginUser != null) ? Math.max(0, targetAmount - loginUser.getTotalPurchaseAmount())
+					: targetAmount;
+			request.setAttribute("remainingAmount", remaining);
+			request.setAttribute("rankProgressPercent", progress);
+
 			return "cart-list.jsp";
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorTitle", "精算計算エラー");
-			request.setAttribute("errorMessage", "軽減税率および会員優待価格の計算中に予期せぬエラーが発生しました。");
+			request.setAttribute("errorMessage", "計算中に予期せぬエラーが発生しました。");
 			request.setAttribute("errorBackUrl", "ItemList.action");
 			request.setAttribute("errorBtnText", "商品一覧へ戻る");
 			return "login-error.jsp";

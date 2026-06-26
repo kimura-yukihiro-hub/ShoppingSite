@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import jp.co.aforce.dao.ItemDAO;
+import jp.co.aforce.dao.LotDAO;
 import jp.co.aforce.tool.Action;
 
 public class ItemDeleteAction extends Action {
@@ -45,6 +46,10 @@ public class ItemDeleteAction extends Action {
 
 			// 2. ItemDAOを呼び出してDELETE文を実行
 			ItemDAO itemDao = new ItemDAO();
+			LotDAO lotDAO = new LotDAO();
+			
+			// ロットを先に削除してから商品を削除する
+			lotDAO.deleteLotsByItemId(itemId);
 			boolean isSuccess = itemDao.deleteItem(itemId) > 0;
 
 			// データベースからの削除が失敗した場合

@@ -14,7 +14,8 @@ body {
 	height: 100vh;
 	transition: background-color 0.5s ease, color 0.5s ease;
 	overscroll-behavior: none !important;
-	overflow: hidden;
+	overflow-y: auto;
+	overflow-x: hidden;
 	/* 画面切り替え時の色変化を滑らかに */
 }
 
@@ -150,6 +151,7 @@ body:not([class*="rank-"]):not(.error-page) {
 	background-color: transparent;
 	color: #bf9f5a;
 	border: 1px solid rgba(180, 150, 80, 0.5);
+	margin-bottom: 20px;
 }
 
 .btn-register:hover {
@@ -162,6 +164,7 @@ body:not([class*="rank-"]):not(.error-page) {
 .link-guest {
 	color: #aaaaaa;
 	font-size: 13px;
+	margin-top: 20px !important;
 	text-decoration: none;
 	transition: color 0.3s ease;
 }
@@ -301,6 +304,35 @@ body:not([class*="rank-"]):not(.error-page) {
    ========================================================================== */
 /* メニュー画面のベースとなる半透明の薄いカード箱 */
 
+.user-page .menu-container {
+	display: flex;
+	background-color: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	color: inherit;
+	gap: 100px;
+	width: 90%;
+	max-width: 900px;
+	padding: 24px 30px;
+	margin: 50px auto;
+}
+
+/* 左側のメニューエリア */
+
+.user-page .menu-left {
+	flex: 0 0 400px;
+	max-width: 400px;
+	padding-right: 40px;
+}
+
+/* 右側のグラフエリア */
+
+.user-page .menu-right {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 .menu-container {
 	background-color: rgba(255, 255, 255, 0.05);
 	border: 1px solid rgba(255, 255, 255, 0.15);
@@ -360,14 +392,172 @@ body:not([class*="rank-"]):not(.error-page) {
 }
 
 /* ==========================================================================
+  ランクゲージのスタイル
+   ========================================================================== */
+
+.rank-circle {
+	width: 220px;
+	height: 220px;
+}
+
+.circular-chart {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.rank-circle .circular-chart path {
+	fill: none !important;
+}
+
+.circle-bg {
+	fill: none;
+	stroke: #eee;
+	stroke-width: 4;
+}
+
+.rank-circle .circle {
+	fill: none;
+	stroke: #ff5252;
+	stroke-width: 4 !important;
+	stroke-linecap: round !important;
+	transition: stroke-dasharray 1.5s ease-in-out;
+	stroke-dasharray: 0, 100;
+}
+
+/* JSで付与するアニメーション用クラス */
+.circle.animate-gauge {
+	stroke-dasharray: var(--progress, 0) !important;
+}
+
+/* --- ゲージ（円）の色設定 --- */
+
+.rank-a1 .circle {
+	stroke: #e53935 !important;
+}
+
+.rank-a2 .circle {
+	stroke: #bf9f5a !important;
+}
+
+.rank-a3 .circle {
+	stroke: #d81b60 !important;
+}
+
+/* VIPのみグラデーションを適用 */
+
+.rank-a4 .circle {
+	stroke: url(#vipGradient) !important;
+}
+
+/* ランクテキストの色分け */
+
+.rank-a1 .rank-text-color {
+	color: #e53935 !important;
+}
+
+.rank-a2 .rank-text-color {
+	color: #bf9f5a !important;
+}
+
+.rank-a3 .rank-text-color {
+	color: #d81b60 !important;
+}
+
+.rank-a4 .rank-text-color {
+	background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: bold;
+}
+
+/* アイコンの共通スタイル */
+
+.rank-info-icon {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: 20px;
+	height: 20px;
+	border: 1px solid currentColor;
+	border-radius: 50%;
+	font-size: 12px;
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
+}
+
+/* ランクごとの色適用 */
+
+.rank-a1 .rank-info-icon {
+	color: #e53935;
+	border-color: #e53935;
+}
+
+.rank-a2 .rank-info-icon {
+	color: #bf9f5a;
+	border-color: #bf9f5a;
+}
+
+.rank-a3 .rank-info-icon {
+	color: #d81b60;
+	border-color: #d81b60;
+}
+
+/* VIPのみゴールドのグラデーションボーダーを適用 */
+
+.rank-a4 .rank-info-icon {
+	border: 1px solid #bf953f;
+	color: #bf953f;
+}
+
+/* ホバー時の演出（全ランク共通） */
+
+.rank-info-icon:hover {
+	background-color: currentColor;
+	color: #000 !important;
+	box-shadow: 0 0 8px currentColor;
+}
+
+/* メッセージの非表示（既存のもの） */
+
+.hidden {
+	display: none !important;
+}
+
+/* メッセージの基本スタイル */
+
+.rank-message {
+	font-size: 0.8em;
+	margin-top: 5px;
+}
+
+/* ==========================================================================
   （登録・変更・削除・確認・完了）共通のスタイル
    ========================================================================== */
+
+.user-add-page body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw !important;
+	height: 80vh !important;
+	transition: background-color 0.5s ease, color 0.5s ease;
+	overscroll-behavior: none !important;
+	overflow-y: auto;
+	overflow-x: hidden;
+	/* 画面切り替え時の色変化を滑らかに */
+}
 
 .form-container {
 	background-color: rgba(255, 255, 255, 0.08);
 	border: 1px solid rgba(255, 255, 255, 0.2);
 	color: #ffffff;
-	width: 480px;
+	width: 600px;
 	margin: 0 auto !important;
 	padding: 4px 30px !important;
 	box-sizing: border-box;
@@ -551,6 +741,53 @@ body:not([class*="rank-"]):not(.error-page) {
 	margin: 0 0 15px 0 !important;
 }
 
+/* --- ランク変動通知エリアのスタイル --- */
+
+/* ランクアップ：トースト通知用 */
+
+.alert-rank-up {
+	position: fixed;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 9999;
+	background-color: #ffd700;
+	color: #333;
+	padding: 15px 30px;
+	border-radius: 50px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1em;
+	animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+	from {
+		top: -100px;
+		opacity: 0;
+	}
+
+	to {
+		top: 20px;
+		opacity: 1;
+	}
+}
+
+/* ランクダウン：固定アラート用 */
+
+.alert-rank-down {
+	background-color: #fff3cd;
+	color: #856404;
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid #ffeeba;
+	border-radius: 5px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
 /* ==========================================================================
   焼肉店の格付けコンセプト（全画面・会員ランク連動スタイル）
    ========================================================================== */
@@ -594,6 +831,7 @@ body.rank-a1 {
 	background: #b71c1c !important;
 }
 
+.rank-a1 .menu-links ul li .btn-history,
 .rank-a1 .menu-links ul li .btn-update,
 .rank-a1 .menu-links ul li .btn-delete,
 .rank-a1 .menu-links ul li .btn-logout {
@@ -603,6 +841,7 @@ body.rank-a1 {
 	transition: all 0.2s ease;
 }
 
+.rank-a1 .menu-links ul li .btn-history:hover,
 .rank-a1 .menu-links ul li .btn-update:hover,
 .rank-a1 .menu-links ul li .btn-delete:hover,
 .rank-a1 .menu-links ul li .btn-logout:hover {
@@ -613,6 +852,7 @@ body.rank-a1 {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
 }
 
+.rank-a1 .menu-links ul li .btn-history:active,
 .rank-a1 .menu-links ul li .btn-update:active,
 .rank-a1 .menu-links ul li .btn-delete:active,
 .rank-a1 .menu-links ul li .btn-logout:active {
@@ -680,6 +920,7 @@ body.rank-a2 {
 	box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1) !important;
 }
 
+.rank-a2 .menu-links ul li .btn-history,
 .rank-a2 .menu-links ul li .btn-update,
 .rank-a2 .menu-links ul li .btn-delete,
 .rank-a2 .menu-links ul li .btn-logout {
@@ -689,6 +930,7 @@ body.rank-a2 {
 	transition: all 0.2s ease;
 }
 
+.rank-a2 .menu-links ul li .btn-history:hover,
 .rank-a2 .menu-links ul li .btn-update:hover,
 .rank-a2 .menu-links ul li .btn-delete:hover,
 .rank-a2 .menu-links ul li .btn-logout:hover {
@@ -699,6 +941,7 @@ body.rank-a2 {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
 }
 
+.rank-a2 .menu-links ul li .btn-history:active,
 .rank-a2 .menu-links ul li .btn-update:active,
 .rank-a2 .menu-links ul li .btn-delete:active,
 .rank-a2 .menu-links ul li .btn-logout:active {
@@ -769,6 +1012,7 @@ body.rank-a3 {
 	box-shadow: 0 1px 4px rgba(244, 143, 177, 0.3) !important;
 }
 
+.rank-a3 .menu-links ul li .btn-history,
 .rank-a3 .menu-links ul li .btn-update,
 .rank-a3 .menu-links ul li .btn-delete,
 .rank-a3 .menu-links ul li .btn-logout {
@@ -778,6 +1022,7 @@ body.rank-a3 {
 	transition: all 0.2s ease;
 }
 
+.rank-a3 .menu-links ul li .btn-history:hover,
 .rank-a3 .menu-links ul li .btn-update:hover,
 .rank-a3 .menu-links ul li .btn-delete:hover,
 .rank-a3 .menu-links ul li .btn-logout:hover {
@@ -788,6 +1033,7 @@ body.rank-a3 {
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
 }
 
+.rank-a3 .menu-links ul li .btn-history:active,
 .rank-a3 .menu-links ul li .btn-update:active,
 .rank-a3 .menu-links ul li .btn-delete:active,
 .rank-a3 .menu-links ul li .btn-logout:active {
@@ -848,6 +1094,7 @@ body.rank-a4 {
 	box-shadow: 0 0 35px rgba(212, 175, 55, 0.9) !important;
 }
 
+.rank-a4 .menu-links ul li .btn-history,
 .rank-a4 .menu-links ul li .btn-update,
 .rank-a4 .menu-links ul li .btn-delete,
 .rank-a4 .menu-links ul li .btn-logout {
@@ -857,6 +1104,7 @@ body.rank-a4 {
 	transition: all 0.2s ease;
 }
 
+.rank-a4 .menu-links ul li .btn-history:hover,
 .rank-a4 .menu-links ul li .btn-update:hover,
 .rank-a4 .menu-links ul li .btn-delete:hover,
 .rank-a4 .menu-links ul li .btn-logout:hover {
@@ -867,6 +1115,7 @@ body.rank-a4 {
 	box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2) !important;
 }
 
+.rank-a4 .menu-links ul li .btn-history:active,
 .rank-a4 .menu-links ul li .btn-update:active,
 .rank-a4 .menu-links ul li .btn-delete:active,
 .rank-a4 .menu-links ul li .btn-logout:active {
@@ -1258,14 +1507,61 @@ body.rank-a4 {
 	width: 100%;
 	padding: 8px 0 !important;
 	background-color: transparent;
-	color: #ffffff;
-	border: 1px solid rgba(255, 255, 255, 0.3);
+	display: block;
+	background-color: transparent;
+	color: #e8e8e8;
+	text-align: center;
+	text-decoration: none;
+	border: 1px solid #7b241c;
+	border-radius: 4px;
+	font-weight: bold;
+	transition: all 0.3s ease;
 	cursor: pointer;
 }
 
 .btn-detail:hover {
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: #7b241c;
+	color: #fff;
 	border-color: #ffffff;
+	opacity: 0.9;
+}
+
+/* 売り切れ時のスタイル設定 */
+
+.out-of-stock {
+	color: #ff4d4d !important;
+	font-weight: bold !important;
+}
+
+/* トップへ戻るボタンのスタイル */
+
+.scroll-top-btn {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.6s ease, visibility 0.6s, background-color 0.3s;
+	width: 50px;
+	height: 50px;
+	background-color: #7b241c;
+	color: #e8e8e8;
+	border: 1px solid #922b21;
+	border-radius: 50%;
+	cursor: pointer;
+	z-index: 1000;
+	font-size: 20px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-top-btn:hover {
+	background-color: #922b21;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-top-btn.show {
+	opacity: 1;
+	visibility: visible;
 }
 
 /* ==========================================================================
@@ -1581,21 +1877,29 @@ body.rank-a4 {
 
 /* カート画面全体のメインコンテナ */
 
+.cart-page .list-container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 0 20px;
+	width: 90%;
+}
+
 .cart-main-container {
-	margin-top: 30px;
-	padding: 25px;
+	margin-top: 10px;
+	padding: 15px;
 	background: #111;
 	border-radius: 12px;
 	border: 1px solid #222;
 	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+	min-height: 150px !important;
 }
 
 .cart-main-container h2 {
 	font-size: 22px;
 	color: #fff;
-	margin-bottom: 25px;
+	margin-bottom: 15px;
 	border-left: 4px solid #ff5252;
-	padding-left: 12px;
+	padding-left: 10px;
 }
 
 /* テーブルのラッパー（横スクロール対応） */
@@ -1852,10 +2156,12 @@ body.rank-a4 {
 
 .cart-summary-area {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: flex-end;
 	gap: 12px;
 	width: 100%;
+	justify-content: space-between;
+	align-items: flex-end;
 	box-sizing: border-box;
 }
 
@@ -1866,8 +2172,8 @@ body.rank-a4 {
 	border: 1px solid #2a2a2a;
 	border-radius: 8px;
 	padding: 15px 20px;
-	width: 320px;
-	max-width: 100%;
+	width: 350px;
+	max-width: 50%;
 	box-sizing: border-box;
 }
 
@@ -1881,8 +2187,19 @@ body.rank-a4 {
 
 .summary-row strong {
 	color: #fff;
+	flex-shrink: 0;
+	text-align: right;
 }
 
+.purchase-preview-page .summary-box {
+	background: #161616;
+	border: 1px solid #2a2a2a;
+	border-radius: 8px;
+	padding: 15px 20px;
+	width: 350px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
 
 .summary-row.total-row {
 	margin-top: 15px;
@@ -1909,7 +2226,7 @@ body.rank-a4 {
 	width: 100%;
 	max-width: 320px;
 	box-sizing: border-box;
-	margin-top: 5px;
+	margin-top: 0;
 }
 
 .summary-actions form {
@@ -2181,11 +2498,10 @@ body.rank-a4 {
 .success-main-container {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	min-height: 50vh;
+	min-height: auto;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 20px 0;
+	padding-top: 8px;
 }
 
 /* 中央のお礼カード */
@@ -2193,7 +2509,7 @@ body.rank-a4 {
 	width: 100%;
 	max-width: 550px;
 	text-align: center;
-	padding: 45px 30px;
+	padding: 5px 30px;
 	border-radius: 12px;
 	box-sizing: border-box;
 	background-color: #111111 !important;
@@ -2243,21 +2559,35 @@ body.rank-a4 {
 .success-details-wrapper h3 {
 	font-size: 14px;
 	color: #aaa !important;
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 	border-bottom: 1px solid #2d2d2d;
 	padding-bottom: 5px;
 }
 
 .success-item-row {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	font-size: 13px;
 	margin-bottom: 8px;
+	border-bottom: 1px solid #222;
 	color: #ccc !important;
+}
+
+/* 1行目：商品名と数量と合計 */
+
+.success-item-header {
+	display: flex;
+	width: 100%;
+	align-items: center;
 }
 
 .success-item-name {
 	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-right: 10px;
 }
 
 .success-item-qty {
@@ -2269,6 +2599,17 @@ body.rank-a4 {
 	width: 100px;
 	text-align: right;
 	color: #fff !important;
+}
+
+/* 2行目：ロット番号（幅を100%にして改行させる） */
+
+.success-item-lot {
+	width: 100%;
+	font-size: 11px;
+	color: #777 !important;
+	margin-top: 4px;
+	padding-left: 5px;
+	display: block;
 }
 
 .success-summary {
@@ -2384,11 +2725,11 @@ body.rank-a4 {
 	margin-bottom: 8px;
 }
 
-/* ==========================================================================
-   12. 管理者専用：商品管理一覧画面（admin-item-list.jsp）用スタイル
-   ========================================================================== */
+/* ==========================================================================*/
+/*   12. 管理者専用：商品管理一覧画面（admin-item-list.jsp）用スタイル*/
+/*   ========================================================================== */
 
-/* メインテーブルを囲むコンテナ枠 */
+/*メインテーブルを囲むコンテナ枠 */
 
 .admin-table-container {
 	padding: 20px;
@@ -2402,7 +2743,7 @@ body.rank-a4 {
 	-ms-overflow-style: none;
 }
 
-/* 管理用データテーブルの基本設定 */
+/*管理用データテーブルの基本設定*/
 
 .admin-table {
 	width: 100%;
@@ -2413,7 +2754,7 @@ body.rank-a4 {
 	min-width: 900px;
 }
 
-/* テーブルの見出し(th)とデータセル(td)*/
+/*テーブルの見出し(th)とデータセル(td)*/
 .admin-table th,
 .admin-table td {
 	padding: 12px;
@@ -2422,7 +2763,7 @@ body.rank-a4 {
 	white-space: nowrap;
 }
 
-/* テーブルの見出し（ヘッダー行） */
+/*テーブルの見出し（ヘッダー行） */
 .admin-table th {
 	background: #1a1a1a;
 	color: #ff9900;
@@ -2432,7 +2773,7 @@ body.rank-a4 {
 	z-index: 5;
 }
 
-/* 行にマウスホバーした際のエフェクト */
+/*行にマウスホバーした際のエフェクト*/
 
 .admin-table tr:hover {
 	background: #1c1c1c;
@@ -2472,7 +2813,7 @@ body.rank-a4 {
 	font-weight: bold;
 }
 
-/* 編集用ボタン（緑系） */
+/*編集用ボタン（緑系） */
 
 .btn-edit-sm {
 	background: #28a745;
@@ -2496,7 +2837,7 @@ body.rank-a4 {
 	background: #c82333;
 }
 
-/* ミニバッジ（肉の状態用）の共通ベース */
+/*ミニバッジ（肉の状態用）の共通ベース */
 
 .badge-status-sm {
 	padding: 4px 8px;
@@ -2517,6 +2858,16 @@ body.rank-a4 {
 	color: #ffffff !important;
 }
 
+.status-mixed-sm {
+	background-color: #f39c12;
+	color: #fff;
+}
+
+.status-none-sm {
+	background-color: #666;
+	color: #fff;
+}
+
 /* ==========================================================================
    13. 管理者専用：新規商品登録（item-add.jsp）＆ 編集画面用スタイル
    ========================================================================== */
@@ -2524,12 +2875,15 @@ body.rank-a4 {
 .menu-container:has(.item-form-box),
 body.rank-a5:has(.item-form-box) .menu-container {
 	max-width: 1200px !important;
-	width: 95% !important;
+	width: 90% !important;
 	margin: 0 auto !important;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden !important;
 }
 
 .item-form-box {
-	padding: 15px 25px !important;
+	padding: 10px 20px !important;
 	background: #111111 !important;
 	border: 1px solid #222222 !important;
 	border-radius: 8px !important;
@@ -2540,12 +2894,13 @@ body.rank-a5:has(.item-form-box) .menu-container {
 	flex-wrap: wrap !important;
 	gap: 0 4%;
 	width: 95% !important;
+	overflow: hidden !important;
 }
 
 .item-form-box .form-group {
 	width: 48% !important;
 	box-sizing: border-box !important;
-	margin-bottom: 10px !important;
+	margin-bottom: 2px !important;
 	text-align: left !important;
 }
 
@@ -2553,10 +2908,10 @@ body.rank-a5:has(.item-form-box) .menu-container {
 
 .item-form-box .form-group label {
 	display: block !important;
-	font-size: 14px !important;
+	font-size: 13px !important;
 	font-weight: bold !important;
 	color: #ffffff !important;
-	margin-bottom: 4px !important;
+	margin-bottom: 1px !important;
 	letter-spacing: 0.5px;
 }
 
@@ -2575,12 +2930,12 @@ body.rank-a5:has(.item-form-box) .menu-container {
 .item-form-box .form-group input[type="number"],
 .item-form-box .cart-select {
 	width: 100% !important;
-	padding: 8px 12px !important;
+	padding: 5px 10px !important;
 	background: #1a1a1a !important;
 	border: 1px solid #333333 !important;
 	border-radius: 4px !important;
 	color: #ffffff !important;
-	font-size: 14px !important;
+	font-size: 13px !important;
 	box-sizing: border-box !important;
 	transition: border-color 0.3s, box-shadow 0.3s;
 }
@@ -2597,8 +2952,9 @@ body.rank-a5:has(.item-form-box) .menu-container {
 	box-sizing: border-box !important;
 	padding: 8px 12px !important;
 	resize: none !important;
-	height: 72px !important;
-	min-height: 72px !important;
+	height: 60px !important;
+	min-height: 60px !important;
+	scrollbar-width: none;
 }
 
 /* フォーカス時のオレンジ発光 */
@@ -2627,7 +2983,7 @@ body.rank-a5:has(.item-form-box) .menu-container {
 	cursor: pointer !important;
 	transition: background 0.3s, border-color 0.3s;
 	box-sizing: border-box !important;
-	height: 72px !important;
+	height: 60px !important;
 	display: flex !important;
 	flex-direction: column !important;
 	justify-content: center !important;
@@ -2658,10 +3014,36 @@ body.rank-a5:has(.item-form-box) .menu-container {
 
 .item-form-box .form-group .preview-image {
 	max-width: 100% !important;
-	max-height: 56px !important;
+	max-height: 45px !important;
 	border-radius: 4px !important;
 	border: 1px solid #222222 !important;
 	object-fit: contain;
+}
+
+.hide-file-input {
+	display: block !important;
+	opacity: 0 !important;
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	cursor: pointer !important;
+	z-index: 9999 !important;
+	/* 他の要素より絶対に前に出す */
+}
+
+/* 追加：ドラッグ中のエフェクトを確実に表示させるための設定 */
+.drop-zone.drag-over {
+	background-color: #222222 !important;
+	border: 2px dashed #ff9900 !important;
+	outline: none !important;
+}
+
+/* 追加：中の要素がマウスイベントを邪魔しないようにする */
+#dropZoneText,
+#previewContainer {
+	pointer-events: none !important;
 }
 
 /* 画像が未選択のときに画像割れアイコンを隠す設定 */
@@ -2694,6 +3076,422 @@ body.rank-a5:has(.item-form-box) .menu-container {
 	line-height: 1.2 !important;
 	box-sizing: border-box !important;
 	margin: 0 !important;
+}
+
+
+/* --------------------------------------
+   ロット管理セクションのスタイル
+-------------------------------------- */
+
+.lot-management-section {
+	margin-top: 40px;
+	border-top: 2px solid #444;
+	padding-top: 20px;
+	color: #fff;
+	background-color: #1a1a1a;
+	padding: 20px;
+	border-radius: 8px;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	height: 100%;
+	/* 親のタブ枠いっぱいまで広げる */
+	overflow: hidden;
+	/* はみ出しをここで阻止 */
+}
+
+.lot-management-section {
+	flex: 1;
+}
+
+.lot-management-section h3 {
+	margin-bottom: 20px;
+	font-size: 1.2em;
+	color: #ff9900;
+	border-left: 4px solid #ff9900;
+	padding-left: 10px;
+}
+
+/* ロットテーブルのスタイル */
+
+.lot-table {
+	width: 100%;
+	border-collapse: collapse;
+	background-color: #222;
+	margin: 0;
+}
+
+.lot-table thead {
+	background-color: #333;
+}
+
+.lot-table thead th {
+	position: sticky;
+	top: 0;
+	background-color: #222;
+	z-index: 10;
+	border-top: none;
+	padding: 15px;
+	border-bottom: 2px solid #444;
+}
+
+.lot-table th,
+.lot-table td {
+	padding: 15px;
+	border-bottom: 1px solid #444;
+	text-align: center;
+	font-size: 0.95em;
+}
+
+.lot-table th {
+	font-weight: bold;
+	color: #ddd;
+}
+
+.lot-table tr:hover {
+	background-color: #2a2a2a;
+	transition: background-color 0.2s;
+}
+
+/* 熟成日数の強調 */
+
+.lot-table strong {
+	color: #ffcc00;
+	font-size: 1.1em;
+}
+
+/* --------------------------------------
+   タブメニューのスタイル
+-------------------------------------- */
+
+.tab-menu {
+	display: flex;
+	gap: 5px;
+	margin-bottom: -1px;
+	padding-left: 10px;
+}
+
+.tab-btn {
+	padding: 12px 25px;
+	background: #333;
+	color: #ccc;
+	border: none;
+	cursor: pointer;
+	border-radius: 8px 8px 0 0;
+	transition: background 0.3s;
+}
+
+.tab-btn.active {
+	background: #1a1a1a;
+	color: #ff9900;
+	border: 1px solid #444;
+	border-bottom: none;
+	font-weight: bold;
+}
+
+.tab-content-wrapper {
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.tab-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	background: #1a1a1a;
+	padding: 20px;
+	border: 1px solid #444;
+	border-radius: 0 8px 8px 8px;
+	max-height: 70vh;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.tab-content::-webkit-scrollbar {
+	display: none;
+}
+
+/* ラジオボタン選択時のタブボタンのデザイン */
+
+#tab-basic:checked~.tab-menu .tab-btn[for="tab-basic"],
+#tab-lot:checked~.tab-menu .tab-btn[for="tab-lot"] {
+	background: #1a1a1a;
+	color: #ff9900;
+	border: 1px solid #444;
+	border-bottom: none;
+	font-weight: bold;
+}
+
+/* 中身の表示切り替え */
+
+#tab-basic:checked~.tab-content-wrapper #basic-info,
+#tab-lot:checked~.tab-content-wrapper #lot-info {
+	display: block;
+}
+
+#basic-info,
+#lot-info {
+	display: none;
+}
+
+
+/* ラベルのデザイン（ボタンのように見せる） */
+
+.tab-label {
+	padding: 12px 25px;
+	background: #333;
+	color: #ccc;
+	cursor: pointer;
+	border-radius: 8px 8px 0 0;
+	margin-right: 5px;
+}
+
+/* ロット一覧表示エリアをスクロール対応にする */
+
+.lot-scroll-box {
+	max-height: 30vh;
+	overflow-y: auto;
+	border: 1px solid #444;
+	background-color: #222;
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+
+/* Chrome, Safari用 スクロールバー非表示 */
+
+.lot-scroll-box::-webkit-scrollbar {
+	display: none;
+}
+
+.bulk-action-area {
+	margin-top: 20px;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.bulk-action-area label {
+	color: #ddd;
+	font-weight: bold;
+}
+
+.bulk-action-area select {
+	padding: 8px 12px;
+	background: #1e1e1e;
+	color: #fff;
+	border: 1px solid #555;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.bulk-action-area .btn-menu {
+	background-color: #28a745;
+	padding: 8px 20px;
+	flex-shrink: 0;
+	width: auto;
+	min-width: 150px;
+}
+
+.bulk-action-area .btn-menu:hover {
+	background-color: #218838;
+}
+
+/* 操作する部分のコンテナ */
+
+.action-inner {
+	background-color: #2a2a2a;
+	padding: 15px;
+	border: 1px solid #444;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modal-content {
+	background: #2a2a2a;
+	padding: 25px;
+	border-radius: 10px;
+	width: 450px;
+	color: #fff;
+	position: relative;
+	border: 1px solid #444;
+}
+
+.close-btn {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	cursor: pointer;
+	font-size: 24px;
+	color: #ccc;
+}
+
+.page-header-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+	margin-bottom: 20px;
+}
+
+.header-left h1 {
+	margin: 0;
+	font-size: 1.5em;
+	color: #ff9900;
+}
+
+.header-left p {
+	margin: 5px 0 0 0;
+	color: #aaa;
+}
+
+.header-right {
+	display: flex;
+	gap: 15px;
+}
+
+/* --- ロット詳細モーダル用スタイル --- */
+
+.lot-detail-container h3 {
+	margin-top: 0;
+	color: #ffa500;
+	border-bottom: 1px solid #555;
+	padding-bottom: 10px;
+}
+
+.lot-detail-container p {
+	font-size: 0.9em;
+	color: #ccc;
+}
+
+.lot-detail-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+	color: #ffffff;
+}
+
+.lot-detail-table thead tr {
+	border-bottom: 2px solid #555;
+	background: #444;
+	color: #fff;
+}
+
+.lot-detail-table th,
+.lot-detail-table td {
+	padding: 10px;
+	text-align: left;
+}
+
+.lot-detail-table tbody tr {
+	border-bottom: 1px solid #555;
+}
+
+/* スクロールエリアの定義 */
+
+.lot-detail-scroll {
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: 1px solid #444;
+	margin-top: 0;
+	padding-top: 0;
+	position: relative;
+	background-color: #222;
+}
+
+/* スクロールバーの非表示 */
+
+.lot-detail-scroll::-webkit-scrollbar {
+	display: none;
+}
+
+/* ヘッダーの固定 */
+
+.lot-detail-table thead th {
+	position: sticky;
+	top: 0 !important;
+	background-color: #333;
+	z-index: 10;
+	margin-top: -10px;
+	padding: 12px;
+	border-bottom: 2px solid #555;
+	box-shadow: none;
+}
+
+/* テーブル全体の幅を調整 */
+
+.lot-detail-table {
+	padding-top: 0;
+	margin-top: 0;
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.lot-detail-table:first-of-type {
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+.lot-detail-table tbody tr:first-child td {
+	border-top: none;
+	padding-top: 12px;
+}
+
+/* 共通のバッジ設定 */
+
+.status-badge {
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 0.85em;
+	color: white;
+	font-weight: bold;
+	display: inline-block;
+	text-align: center;
+	min-width: 40px;
+}
+
+/* 混在 */
+
+.status-badge.mixed {
+	background-color: #f0ad4e;
+	color: #fff;
+}
+
+/* 生 */
+
+.status-badge.fresh {
+	background-color: #5cb85c;
+	color: #fff;
+}
+
+/* 熟成中*/
+
+.status-badge.aged {
+	background-color: #d9534f;
+	color: #fff;
 }
 
 /* ==========================================================================
@@ -3235,6 +4033,7 @@ body.page-admin-sales-dashboard {
    ========================================================================== */
 
 /* 自動生成ボタンのスタイル */
+
 .item-form-box .form-group #btn-generate-pw {
 	width: auto !important;
 	min-width: 0 !important;
@@ -3248,6 +4047,7 @@ body.page-admin-sales-dashboard {
 }
 
 /* サーバーサイドエラーのスタイル */
+
 .item-form-box .err-msg {
 	color: #ff3333 !important;
 	font-weight: bold !important;
@@ -3263,9 +4063,35 @@ body.page-admin-sales-dashboard {
 }
 
 /* 本人確認ラベルのスタイル */
+
 .item-form-box .form-group label.admin-auth-label {
 	color: #ff9900 !important;
 }
+
+/* --- 管理者追加ページ専用レイアウト (validated-form限定) --- */
+
+.validated-form {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 40px !important;
+	padding: 20px !important;
+	width: 100% !important;
+}
+
+.validated-form .form-column-left,
+.validated-form .form-column-right {
+	flex: 1 !important;
+	min-width: 450px !important;
+}
+
+/* 入力欄を最大限広げる */
+
+.validated-form .input-block,
+.validated-form .input-block input {
+	width: 100% !important;
+	box-sizing: border-box !important;
+}
+
 
 /* ==========================================================================
    左右独立2カラム配置 ＆ エラー重なり・目玉ズレ完全防止
@@ -3415,12 +4241,12 @@ body.page-admin-sales-dashboard {
    17. 管理者専用：顧客管理一覧画面（admin-user-list.jsp）用スタイル
    ========================================================================== */
 
-/* コンテナ枠：商品管理画面と統一感を出すための設定 */
+/* コンテナ枠 */
+
 .admin-customer-container {
 	max-width: 1200px;
 	margin: 40px auto;
 	background: #111;
-	/* 商品管理の背景色に合わせる */
 	padding: 30px;
 	border-radius: 8px;
 	border: 1px solid #222;
@@ -3439,43 +4265,53 @@ body.page-admin-sales-dashboard {
 	margin-top: 5px;
 }
 
-/* テーブルスタイル：.admin-table クラスと共通化 */
+/* スクロールエリア（テーブルを囲む箱） */
+
+.customer-list-box {
+	max-height: 60vh;
+	overflow-y: auto;
+	border: 1px solid #333;
+	border-radius: 4px;
+	margin-top: 20px;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.customer-list-box::-webkit-scrollbar {
+	display: none;
+}
+
+/* テーブル全体 */
+
 .admin-user-table {
 	width: 100%;
 	border-collapse: collapse;
-	margin-top: 20px;
 	color: #e0e0e0;
 }
 
-.admin-user-table th {
-	background: #1a1a1a;
+/* ヘッダー固定の設定 */
+
+.admin-user-table thead th {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background-color: #1a1a1a;
 	padding: 15px;
-	text-align: left;
+	text-align: center;
 	border-bottom: 2px solid #333;
 	color: #ff9900;
-	/* 商品管理と同じオレンジ系ヘッダー */
 }
+
+/* データセル */
 
 .admin-user-table td {
 	padding: 15px;
 	border-bottom: 1px solid #333;
-}
-
-/* 操作ボタンエリアの調整 */
-.col-action {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 10px;
-}
-
-/* ヘッダーとデータセルを揃える */
-.admin-user-table th,
-.admin-user-table td {
 	text-align: center;
 }
 
-/* ボタンデザイン：既存の共通スタイルを最大限活用 */
+/* ボタンデザイン */
+
 .btn-user-action {
 	padding: 6px 12px;
 	border-radius: 4px;
@@ -3498,7 +4334,8 @@ body.page-admin-sales-dashboard {
 	border: 1px solid #c82333;
 }
 
-/* 区分バッジの調整 */
+/* 区分バッジ */
+
 .badge-user-status {
 	padding: 4px 8px;
 	border-radius: 4px;
@@ -3506,79 +4343,60 @@ body.page-admin-sales-dashboard {
 	font-weight: bold;
 }
 
-.user-status-admin {
-	background: #d4af37;
-	color: #000;
-}
-
 .user-status-general {
 	background: #555;
 	color: #fff;
 }
 
-/* 会員一覧表示エリアをスクロール対応にする */
-.customer-list-box {
-	max-height: 60vh;
-	overflow-y: auto;
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-}
-
-/* Chrome, Safari用 スクロールバー非表示 */
-.customer-list-box::-webkit-scrollbar {
-	display: none;
-}
-
-/* スクロール時にテーブルのヘッダーが隠れないようにする工夫 */
-.admin-user-table thead {
-	position: sticky;
-	top: 0;
-	background-color: #1a1a1a;
-	z-index: 10;
-}
-
 /* ==========================================================================
-   18. 管理者削除確認画面用スタイル
+   18. 管理者削除確認画面用スタイル 
    ========================================================================== */
 
+/* 全体コンテナ */
 
-/* 管理者削除確認画面だけ、全体コンテナの幅を制限 */
-.menu-container.admin-customer-container.delete-confirm-page {
-	max-width: 600px !important;
-	margin: 0 auto;
+.menu-container.delete-confirm-page {
+	max-width: 500px !important;
+	margin: 40px auto !important;
 	padding: 30px !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	float: none !important;
 }
 
-/* フォーム全体を囲むコンテナの調整 */
-.delete-confirm-page.item-form-box {
+/* フォーム全体を囲むコンテナ */
+
+.delete-confirm-page .item-form-box {
+	width: 100%;
+	max-width: 400px;
 	padding: 30px;
-	margin: 40px auto;
-	max-width: 600px !important;
-	width: 90%;
 	background-color: #1a1a1a;
 	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	box-sizing: border-box;
 }
 
-.delete-confirm-page.item-form-box p {
+.delete-confirm-page .item-form-box p {
 	line-height: 1.6;
 	margin: 0;
 }
 
-/* フォームグループ（ラベルと入力欄の親） */
-.delete-confirm-page.form-group {
+/* フォームグループ */
+
+.delete-confirm-page .form-group {
 	position: relative;
 	width: 100%;
-	max-width: 400px;
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 15px;
 }
 
 /* パスワード入力欄 */
-.delete-confirm-page.form-group input[type="password"],
-.delete-confirm-page.form-group input[type="text"] {
+
+.delete-confirm-page .form-group input[type="password"],
+.delete-confirm-page .form-group input[type="text"] {
 	padding: 10px;
 	padding-right: 40px;
 	border: 1px solid #ccc;
@@ -3588,10 +4406,11 @@ body.page-admin-sales-dashboard {
 }
 
 /* 目のアイコンボタンの配置 */
-.delete-confirm-page.toggle-password-btn {
+
+.delete-confirm-page .toggle-password-btn {
 	position: absolute;
 	right: 10px;
-	top: 70%;
+	top: 65%;
 	transform: translateY(-50%);
 	border: none;
 	background: transparent;
@@ -3602,27 +4421,15 @@ body.page-admin-sales-dashboard {
 	align-items: center;
 }
 
-.delete-confirm-page.toggle-password-btn:hover {
-	color: #333;
-}
-
-.delete-confirm-page.toggle-password-btn svg {
+.delete-confirm-page .toggle-password-btn svg {
 	width: 20px;
 	height: 20px;
 	color: #666;
 }
 
-.delete-confirm-page #currentAdminPassword {
-	width: 100%;
-	padding: 10px;
-	padding-right: 45px;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
 /* バリデーションエラーメッセージ */
-.delete-confirm-page.error-msg {
+
+.delete-confirm-page .error-msg {
 	color: #ff4444;
 	font-size: 0.85em;
 	margin-top: 5px;
@@ -3630,48 +4437,57 @@ body.page-admin-sales-dashboard {
 	min-height: 1.2em;
 }
 
-/* エラー時の入力枠 */
-.delete-confirm-page input.is-invalid {
-	border: 2px solid #ff4444 !important;
-}
+/* 削除実行ボタンとキャンセルボタンのエリア */
 
-/* 削除実行ボタンとキャンセルボタンのエリア設定 */
-.delete-confirm-page.btn-area {
+.delete-confirm-page .btn-area {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	justify-content: center;
 	align-items: center;
-	gap: 10px;
+	gap: 15px;
 	margin-top: 20px;
-}
-
-/* ボタン共通のサイズ制限 */
-.delete-confirm-page.btn-user-delete,
-.delete-confirm-page.btn-menu {
-	width: 200px;
-	padding: 10px 20px;
-	text-align: center;
-	box-sizing: border-box;
+	width: 100%;
 }
 
 /* 削除実行ボタン */
-.delete-confirm-page.btn-user-delete {
+
+.delete-confirm-page .btn-user-delete {
+	width: 200px;
+	padding: 10px 20px;
+	text-align: center;
 	background-color: #d9534f;
 	color: white;
 	border: none;
-	padding: 10px 20px;
 	border-radius: 4px;
 	cursor: pointer;
 	font-weight: bold;
 }
 
-.delete-confirm-page.btn-user-delete:hover {
+.delete-confirm-page .btn-user-delete:hover {
 	background-color: #c9302c;
 }
 
-/* 警告文エリア */
-.delete-confirm-page.warning-area {
-	margin-bottom: 20px;
-	/* パスワード入力欄との間に隙間を作る */
+/* キャンセルボタン用 */
+
+.delete-confirm-page .btn-menu {
+	width: 200px;
+	padding: 10px 20px;
+	text-align: center;
+	background-color: #444;
+	color: white;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+/* ボタン共通のサイズ調整 */
+
+.delete-confirm-page .btn-user-delete,
+.delete-confirm-page .btn-menu {
+	width: 140px;
+	padding: 10px 0;
+	text-align: center;
+	box-sizing: border-box;
+	display: inline-block;
 }
 
 /* ==========================================================================
@@ -3706,7 +4522,7 @@ body.page-admin-sales-dashboard {
 
 /* フォームの外枠コンテナ自体の余白調整 */
 .edit-page .item-form-box.customer-list-box {
-	padding: 40px;
+	padding: 50px;
 	margin: 0 auto;
 	background-color: #1a1a1a;
 	border-radius: 8px;
@@ -3714,15 +4530,16 @@ body.page-admin-sales-dashboard {
 	width: 100% !important;
 }
 
-/* 各項目のグループ化（Gridアイテム化に伴う調整） */
+/* 各項目のグループ化 */
+
 .edit-page .item-form-box.customer-list-box .form-group {
-	margin-bottom: 0 !important;
-	/* Gridのgapで制御するためマージンは0に */
+	margin-bottom: 5px !important;
 	width: 100% !important;
 	box-sizing: border-box !important;
 }
 
 /* 1行目: 会員番号(左) と 氏名(右) を配置 */
+
 .edit-page .item-form-box.customer-list-box .form-group:nth-of-type(1) {
 	grid-column: 1;
 }
@@ -3732,6 +4549,7 @@ body.page-admin-sales-dashboard {
 }
 
 /* 2行目: メールアドレス(左) と 住所(右) を配置 */
+
 .edit-page .item-form-box.customer-list-box .form-group:nth-of-type(3) {
 	grid-column: 1;
 }
@@ -3741,25 +4559,22 @@ body.page-admin-sales-dashboard {
 }
 
 /* 3行目: 会員ランク変更(左下) に配置 */
+
 .edit-page .item-form-box.customer-list-box .form-group:nth-of-type(5) {
 	grid-column: 1;
 	align-self: end;
-	/* 下揃えにしてボタンの高さと合わせる */
 }
 
 /* 3行目: ボタンエリア(右下) に配置 */
+
 .edit-page .item-form-box.customer-list-box .btn-area {
 	grid-column: 2;
 	display: flex !important;
 	flex-direction: column !important;
-	/* ボタン同士は縦並び */
 	align-items: stretch !important;
-	/* ボタンの横幅をエリアいっぱいに広げる */
 	gap: 12px;
-	margin-top: 0 !important;
-	/* 上部マージンをリセット */
+	margin-top: 15px !important;
 	align-self: end;
-	/* 下揃え */
 }
 
 /* ラベルのスタイル */
@@ -3842,8 +4657,146 @@ body.page-admin-sales-dashboard {
 	background-color: #555;
 }
 
+.edit-page .error-msg {
+	position: static !important;
+	bottom: -1.5em;
+	color: #ff4d4d;
+	font-size: 0.8em;
+	margin-top: -20px !important;
+	margin-bottom: 10px !important;
+	min-height: 1.2em;
+	line-height: 1.2;
+	text-align: left;
+}
+
+.edit-page .form-group {
+	position: relative;
+	margin-bottom: 5px !important;
+}
+
 /* ==========================================
-   20. スマホ・タブレット用レスポンシブ対応
+   20. 購入履歴ページ
+   ========================================== */
+
+.history-page {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	overflow: hidden;
+}
+
+.history-page .list-container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+.history-page .list-main {
+	flex: 1;
+	max-width: 1200px;
+	width: 95%;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 8px;
+	color: #333;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+/* スクロールする領域 */
+.table-scroll-wrapper {
+	flex: 1;
+	overflow-y: auto;
+	border: 1px solid #eee;
+	margin-top: 20px;
+	background-color: #fff;
+}
+
+.item-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	table-layout: fixed;
+}
+
+/* 列ごとの幅を6列構成に調整 */
+
+/* 1列目：購入日時 */
+.item-table th:nth-child(1),
+.item-table td:nth-child(1) {
+	width: 15%;
+}
+
+/* 2列目：商品名 */
+.item-table th:nth-child(2),
+.item-table td:nth-child(2) {
+	width: 35%;
+}
+
+/* 3列目：ロット番号 */
+.item-table th:nth-child(3),
+.item-table td:nth-child(3) {
+	width: 20%;
+}
+
+/* 4列目：数量 */
+.item-table th:nth-child(4),
+.item-table td:nth-child(4) {
+	width: 10%;
+}
+
+/* 5列目：単価 */
+.item-table th:nth-child(5),
+.item-table td:nth-child(5) {
+	width: 10%;
+}
+
+/* 6列目：合計 */
+.item-table th:nth-child(6),
+.item-table td:nth-child(6) {
+	width: 10%;
+}
+
+/* 商品名が長い場合の対策 */
+
+.item-table td:nth-child(2) {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* 長い場合は「...」にする */
+}
+
+/* ヘッダーを固定 */
+
+.item-table thead th {
+	position: sticky;
+	top: -1px;
+	background-color: #f8f8f8;
+	padding: 12px;
+	border-bottom: 2px solid #ddd;
+	border-top: 1px solid #eee;
+	text-align: left;
+	z-index: 10;
+}
+
+.item-table td {
+	padding: 12px;
+	border-bottom: 1px solid #eee;
+}
+
+.history-btn {
+	margin-top: 20px;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+
+/* ==========================================
+   21. スマホ・タブレット用レスポンシブ対応
    ========================================== */
 @media (max-width: 600px) {
 	.cart-summary-area {

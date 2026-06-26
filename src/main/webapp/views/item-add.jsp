@@ -19,31 +19,46 @@
 		<form action="${pageContext.request.contextPath}/ItemAdd.action"
 			method="post" enctype="multipart/form-data"
 			onsubmit="return confirm('この商品を新しく登録します。よろしいですか？');"
-			class="item-form-box">
+			class="item-form-box validated-form">
+
+			<input type="hidden" name="itemId" value="${item.itemId}"> <input
+				type="hidden" name="currentImagePath" value="${item.imagePath}">
 
 			<div class="form-group">
 				<label>商品名<span>(必須)</span></label> <input type="text" id="itemName"
 					name="itemName" placeholder="例: 極上特選神戸牛カルビ"
-					value="<c:out value='${savedItemName}' />" required>
+					value="<c:out value='${savedItemName}' />" required> <span
+					id="itemName-error" class="error-msg"></span>
+			</div>
+
+			<div class="form-group">
+				<label>ふりがな（カナ） <span>(必須)</span></label> <input type="text"
+					id="kanaName" name="kanaName" placeholder="例: ゴクジョウトクセンコウベギュウカルビ"
+					value="<c:out value='${savedKanaName}' />" required> <span
+					id="kanaName-error" class="error-msg"></span>
+				<p style="font-size: 0.8em; color: #888; margin-top: 5px;">※全角カタカナで入力してください。（長音「ー」は使用可能です）</p>
 			</div>
 
 			<div class="form-group">
 				<label>価格（税抜/円） <span>(必須)</span></label> <input type="number"
 					id="price" name="price" placeholder="例: 2980" min="0"
-					value="<c:out value='${savedPrice}' />" required>
+					value="<c:out value='${savedPrice}' />" required> <span
+					id="price-error" class="error-msg"></span>
 			</div>
 
 			<div class="form-group">
 				<label>初期在庫数 <span>(必須)</span></label> <input type="number"
 					id="stock" name="stock" placeholder="例: 30" min="0"
-					value="<c:out value='${savedStock}' />" required>
+					value="<c:out value='${savedStock}' />" required> <span
+					id="stock-error" class="error-msg"></span>
+				<p style="font-size: 0.8em; color: #888; margin-top: 5px;">※ここに入力した数だけ「ロット（個体）番号」が自動生成されます。</p>
 			</div>
 
 			<div class="form-group">
 				<label>肉の状態</label> <select id="meatStatus" name="meatStatus"
 					class="cart-select">
-					<option value="生" ${savedMeatStatus == '生' ? 'selected' : ''}>生（フレッシュ）</option>
-					<option value="熟成" ${savedMeatStatus == '熟成' ? 'selected' : ''}>熟成（エイジング）</option>
+					<option value="0" ${savedMeatStatus == '0' ? 'selected' : ''}>生</option>
+					<option value="1" ${savedMeatStatus == '1' ? 'selected' : ''}>熟成</option>
 				</select>
 			</div>
 
@@ -60,6 +75,7 @@
 				<label>部位 / カテゴリ <span>(必須)</span></label> <input type="text"
 					id="category" name="category" placeholder="例: カルビ、ロース、モモ"
 					maxlength="20" value="<c:out value='${savedCategory}' />" required>
+				<span id="category-error" class="error-msg"></span>
 			</div>
 
 			<div class="form-group">
@@ -70,10 +86,10 @@
 			</div>
 
 			<div class="form-group">
-				<label>商品画像</label> <input type="file" id="imageFile"
-					name="imageFile" accept="image/*" class="hide-file-input">
-
+				<label>商品画像</label>
 				<div id="dropZone" class="drop-zone">
+					<input type="file" id="imageFile" name="imageFile" accept="image/*"
+						class="hide-file-input">
 					<div id="dropZoneText">
 						<p>ここに新しい画像をドラッグ＆ドロップ</p>
 						<p style="font-size: 0.8em; color: #555;">またはクリックしてファイルを選択</p>
@@ -93,5 +109,6 @@
 		</form>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/image-upload.js"></script>
+	<script src="${pageContext.request.contextPath}/js/item-validation.js"></script>
 </body>
 </html>

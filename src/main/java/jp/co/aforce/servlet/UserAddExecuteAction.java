@@ -30,6 +30,8 @@ public class UserAddExecuteAction extends Action {
 			if (memberId == null || password == null || memberId.trim().isEmpty()) {
 				request.setAttribute("errorTitle", "登録セッションエラー");
 				request.setAttribute("errorMessage", "登録データの送信中に情報の欠落が検出されました。恐れ入りますが最初からやり直してください。");
+				request.setAttribute("errorBackUrl", "user-add.jsp");
+				request.setAttribute("errorBtnText", "登録画面へ戻る");
 				return "login-error.jsp";
 			}
 
@@ -62,7 +64,9 @@ public class UserAddExecuteAction extends Action {
 			} catch (java.sql.SQLIntegrityConstraintViolationException e) {
 				// 一意制約違反（重複）は個別の親切メッセージで弾く
 				request.setAttribute("errorTitle", "登録できませんでした");
-				request.setAttribute("errorMessage", "入力された会員番号「" + memberId + "」は、タッチの差で別のユーザーに登録されたか、すでに使用されています。");
+				request.setAttribute("errorMessage", "入力された会員番号「" + memberId + "」は、すでに使用されています。別の会員番号を入力してください。");
+				request.setAttribute("errorBackUrl", "user-add.jsp");
+				request.setAttribute("errorBtnText", "登録画面へ戻る");
 				return "login-error.jsp";
 			}
 
@@ -85,7 +89,9 @@ public class UserAddExecuteAction extends Action {
 			} else {
 				// INSERTの結果が0件だった場合の例外ケース
 				request.setAttribute("errorTitle", "登録失敗");
-				request.setAttribute("errorMessage", "データベースへの会員登録に失敗しました。入力された文字が長すぎる可能性があります。");
+				request.setAttribute("errorMessage", "データベースへの会員登録に失敗しました。入力された内容を確認して再度お試しください。");
+				request.setAttribute("errorBackUrl", "user-add.jsp");
+				request.setAttribute("errorBtnText", "登録画面へ戻る");
 				return "login-error.jsp";
 			}
 
@@ -93,6 +99,8 @@ public class UserAddExecuteAction extends Action {
 			e.printStackTrace();
 			request.setAttribute("errorTitle", "会員登録システムエラー");
 			request.setAttribute("errorMessage", "会員情報のデータベース保存処理中に、サーバー側で予期せぬ重大なエラーが発生しました。");
+			request.setAttribute("errorBackUrl", "user-add.jsp");
+			request.setAttribute("errorBtnText", "登録画面へ戻る");
 			return "login-error.jsp";
 		}
 	}

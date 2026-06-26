@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import jp.co.aforce.beans.Item;
 import jp.co.aforce.dao.ItemDAO;
+import jp.co.aforce.dao.LotDAO;
 import jp.co.aforce.tool.Action;
 
 public class ItemDetailAction extends Action {
@@ -55,6 +56,13 @@ public class ItemDetailAction extends Action {
 				request.setAttribute("errorBtnText", "商品一覧へ戻る");
 				return "login-error.jsp";
 			}
+
+			// LotDAOを使用して、現在のリアルタイム在庫を取得
+			LotDAO lotDAO = new LotDAO();
+			int availableStock = lotDAO.getAvailableStock(itemId);
+
+			// itemオブジェクトの在庫数フィールドを最新の在庫数で上書き
+			item.setStock(availableStock);
 
 			//3. 正常系：商品データをJSPへ引き渡すためにリクエスト属性に格納
 			request.setAttribute("item", item);

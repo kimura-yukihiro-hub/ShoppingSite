@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import jp.co.aforce.beans.CartItem;
 import jp.co.aforce.beans.Item;
 import jp.co.aforce.dao.ItemDAO;
+import jp.co.aforce.dao.LotDAO;
 import jp.co.aforce.tool.Action;
 
 //商品を買い物かご（カート）に追加するアクションクラス
@@ -24,6 +25,14 @@ public class CartAddAction extends Action {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		try {
+			// パラメータの取得とバリデーション
+			String itemIdStr = request.getParameter("itemId");
+			String quantityStr = request.getParameter("quantity");
+			
+			// 数値が送られてきていない、または数値以外の場合はエラーへ
+			if (itemIdStr == null || !itemIdStr.matches("\\d+") || quantityStr == null || !quantityStr.matches("\\d+")) {
+				throw new IllegalArgumentException("不正なリクエストパラメータです。");
+			}
 			// 1. 詳細画面のフォームから送信された「商品ID」と「選択された数量」を取得
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
 			int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -36,6 +45,10 @@ public class CartAddAction extends Action {
 			// 2. ItemDAOのfindByIdを呼び出して、最新の商品情報をDBから取得
 			ItemDAO dao = new ItemDAO();
 			Item item = dao.findById(itemId);
+			
+			// LotDAOを使用して、現在のリアルタイム在庫を取得
+			LotDAO lotDAO = new LotDAO();
+			int currentStock = lotDAO.getAvailableStock(itemId);
 
 			if (item != null) {
 				HttpSession session = request.getSession();
@@ -56,9 +69,9 @@ public class CartAddAction extends Action {
 						int newQuantity = cartItem.getQuantity() + quantity;
 
 						// もし合算した数量が在庫数を上回る場合は在庫上限で止める
-						if (newQuantity > item.getStock()) {
-							newQuantity = item.getStock();
-						}
+						if (newQuantity > currentStock) {
+			                newQuantity = currentStock;
+			            }
 
 						cartItem.setQuantity(newQuantity);
 						isExist = true;

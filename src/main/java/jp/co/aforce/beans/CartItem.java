@@ -3,6 +3,7 @@ package jp.co.aforce.beans;
 public class CartItem implements java.io.Serializable {
 	private Item item; //肉の商品情報
 	private int quantity; //購入数量
+	private String serialNumber; //購入時に割り当てられたロット番号
 
 	//デフォルトコンストラクタ
 	public CartItem() {
@@ -39,6 +40,14 @@ public class CartItem implements java.io.Serializable {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
 	}
 
 	// 「どの肉が何個入っているか」が一瞬でコンソールに表示されるようになる

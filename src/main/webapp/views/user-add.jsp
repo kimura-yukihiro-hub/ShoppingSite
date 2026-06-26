@@ -9,7 +9,7 @@
 	href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-	<div class="form-container">
+	<div class="form-container user-add-page">
 		<h2>会員情報新規登録</h2>
 
 		<!-- リアルタイムバリデーションJSを連動させるためのクラスを付与 -->

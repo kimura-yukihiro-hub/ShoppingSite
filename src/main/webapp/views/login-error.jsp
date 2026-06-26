@@ -17,9 +17,7 @@
 			<c:out value="${not empty errorTitle ? errorTitle : 'ログインできませんでした'}" />
 		</h2>
 
-		<p>
-			<c:out
-				value="${not empty errorMessage ? errorMessage : 'エラーもしくはパスワードが違います'}" />
+		<p>${not empty errorMessage ? errorMessage : 'エラーもしくはパスワードが違います'}
 		</p>
 
 		<c:choose>

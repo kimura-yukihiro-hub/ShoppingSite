@@ -14,7 +14,7 @@ public class UserDeleteAction extends Action {
 			return "user-delete.jsp";
 
 		} catch (Exception e) {
-			// 💡万が一、画面遷移中にサーバー側で予期せぬ例外が発生した場合はここでキャッチ
+			// 万が一、画面遷移中にサーバー側で予期せぬ例外が発生した場合はここでキャッチ
 			e.printStackTrace();
 			request.setAttribute("errorTitle", "退会手続きエラー");
 			request.setAttribute("errorMessage", "退会確認画面の読み込み中に予期せぬエラーが発生しました。お手数ですがマイページからやり直してください。");

@@ -1,10 +1,14 @@
 package jp.co.aforce.servlet;
 
+import java.util.List;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import jp.co.aforce.beans.Item;
+import jp.co.aforce.beans.Lot;
 import jp.co.aforce.dao.ItemDAO;
+import jp.co.aforce.dao.LotDAO;
 import jp.co.aforce.tool.Action;
 
 public class ItemEditAction extends Action {
@@ -50,8 +54,28 @@ public class ItemEditAction extends Action {
 				return "login-error.jsp";
 			}
 
+			// LotDAOを使用して、現在のリアルタイム在庫を再確認
+			LotDAO lotDAO = new LotDAO();
+			int currentAvailableStock = lotDAO.getAvailableStock(itemId);
+
+			// itemオブジェクトの在庫を最新の状態に更新
+			item.setStock(currentAvailableStock);
+
 			// 3. 取得した商品Beanデータをリクエスト属性「item」という名前で登録
 			request.setAttribute("item", item);
+
+			// ロット情報を取得してリクエスト属性にセット
+			List<Lot> lotList = lotDAO.getLotSummariesByItemId(itemId);
+			// 「混在」をチェックしてフラグをセットする
+			for (Lot lot : lotList) {
+				if (lotDAO.isMixedStatus(lot.getBatchId())) {
+					// meatStatusを「混在(99)」に書き換える
+					// ※この書き換えはリクエストスコープ内のリストに対してのみ行われるので、
+					//   データベースの中身が壊れることはない
+					lot.setMeatStatus(99);
+				}
+			}
+			request.setAttribute("lotList", lotList);
 
 			// 4. 編集画面（item-edit.jsp）へフォワードするためファイル名を返す
 			return "item-edit.jsp";

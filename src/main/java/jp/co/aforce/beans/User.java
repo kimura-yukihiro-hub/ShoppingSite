@@ -10,6 +10,8 @@ public class User implements java.io.Serializable {
 	private String address; //住所
 	private String mailAddress; //メールアドレス
 	private int meatRank; //会員ランク
+	private long totalPurchaseAmount;
+	private java.util.Date lastPurchaseDate;
 
 	public User() {
 	}
@@ -18,18 +20,51 @@ public class User implements java.io.Serializable {
 	public String getMeatRankName() {
 		switch (this.meatRank) {
 		case 1:
-			return "一般会員";
+			return "一般";
 		case 2:
-			return "ゴールド会員";
+			return "ゴールド";
 		case 3:
-			return "プラチナ会員";
+			return "プラチナ";
 		case 4:
-			return "VIP会員";
+			return "VIP";
 		case 5:
 			return "管理者";
 		default:
-			return "ゲスト会員";
+			return "ゲスト";
 		}
+	}
+
+	public double getDiscountRate() {
+		switch (this.meatRank) {
+		case 2:
+			return 0.02; // ゴールド会員 2%
+		case 3:
+			return 0.05; // プラチナ会員 5%
+		case 4:
+			return 0.10; // VIP会員 10%
+		default:
+			return 0.0; // 一般会員など
+		}
+	}
+
+	public long getNextRankGoal() {
+		switch (this.meatRank) {
+		case 1:
+			return 10000;
+		case 2:
+			return 30000;
+		case 3:
+			return 100000;
+		default:
+			return 100000; // VIP以上
+		}
+	}
+
+	public int getProgressPercent() {
+		long goal = getNextRankGoal();
+		if (goal <= 0 || this.meatRank >= 4)
+			return 100;
+		return (int) Math.min(((double) this.totalPurchaseAmount / (double) goal) * 100.0, 100.0);
 	}
 
 	public String getMemberId() {
@@ -94,6 +129,22 @@ public class User implements java.io.Serializable {
 
 	public void setMeatRank(int meatRank) {
 		this.meatRank = meatRank;
+	}
+
+	public long getTotalPurchaseAmount() {
+		return totalPurchaseAmount;
+	}
+
+	public void setTotalPurchaseAmount(long totalPurchaseAmount) {
+		this.totalPurchaseAmount = totalPurchaseAmount;
+	}
+
+	public java.util.Date getLastPurchaseDate() {
+		return lastPurchaseDate;
+	}
+
+	public void setLastPurchaseDate(java.util.Date lastPurchaseDate) {
+		this.lastPurchaseDate = lastPurchaseDate;
 	}
 
 	// 中身のデータがコンソールに綺麗に全出力されるようになる

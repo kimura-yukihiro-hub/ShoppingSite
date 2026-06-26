@@ -71,10 +71,19 @@
 												value="${cartItem.item.category}" /></span>
 									</div>
 									<div class="preview-item-price-qty">
-										<span class="preview-item-qty"><fmt:formatNumber
-												value="${cartItem.item.price}" pattern="#,###" /> 円 × <c:out
-												value="${cartItem.quantity}" /></span> <span
-											class="preview-item-subtotal"><fmt:formatNumber
+										<%-- 追加：この時点でのリアルタイム在庫チェック結果を小さく表示 --%>
+										<c:choose>
+											<c:when test="${cartItem.item.stock < cartItem.quantity}">
+												<span>⚠️ 在庫不足により購入できません</span>
+											</c:when>
+											<c:otherwise>
+												<span class="preview-item-qty"> <fmt:formatNumber
+														value="${cartItem.item.price}" pattern="#,###" /> 円 × <c:out
+														value="${cartItem.quantity}" />
+												</span>
+											</c:otherwise>
+										</c:choose>
+										<span class="preview-item-subtotal"><fmt:formatNumber
 												value="${cartItem.subtotal}" pattern="#,###" /> 円</span>
 									</div>
 								</div>
@@ -88,17 +97,30 @@
 						<h3>💰 お支払い合計</h3>
 						<div class="summary-row">
 							<span>商品合計(税抜)：</span> <strong><fmt:formatNumber
-									value="${not empty totalWithoutTax ? totalWithoutTax : 0}"
-									pattern="#,###" /> 円</strong>
+									value="${subtotalBeforeDiscount}" pattern="#,###" /> 円</strong>
 						</div>
+
+						<c:if test="${discountAmount > 0}">
+							<div class="summary-row">
+								<span>会員特典割引：</span> <strong>-<fmt:formatNumber
+										value="${discountAmount}" pattern="#,###" /> 円
+								</strong>
+							</div>
+						</c:if>
+
+						<div class="summary-row">
+							<span>割引後合計(税抜)：</span> <strong><fmt:formatNumber
+									value="${totalAfterDiscount}" pattern="#,###" /> 円</strong>
+						</div>
+
 						<div class="summary-row">
 							<span>消費税(8%)：</span> <strong><fmt:formatNumber
-									value="${not empty tax ? tax : 0}" pattern="#,###" /> 円</strong>
+									value="${tax}" pattern="#,###" /> 円</strong>
 						</div>
+
 						<div class="summary-row total-row">
 							<span>総合計(税込)：</span> <strong class="grand-total-price"><fmt:formatNumber
-									value="${not empty grandTotal ? grandTotal : 0}"
-									pattern="#,###" /> 円</strong>
+									value="${grandTotal}" pattern="#,###" /> 円</strong>
 						</div>
 
 						<form
@@ -106,7 +128,7 @@
 							method="post" onsubmit="return confirm('注文を確定します。よろしいですか？');"
 							class="execute-form">
 							<input type="hidden" name="totalWithoutTax"
-								value="<c:out value='${totalWithoutTax}'/>"> <input
+								value="<c:out value='${totalAfterDiscount}'/>"> <input
 								type="hidden" name="tax" value="<c:out value='${tax}'/>">
 							<input type="hidden" name="grandTotal"
 								value="<c:out value='${grandTotal}'/>">

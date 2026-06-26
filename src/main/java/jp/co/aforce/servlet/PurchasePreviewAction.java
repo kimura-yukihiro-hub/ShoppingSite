@@ -7,52 +7,70 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import jp.co.aforce.beans.CartItem;
+import jp.co.aforce.beans.User; // ユーザー情報用
+import jp.co.aforce.dao.LotDAO;
 import jp.co.aforce.tool.Action;
 
 public class PurchasePreviewAction extends Action {
 
-	//プレビュー画面は「ログイン必須」のため、requireLogin = false は指定しない
-	// これにより、未ログインのゲストがボタンを押した場合は自動的にログイン画面へ誘導
-
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 		HttpSession session = request.getSession();
 
-		// 1. セッションから買い物かご（リスト）を取得
 		@SuppressWarnings("unchecked")
 		List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+		User user = (User) session.getAttribute("loginUser"); // ログインユーザー情報を取得
 
-		// カートが空っぽの状態でURL直打ちアクセスされた場合はカート画面に戻す
 		if (cart == null || cart.isEmpty()) {
 			return "redirect:CartList.action";
 		}
 
 		try {
-			int grandTotal = 0;
+			// 在庫の再確認
+			LotDAO lotDAO = new LotDAO();
 			for (CartItem cartItem : cart) {
-				// 会員割引＆軽減税率8%が適用済みの税込小計を合算
-				grandTotal += cartItem.getSubtotal();
+				int currentAvailable = lotDAO.getAvailableStock(cartItem.getItem().getItemId());
+
+				if (cartItem.getQuantity() > currentAvailable) {
+					request.setAttribute("errorTitle", "在庫状況が変更されました");
+					request.setAttribute("errorMessage", "申し訳ございません。商品「" + cartItem.getItem().getItemName() +
+							"」の在庫が不足したため、購入を続けることができません。<br>カートの内容を更新してください。");
+					request.setAttribute("errorBackUrl", "CartList.action");
+					request.setAttribute("errorBtnText", "カートに戻る");
+					return "login-error.jsp";
+				}
+
 			}
 
-			// ★修正箇所：税込の総合計から「税抜金額」と「消費税(8%)」を逆算して計算
-			int totalWithoutTax = (int) (grandTotal / 1.08);
-			int tax = grandTotal - totalWithoutTax;
+			// カートから合計を算出
+			int subtotalBeforeDiscount = 0;
+			for (CartItem cartItem : cart) {
+				subtotalBeforeDiscount += cartItem.getSubtotal();
+			}
 
-			// 2. 計算した金額データとカート情報を購入確認画面へ引き渡すために格納
-			request.setAttribute("cart", cart);
-			request.setAttribute("grandTotal", grandTotal);
-			request.setAttribute("totalWithoutTax", totalWithoutTax); 
+			// UserBeanのmeatRankから割引率を取得するメソッドをUserクラスに作成済みと想定
+			double discountRate = (user != null) ? user.getDiscountRate() : 0.0;
+			int discountAmount = (int) (subtotalBeforeDiscount * discountRate);
+			int totalAfterDiscount = subtotalBeforeDiscount - discountAmount;
+
+			// 税計算
+			int tax = (int) (totalAfterDiscount * 0.08);
+			int grandTotal = totalAfterDiscount + tax;
+
+			// JSPへ渡す属性名に注意！
+			request.setAttribute("subtotalBeforeDiscount", subtotalBeforeDiscount);
+			request.setAttribute("discountAmount", discountAmount);
+			request.setAttribute("totalAfterDiscount", totalAfterDiscount);
 			request.setAttribute("tax", tax);
+			request.setAttribute("grandTotal", grandTotal);
 
-			// 3. 購入最終プレビュー画面のJSPファイル名を返す
 			return "purchase-preview.jsp";
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("errorTitle", "注文確認エラー");
-			request.setAttribute("errorBackUrl", "CartList.action");
-			request.setAttribute("errorBtnText", "カートへ戻る");
-			request.setAttribute("errorMessage", "注文確認画面の生成中に予期せぬエラーが発生しました。お手数ですがカート画面からやり直してください。");
+			request.setAttribute("errorTitle", "決済処理エラー");
+	        request.setAttribute("errorMessage", "決済情報の取得中にエラーが発生しました。");
+	        request.setAttribute("errorBackUrl", "CartList.action");
+	        request.setAttribute("errorBtnText", "カートに戻る");
 			return "login-error.jsp";
 		}
 	}
